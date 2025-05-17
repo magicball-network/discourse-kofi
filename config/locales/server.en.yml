@@ -1,0 +1,3 @@
+en:
+  site_settings:
+    kofi_webhook_token: 'Verification token for webhook calls made by Ko-fi. Can be found at: https://ko-fi.com/manage/webhooks'

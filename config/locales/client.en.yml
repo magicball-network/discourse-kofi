@@ -1,0 +1,9 @@
+en:
+  js:
+    discourse_kofi:
+      title: "Ko-fi"
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_kofi: "Ko-fi"

@@ -1,0 +1,7 @@
+discourse_kofi:
+  kofi_enabled:
+    default: false
+    client: false
+  kofi_webhook_token:
+    default: ''
+    client: false

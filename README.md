@@ -1,2 +1,3 @@
-# discourse-ko-fi
-Ko-fi integration with Discourse
+# Discourse Ko-fi
+
+This [Discourse](https://discourse.com) plugin adds an integration with [Ko-fi](https://ko-fi.com). 
