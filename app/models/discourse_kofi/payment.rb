@@ -50,7 +50,7 @@ module ::DiscourseKofi
       payment
     end
 
-    def is_test_transaction
+    def test_transaction?
       TEST_TRANSACTION_ID == kofi_transaction_id
     end
 
@@ -91,3 +91,42 @@ module ::DiscourseKofi
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: discourse_kofi_payments
+#
+#  id                            :bigint           not null, primary key
+#  message_id                    :string           not null
+#  timestamp                     :datetime         not null
+#  type                          :string           not null
+#  is_public                     :boolean          not null
+#  from_name                     :string
+#  message                       :string
+#  amount                        :decimal(15, 2)   not null
+#  url                           :string
+#  email                         :string
+#  currency                      :string           not null
+#  is_subscription_payment       :boolean          not null
+#  is_first_subscription_payment :boolean          not null
+#  kofi_transaction_id           :string           not null
+#  tier_name                     :string
+#  payment_type                  :integer
+#  rewarded                      :boolean          default(FALSE), not null
+#  account_id                    :bigint
+#  user_id                       :bigint
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#
+# Indexes
+#
+#  index_discourse_kofi_payments_on_account_id           (account_id)
+#  index_discourse_kofi_payments_on_kofi_transaction_id  (kofi_transaction_id)
+#  index_discourse_kofi_payments_on_message_id           (message_id) UNIQUE
+#  index_discourse_kofi_payments_on_user_id              (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (account_id => discourse_kofi_accounts.id)
+#  fk_rails_...  (user_id => users.id)
+#

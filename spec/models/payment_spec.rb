@@ -51,7 +51,7 @@ RSpec.describe DiscourseKofi::Payment do
     ).to eq "00000000-1111-2222-3333-444444444444"
     expect(payment.tier_name).to eq "Gold"
 
-    expect(payment.is_test_transaction).to be true
+    expect(payment.test_transaction?).to be true
     expect(payment.type_donation?).to be true
 
     expect(payment.save).to eq true

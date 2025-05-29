@@ -12,6 +12,7 @@ module ::DiscourseKofi
                        :verify_authenticity_token
 
     def index
+      return head :not_found unless SiteSetting.kofi_enabled
       return head :bad_request if params.exclude?(:data)
 
       begin
@@ -32,7 +33,7 @@ module ::DiscourseKofi
         return head :forbidden
       end
 
-      if payment.is_test_transaction
+      if payment.test_transaction?
         Rails.logger.info(
           "Received Ko-fi test transaction, message id: #{payment.message_id}."
         )
