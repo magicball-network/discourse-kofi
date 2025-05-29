@@ -12,8 +12,45 @@ module ::DiscourseKofi
                        :verify_authenticity_token
 
     def index
-      Rails.logger.info("Ko-fi webhook: #{params[:data]}")
-      render plain: nil, status: :ok
+      return head :bad_request if params.exclude?(:data)
+
+      begin
+        payment = Payment.from_json(params[:data])
+      rescue ActiveSupport::JSON.parse_error => e
+        Rails.error.report(e, handled: true, source: PLUGIN_NAME)
+        Rails.logger.warn(
+          "Received invalid Ko-fi webhook request. #{e.message}"
+        )
+        return head :bad_request
+      end
+
+      if payment.verification_token != SiteSetting.kofi_webhook_token
+        Rails.logger.warn(
+          "Invalid Ko-fi webhook token received in request: #{payment.verification_token}."
+        )
+        # TODO: report somewhere?
+        return head :forbidden
+      end
+
+      if payment.is_test_transaction
+        Rails.logger.info(
+          "Received Ko-fi test transaction, message id: #{payment.message_id}."
+        )
+        # TODO: report somewhere?
+        return head :ok
+      end
+
+      if Payment.find_by_message_id(payment.message_id)
+        Rails.logger.warn(
+          "Ko-fi message #{payment.message_id} already processed."
+        )
+        return head :ok
+      end
+
+      payment.save
+      # Todo: launch process task
+
+      head :ok
     end
   end
 end
