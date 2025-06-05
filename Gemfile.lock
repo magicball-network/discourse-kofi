@@ -51,7 +51,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.11.3)
-    language_server-protocol (3.17.0.4)
+    language_server-protocol (3.17.0.5)
     lefthook (1.11.13)
     lint_roller (1.1.0)
     logger (1.7.0)
@@ -174,16 +174,16 @@ GEM
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
       rubocop-rspec (~> 3.5)
-    ruby-lsp (0.23.23)
+    ruby-lsp (0.23.24)
       language_server-protocol (~> 3.17.0)
       prism (>= 1.2, < 2.0)
       rbs (>= 3, < 5)
       sorbet-runtime (>= 0.5.10782)
-    ruby-lsp-rspec (0.1.23)
+    ruby-lsp-rspec (0.1.24)
       ruby-lsp (~> 0.23.19)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
-    sorbet-runtime (0.5.12135)
+    sorbet-runtime (0.5.12155)
     stringio (3.1.7)
     syntax_tree (6.2.0)
       prettier_print (>= 1.2.0)
@@ -203,7 +203,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  lefthook (~> 1.11)
+  lefthook
   rspec
   rspec-rails
   rubocop-discourse

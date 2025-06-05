@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 
 group :development do
-  gem "lefthook", "~> 1.11"
+  gem "lefthook"
   gem "rspec"
   gem "rspec-rails"
   gem "rubocop-discourse"
