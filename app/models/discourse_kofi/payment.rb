@@ -29,7 +29,12 @@ module ::DiscourseKofi
     self.inheritance_column = nil
 
     enum :payment_type,
-         { donation: 1, subscription: 2, commission: 3, shop_order: 4 },
+         {
+           donation: "donation",
+           subscription: "subscription",
+           commission: "commission",
+           shop_order: "shop_order"
+         },
          prefix: :type
 
     belongs_to :user, optional: true
@@ -111,7 +116,7 @@ end
 #  is_first_subscription_payment :boolean          not null
 #  kofi_transaction_id           :string           not null
 #  tier_name                     :string
-#  payment_type                  :integer
+#  payment_type                  :string
 #  rewarded                      :boolean          default(FALSE), not null
 #  account_id                    :bigint
 #  user_id                       :bigint

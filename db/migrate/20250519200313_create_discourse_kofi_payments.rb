@@ -26,7 +26,7 @@ class CreateDiscourseKofiPayments < ActiveRecord::Migration[7.2]
       t.string :tier_name
 
       # Non-webhook fields
-      t.integer :payment_type
+      t.string :payment_type
       t.boolean :rewarded, default: false, null: false
 
       t.references :account, foreign_key: { to_table: :discourse_kofi_accounts }
