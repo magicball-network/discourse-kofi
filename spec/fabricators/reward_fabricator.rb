@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+require "faker"
+
+Fabricator(:reward, from: "DiscourseKofi::Reward") do
+  badge
+  payment_type [:donation]
+  amount { Faker::Commerce.price }
+end
+
+Fabricator(:reward_subscription, from: "DiscourseKofi::Reward") do
+  subscription true
+  group
+  tier_name { Faker::Subscription.plan }
+end

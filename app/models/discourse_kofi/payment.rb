@@ -4,7 +4,14 @@ require "active_support/json"
 
 module ::DiscourseKofi
   class Payment < ActiveRecord::Base
-    # Field which are accepted in a JSON payload
+    PAYMENT_TYPES = {
+      donation: "donation",
+      subscription: "subscription",
+      commission: "commission",
+      shop_order: "shop_order"
+    }.freeze
+
+    # Fields which are accepted in a JSON payload
     JSON_WHITELIST = %w[
       verification_token
       message_id
@@ -21,21 +28,15 @@ module ::DiscourseKofi
       is_first_subscription_payment
       kofi_transaction_id
       tier_name
-    ]
+    ].freeze
+
     # Ko-fi uses this transaction ID for test message
     TEST_TRANSACTION_ID = "00000000-1111-2222-3333-444444444444"
 
     self.table_name = "discourse_kofi_payments"
     self.inheritance_column = nil
 
-    enum :payment_type,
-         {
-           donation: "donation",
-           subscription: "subscription",
-           commission: "commission",
-           shop_order: "shop_order"
-         },
-         prefix: :type
+    enum :payment_type, PAYMENT_TYPES, prefix: :type
 
     belongs_to :user, optional: true
     belongs_to :account, class_name: "DiscourseKofi::Account", optional: true
@@ -116,7 +117,7 @@ end
 #  is_first_subscription_payment :boolean          not null
 #  kofi_transaction_id           :string           not null
 #  tier_name                     :string
-#  payment_type                  :string
+#  payment_type                  :string           not null
 #  rewarded                      :boolean          default(FALSE), not null
 #  account_id                    :bigint
 #  user_id                       :bigint
@@ -128,6 +129,9 @@ end
 #  index_discourse_kofi_payments_on_account_id           (account_id)
 #  index_discourse_kofi_payments_on_kofi_transaction_id  (kofi_transaction_id)
 #  index_discourse_kofi_payments_on_message_id           (message_id) UNIQUE
+#  index_discourse_kofi_payments_on_payment_type         (payment_type)
+#  index_discourse_kofi_payments_on_tier_name            (tier_name) WHERE (tier_name IS NOT NULL)
+#  index_discourse_kofi_payments_on_timestamp            (timestamp)
 #  index_discourse_kofi_payments_on_user_id              (user_id)
 #
 # Foreign Keys
