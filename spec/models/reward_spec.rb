@@ -74,6 +74,13 @@ RSpec.describe DiscourseKofi::Reward, type: :model do
     expect(reward.valid?).to be false
     expect(reward.errors[:group]).to eq ["can't be blank"]
     expect(reward.errors[:badge]).to eq ["can't be blank"]
+
+    reward.badge = badge
+    expect(reward.valid?).to be true
+
+    reward.badge = nil
+    reward.group = group
+    expect(reward.valid?).to be true
   end
 
   it "must be a valid payment type" do

@@ -23,8 +23,12 @@ module ::DiscourseKofi
 
       reward.validates :amount, numericality: { greater_than_or_equal_to: 0 }
 
-      reward.validates :badge, presence: true, if: :group.nil?
-      reward.validates :group, presence: true, if: :badge.nil?
+      reward.validates :badge,
+                       presence: true,
+                       unless: Proc.new { |r| r.group.present? }
+      reward.validates :group,
+                       presence: true,
+                       unless: Proc.new { |r| r.badge.present? }
     end
 
     validate :valid_payment_types, unless: :subscription?

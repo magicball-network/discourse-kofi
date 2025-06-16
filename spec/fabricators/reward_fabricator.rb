@@ -4,7 +4,7 @@ require "faker"
 
 Fabricator(:reward, from: "DiscourseKofi::Reward") do
   badge
-  payment_type [:donation]
+  payment_types [:donation]
   amount { Faker::Commerce.price }
 end
 
