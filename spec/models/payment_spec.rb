@@ -58,6 +58,7 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
 
     stored_payment = ::DiscourseKofi::Payment.find(payment.id)
     expect(stored_payment.message_id).to eq payment.message_id
+    expect(stored_payment.payment_type).to eq "donation"
     expect(stored_payment.verification_token).to be_nil
   end
 
@@ -70,5 +71,21 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
 
     payment.account = nil
     expect(payment.user).to be_nil
+  end
+
+  it "aggregates payments" do
+    account = Fabricate(:account)
+    account.save
+
+    Fabricate(:payment, account: account, amount: 5, type: "Donation").save
+    Fabricate(:payment, account: account, amount: 10, type: "Donation").save
+    Fabricate(:payment, account: account, amount: 15, type: "Subscription").save
+    Fabricate(:payment, account: account, amount: 20, type: "Subscription").save
+    Fabricate(:payment, amount: 9000, type: "Donation").save
+    Fabricate(:payment, amount: 9000, type: "Subscription").save
+
+    aggregate = ::DiscourseKofi::Payment.user_total(account.user)
+    expect(aggregate["donation"]).to eq 15
+    expect(aggregate["subscription"]).to eq 35
   end
 end

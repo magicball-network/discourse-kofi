@@ -56,6 +56,14 @@ module ::DiscourseKofi
       payment
     end
 
+    def self.user_total(user)
+      Payment
+        .where(user: user)
+        .group(:payment_type)
+        .pluck(:payment_type, "sum(amount)")
+        .to_h
+    end
+
     def test_transaction?
       TEST_TRANSACTION_ID == kofi_transaction_id
     end
