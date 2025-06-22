@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 RSpec.describe DiscourseKofi::Payment, type: :model do
   it "parses valid JSON" do
     json = <<-EOF

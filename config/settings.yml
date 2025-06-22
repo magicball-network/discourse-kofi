@@ -5,3 +5,53 @@ discourse_kofi:
   kofi_webhook_token:
     default: ''
     client: false
+  kofi_account:
+    default: ''
+    client: true
+  kofi_dashboard_enabled:
+    type: enum
+    default: disabled
+    client: false
+    choices:
+      - disabled
+      - authenticated_only
+      - enabled
+  kofi_dashboard_count:
+    default: 50
+    client: true
+  kofi_dashboard_types:
+    type: list
+    default: donation
+    client: false
+    allow_any: false
+    list_type: compact
+    choices: &payment_types
+      - donation
+      - subscription
+      - commission
+      - shop_order
+  kofi_dashboard_total_types:
+    type: list
+    default: donation
+    client: false
+    allow_any: false
+    list_type: compact
+    choices: *payment_types
+  kofi_dashboard_anonymous_view:
+    type: list
+    default: amount
+    client: false
+    allow_any: false
+    list_type: compact
+    choices: &visibility
+      - amount
+      - user
+      - message
+      - include_unknown
+  kofi_dashboard_authenticated_view:
+    type: list
+    default: amount|user|message|include_unknown
+    client: false
+    allow_any: false
+    list_type: compact
+    choices: *visibility

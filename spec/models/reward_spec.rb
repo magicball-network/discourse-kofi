@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require "rails_helper"
+
 RSpec.describe DiscourseKofi::Reward, type: :model do
   let(:badge) { Fabricate(:badge) }
   let(:group) { Fabricate(:group) }

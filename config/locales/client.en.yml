@@ -7,3 +7,5 @@ en:
       site_settings:
         categories:
           discourse_kofi: "Ko-fi"
+      rewards:
+        title: "Rewards"
