@@ -22,7 +22,7 @@ RSpec.describe DiscourseKofi::PaymentsController do
       get "/ko-fi/payments.json"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
-      expect(parsed).to be_empty
+      expect(parsed[:payments]).to be_empty
     end
 
     it "returns an empty result when anonymous" do
@@ -30,14 +30,14 @@ RSpec.describe DiscourseKofi::PaymentsController do
       get "/ko-fi/payments.json"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
-      expect(parsed).to be_empty
+      expect(parsed[:payments]).to be_empty
     end
 
     it "returns anonymous data" do
       get "/ko-fi/payments.json"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
-      expect(parsed).to contain_exactly(
+      expect(parsed[:payments]).to contain_exactly(
         include(
           id: public_donation.id,
           amount_currency: "$10.00",
@@ -65,7 +65,7 @@ RSpec.describe DiscourseKofi::PaymentsController do
       get "/ko-fi/payments.json"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
-      expect(parsed).to contain_exactly(
+      expect(parsed[:payments]).to contain_exactly(
         include(
           id: public_donation.id,
           amount_currency: "$10.00",

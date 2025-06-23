@@ -70,7 +70,7 @@ module ::DiscourseKofi
 
     def type=(value)
       super
-      self.update_payment_type
+      update_payment_type
     end
 
     def update_payment_type
@@ -93,7 +93,7 @@ module ::DiscourseKofi
 
     def account=(value)
       super
-      self.update_user
+      update_user
     end
 
     def update_user

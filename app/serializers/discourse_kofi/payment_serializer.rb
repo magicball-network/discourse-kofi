@@ -4,20 +4,22 @@ require "active_support/json"
 
 module ::DiscourseKofi
   class PaymentSerializer < ApplicationSerializer
+    root "payment"
+
     attributes :id,
                :timestamp,
                :payment_type,
-               :message,
                :amount_currency,
                :username,
-               :user_id
+               :user_id,
+               :message
 
-    def initialize(object, opts = nil)
+    def initialize(object, options = {})
       super
-      if opts.nil? || opts[:visible_details].nil?
+      if @options[:visible_details].nil?
         @visible_details = []
       else
-        @visible_details = opts[:visible_details]
+        @visible_details = @options[:visible_details]
       end
     end
 
@@ -73,7 +75,7 @@ module ::DiscourseKofi
       object.user.id if object.user
     end
 
-    def show_details(field, always_public: false)
+    def show_details(field, always_public = false)
       @visible_details.include?(field.to_s) &&
         (object.is_public || always_public)
     end

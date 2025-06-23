@@ -14,7 +14,7 @@ module ::DiscourseKofi
 
     #TODO: account
 
-    def show_details(field)
+    def show_details(field, always_public = false)
       true
     end
   end

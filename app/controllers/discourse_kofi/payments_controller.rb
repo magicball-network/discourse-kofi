@@ -6,12 +6,12 @@ module ::DiscourseKofi
 
     def index
       if SiteSetting.kofi_dashboard_enabled == "disabled"
-        render json: [], root: false
+        render json: []
         return
       end
       if SiteSetting.kofi_dashboard_enabled == "authenticated_only" &&
            current_user.blank?
-        render json: [], root: false
+        render json: []
         return
       end
 
@@ -31,10 +31,13 @@ module ::DiscourseKofi
         visible_details = SiteSetting.kofi_dashboard_anonymous_view.split("|")
       end
 
-      render_serialized(
-        payments,
-        PaymentSerializer,
-        visible_details: visible_details
+      render_json_dump(
+        payments:
+          serialize_data(
+            payments,
+            PaymentSerializer,
+            visible_details: visible_details
+          )
       )
     end
   end

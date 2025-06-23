@@ -1,14 +1,21 @@
 # frozen_string_literal: true
 
 module DiscourseKofi
-  module Admin
-    class PaymentsController < ::Admin::AdminController
+  module Users
+    class PaymentsController < ::ApplicationController
       requires_plugin DiscourseKofi::PLUGIN_NAME
+
+      requires_login
 
       def index
         # TODO filtering
         payments =
-          Payment.order(timestamp: :desc).offset(params[:offset] || 0).limit(50)
+          Payment
+            .where(user: current_user)
+            .order(timestamp: :desc)
+            .offset(params[:offset] || 0)
+            .limit(50)
+
         render_json_dump(
           payments: serialize_data(payments, UserPaymentSerializer)
         )
@@ -16,15 +23,15 @@ module DiscourseKofi
 
       def show
         params.require(:id)
-        payment = Payment.find(params[:id])
+        payment = Payment.find_by(id: params[:id], user: current_user)
         raise Discourse::NotFound unless payment
 
-        render_serialized(payment, AdminPaymentSerializer)
+        render_serialized(payment, UserPaymentSerializer)
       end
 
       def update
-        params.require(:id, :is_public)
-        payment = Payment.find(params[:id])
+        params.require(:id)
+        payment = Payment.find_by(id: params[:id], user: current_user)
         raise Discourse::NotFound unless payment
 
         # Only allow updating the visibility
