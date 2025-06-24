@@ -8,7 +8,7 @@ Fabricator(:reward, from: "DiscourseKofi::Reward") do
   amount { Faker::Commerce.price }
 end
 
-Fabricator(:reward_subscription, from: "DiscourseKofi::Reward") do
+Fabricator(:subscription_reward, from: "DiscourseKofi::Reward") do
   subscription true
   group
   tier_name { Faker::Subscription.plan }

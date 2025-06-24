@@ -3,23 +3,16 @@
 require "active_support/json"
 
 module ::DiscourseKofi
-  class RewardSerializer < ApplicationSerializer
-    attributes :id,
-               :subscription,
-               :badge_id,
-               :badge_name,
-               :group_id,
-               :group_name,
-               :tier_name,
-               :payment_types,
-               :amount
+  class RewardSerializer < BaseRewardSerializer
+    attributes :payment_types, :amount
 
-    def badge_name
-      object.badge.name if object.badge
-    end
+    has_one :badge, serializer: IdNameSerializer, embed: :objects
 
-    def group_name
-      object.group.name if object.group
+    def initialize(object, options = {})
+      if object.subscription
+        raise ArgumentError.new("Cannot serialize subscription rewards")
+      end
+      super
     end
   end
 end

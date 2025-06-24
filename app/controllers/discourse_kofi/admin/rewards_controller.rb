@@ -12,7 +12,11 @@ module DiscourseKofi
           DiscourseKofi::Reward.where(subscription: true).order(
             "lower(tier_name)"
           )
-        render json: { rewards: rewards, subscriptions: subscriptions }
+        render_json_dump(
+          rewards: serialize_data(rewards, RewardSerializer),
+          subscriptions:
+            serialize_data(subscriptions, SubscriptionRewardSerializer)
+        )
       end
 
       def show
