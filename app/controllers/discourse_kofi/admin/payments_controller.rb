@@ -23,7 +23,7 @@ module DiscourseKofi
       end
 
       def update
-        params.require(:id, :is_public)
+        params.require(:id)
         payment = Payment.find(params[:id])
         raise Discourse::NotFound unless payment
 
