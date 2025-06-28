@@ -8,7 +8,9 @@ module ::DiscourseKofi
   end
 
   class BaseRewardSerializer < ApplicationSerializer
-    attributes :id
+    root "reward"
+
+    attributes :id, :subscription
 
     has_one :group, serializer: IdNameSerializer, embed: :objects
   end

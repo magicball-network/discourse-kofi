@@ -34,12 +34,18 @@ module ::DiscourseKofi
     validate :valid_payment_types, unless: :subscription?
 
     def valid_payment_types
-      payment_types.each do |payment_type|
-        if !Payment::PAYMENT_TYPES.keys.include?(payment_type.to_sym)
-          errors.add(
-            :payment_types,
-            "'#{payment_type}' is not a valid payment type"
-          )
+      if !payment_types.kind_of?(Array)
+        errors.add(:payment_types, "must be an array")
+      elsif payment_types.empty?
+        errors.add(:payment_types, "must contain at least one value")
+      else
+        payment_types.each do |payment_type|
+          if !Payment::PAYMENT_TYPES.keys.include?(payment_type.to_sym)
+            errors.add(
+              :payment_types,
+              "'#{payment_type}' is not a valid payment type"
+            )
+          end
         end
       end
     end

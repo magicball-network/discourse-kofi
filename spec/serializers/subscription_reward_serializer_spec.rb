@@ -11,6 +11,7 @@ RSpec.describe DiscourseKofi::SubscriptionRewardSerializer do
       ).as_json
 
     expect(json[:id]).not_to be_nil
+    expect(json[:subscription]).to be true
     expect(json[:group]).not_to be_nil
     expect(json[:group][:id]).to eq reward.group.id
     expect(json[:group][:name]).to eq reward.group.name

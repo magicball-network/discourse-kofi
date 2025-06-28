@@ -7,6 +7,7 @@ RSpec.describe DiscourseKofi::RewardSerializer do
     json = DiscourseKofi::RewardSerializer.new(reward, { root: false }).as_json
 
     expect(json[:id]).not_to be_nil
+    expect(json[:subscription]).to be false
     expect(json[:badge]).not_to be_nil
     expect(json[:badge][:id]).to eq reward.badge.id
     expect(json[:badge][:name]).to eq reward.badge.name
