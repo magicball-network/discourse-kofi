@@ -15,6 +15,7 @@ module DiscourseKofi
       account = @accounts.find_account(payment.email)
       return if account.nil?
       payment.account = account
+      payment.is_public = false if account.always_hide
       reward_user(payment)
       payment.save
     end
@@ -33,6 +34,7 @@ module DiscourseKofi
       end
 
       payment.account = account
+      payment.is_public = false if account.always_hide
       reward_user(payment)
       payment.save
       :ok

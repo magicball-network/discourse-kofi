@@ -43,6 +43,10 @@ module DiscourseKofi
           render_json_error payment.errors
         end
       end
+
+      def claim
+        # TODO
+      end
     end
   end
 end

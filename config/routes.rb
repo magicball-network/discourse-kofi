@@ -6,12 +6,16 @@ DiscourseKofi::Engine.routes.draw do
   resources :payments, only: %i[index]
 
   namespace :users do
-    resources :payments, only: %i[index show update]
+    resources :payments, only: %i[index show update] do
+      post "claim", on: :collection
+    end
+    resources :accounts, only: %i[index show update]
   end
 
   namespace :admin, constraints: AdminConstraint.new do
     resources :rewards
     resources :payments, only: %i[index show update]
+    resources :accounts
   end
 end
 

@@ -21,4 +21,23 @@ RSpec.describe "users controller authz" do
       expect(response.status).to eq(403)
     end
   end
+
+  describe "accounts" do
+    fab!(:account)
+
+    it "#index" do
+      get "/ko-fi/users/accounts.json"
+      expect(response.status).to eq(403)
+    end
+
+    it "#show" do
+      get "/ko-fi/users/accounts/#{account.id}.json"
+      expect(response.status).to eq(403)
+    end
+
+    it "#update" do
+      patch "/ko-fi/users/accounts/#{account.id}.json"
+      expect(response.status).to eq(403)
+    end
+  end
 end
