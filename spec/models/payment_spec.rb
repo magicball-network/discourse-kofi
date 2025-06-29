@@ -2,28 +2,7 @@
 
 RSpec.describe DiscourseKofi::Payment, type: :model do
   it "parses valid JSON" do
-    json = <<-EOF
-      {
-        "verification_token": "8cd88e1f-cf88-4dcc-9b66-75782b54ca70",
-        "message_id": "bee3f4db-0ac1-442b-9a9b-5387a43a6b48",
-        "timestamp": "2025-05-17T08:08:19Z",
-        "type": "Donation",
-        "is_public": true,
-        "from_name": "Jo Example",
-        "message": "Just a unit test",
-        "amount": "3.00",
-        "url": "https://ko-fi.com/Home/CoffeeShop?txid=00000000-1111-2222-3333-444444444444",
-        "email": "jo.example@kofi.example",
-        "currency": "USD",
-        "is_subscription_payment": true,
-        "is_first_subscription_payment": true,
-        "kofi_transaction_id": "00000000-1111-2222-3333-444444444444",
-        "shop_items": null,
-        "tier_name": "Gold",
-        "shipping": null,
-        "some_unknown_field": null
-      }
-      EOF
+    json = plugin_file_fixture("webhook.json").read
 
     payment = ::DiscourseKofi::Payment.from_json(json)
 

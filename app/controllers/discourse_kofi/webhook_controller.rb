@@ -47,6 +47,12 @@ module ::DiscourseKofi
         )
         return head :ok
       end
+      if Payment.find_by_kofi_transaction_id(payment.kofi_transaction_id)
+        Rails.logger.warn(
+          "Ko-fi transaction #{payment.kofi_transaction_id} already processed."
+        )
+        return head :ok
+      end
 
       payment.save
       # Todo: launch process task
