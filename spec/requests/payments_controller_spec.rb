@@ -19,7 +19,7 @@ RSpec.describe DiscourseKofi::PaymentsController do
 
     it "returns an empty result when disabled" do
       SiteSetting.kofi_dashboard_enabled = "disabled"
-      get "/ko-fi/payments.json"
+      get "/ko-fi/payments"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
       expect(parsed[:payments]).to be_empty
@@ -27,14 +27,14 @@ RSpec.describe DiscourseKofi::PaymentsController do
 
     it "returns an empty result when anonymous" do
       SiteSetting.kofi_dashboard_enabled = "authenticated_only"
-      get "/ko-fi/payments.json"
+      get "/ko-fi/payments"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
       expect(parsed[:payments]).to be_empty
     end
 
     it "returns anonymous data" do
-      get "/ko-fi/payments.json"
+      get "/ko-fi/payments"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
       expect(parsed[:payments]).to contain_exactly(
@@ -62,7 +62,7 @@ RSpec.describe DiscourseKofi::PaymentsController do
     it "returns authenticated data" do
       sign_in(account.user)
 
-      get "/ko-fi/payments.json"
+      get "/ko-fi/payments"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
       expect(parsed[:payments]).to contain_exactly(

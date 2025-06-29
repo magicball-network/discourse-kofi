@@ -23,7 +23,7 @@ RSpec.describe DiscourseKofi::Admin::PaymentsController do
 
   describe "#index" do
     it "returns all payments" do
-      get "/ko-fi/admin/payments.json"
+      get "/ko-fi/admin/payments"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
       expect(parsed[:payments]).to contain_exactly(
@@ -38,7 +38,7 @@ RSpec.describe DiscourseKofi::Admin::PaymentsController do
 
   describe "#update" do
     it "can update the public flag" do
-      patch "/ko-fi/admin/payments/#{public_donation.id}.json",
+      patch "/ko-fi/admin/payments/#{public_donation.id}",
             params: {
               is_public: false
             }
@@ -47,7 +47,7 @@ RSpec.describe DiscourseKofi::Admin::PaymentsController do
       parsed = response.parsed_body
       expect(parsed[:success]).to eq "OK"
 
-      get "/ko-fi/admin/payments/#{public_donation.id}.json"
+      get "/ko-fi/admin/payments/#{public_donation.id}"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
       expect(parsed[:payment][:is_public]).to be false

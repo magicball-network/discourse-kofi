@@ -13,7 +13,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
 
   describe "#index" do
     it "returns all rewards" do
-      get "/ko-fi/admin/rewards.json"
+      get "/ko-fi/admin/rewards"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
       expect(parsed[:rewards]).to contain_exactly(include(id: reward.id))
@@ -25,7 +25,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
 
   describe "#show" do
     it "returns a reward" do
-      get "/ko-fi/admin/rewards/#{reward.id}.json"
+      get "/ko-fi/admin/rewards/#{reward.id}"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
       expect(parsed[:reward][:id]).to eq reward.id
@@ -36,7 +36,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
     end
 
     it "returns a subscription reward" do
-      get "/ko-fi/admin/rewards/#{subscription_reward.id}.json"
+      get "/ko-fi/admin/rewards/#{subscription_reward.id}"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
       expect(parsed[:reward][:id]).to eq subscription_reward.id
@@ -47,7 +47,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
     end
 
     it "cannot find an unknown reward" do
-      get "/ko-fi/admin/rewards/99999999999999999.json"
+      get "/ko-fi/admin/rewards/99999999999999999"
       expect(response.status).to eq(404)
     end
   end
@@ -63,7 +63,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
         .with("kofi_reward_creation", anything)
         .once
 
-      post "/ko-fi/admin/rewards.json",
+      post "/ko-fi/admin/rewards",
            params: {
              subscription: false,
              badge_id: badge.id,
@@ -91,7 +91,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
         .with("kofi_reward_creation", anything)
         .once
 
-      post "/ko-fi/admin/rewards.json",
+      post "/ko-fi/admin/rewards",
            params: {
              subscription: true,
              group_id: group.id,
@@ -113,7 +113,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
         .with("kofi_reward_creation", anything)
         .never
 
-      post "/ko-fi/admin/rewards.json",
+      post "/ko-fi/admin/rewards",
            params: {
              subscription: false,
              group_id: group.id,
@@ -140,7 +140,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
           .with("kofi_reward_change", anything)
           .once
 
-        patch "/ko-fi/admin/rewards/#{reward.id}.json",
+        patch "/ko-fi/admin/rewards/#{reward.id}",
               params: {
                 group_id: nil,
                 amount: 123.45,
@@ -159,7 +159,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
       end
 
       it "cannot change the subscription kind" do
-        patch "/ko-fi/admin/rewards/#{reward.id}.json",
+        patch "/ko-fi/admin/rewards/#{reward.id}",
               params: {
                 subscription: true
               }
@@ -170,7 +170,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
       end
 
       it "cannot make invalid changes" do
-        patch "/ko-fi/admin/rewards/#{reward.id}.json",
+        patch "/ko-fi/admin/rewards/#{reward.id}",
               params: {
                 tier_name: "something"
               }
@@ -179,7 +179,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
       end
 
       it "cannot unpdate an unknown reward" do
-        patch "/ko-fi/admin/rewards/9999999999999.json", params: {}
+        patch "/ko-fi/admin/rewards/9999999999999", params: {}
 
         expect(response.status).to eq(404)
       end
@@ -193,15 +193,15 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
           .with("kofi_reward_deletion", anything)
           .once
 
-        delete "/ko-fi/admin/rewards/#{reward.id}.json"
+        delete "/ko-fi/admin/rewards/#{reward.id}"
         expect(response.status).to eq(200)
 
-        get "/ko-fi/admin/rewards/#{reward.id}.json"
+        get "/ko-fi/admin/rewards/#{reward.id}"
         expect(response.status).to eq(404)
       end
 
       it "cannot delete an unknown rewared" do
-        delete "/ko-fi/admin/rewards/9999999999999.json"
+        delete "/ko-fi/admin/rewards/9999999999999"
         expect(response.status).to eq(404)
       end
     end

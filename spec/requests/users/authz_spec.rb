@@ -7,17 +7,17 @@ RSpec.describe "users controller authz" do
     fab!(:payment)
 
     it "#index" do
-      get "/ko-fi/users/payments.json"
+      get "/ko-fi/users/payments"
       expect(response.status).to eq(403)
     end
 
     it "#show" do
-      get "/ko-fi/users/payments/#{payment.id}.json"
+      get "/ko-fi/users/payments/#{payment.id}"
       expect(response.status).to eq(403)
     end
 
     it "#update" do
-      patch "/ko-fi/users/payments/#{payment.id}.json"
+      patch "/ko-fi/users/payments/#{payment.id}"
       expect(response.status).to eq(403)
     end
   end
@@ -26,17 +26,17 @@ RSpec.describe "users controller authz" do
     fab!(:account)
 
     it "#index" do
-      get "/ko-fi/users/accounts.json"
+      get "/ko-fi/users/accounts"
       expect(response.status).to eq(403)
     end
 
     it "#show" do
-      get "/ko-fi/users/accounts/#{account.id}.json"
+      get "/ko-fi/users/accounts/#{account.id}"
       expect(response.status).to eq(403)
     end
 
     it "#update" do
-      patch "/ko-fi/users/accounts/#{account.id}.json"
+      patch "/ko-fi/users/accounts/#{account.id}"
       expect(response.status).to eq(403)
     end
   end

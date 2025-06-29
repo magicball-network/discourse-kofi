@@ -7,17 +7,17 @@ RSpec.describe "admin controller authz" do
     fab!(:payment)
 
     it "#index" do
-      get "/ko-fi/admin/payments.json"
+      get "/ko-fi/admin/payments"
       expect(response.status).to eq(404)
     end
 
     it "#show" do
-      get "/ko-fi/admin/payments/#{payment.id}.json"
+      get "/ko-fi/admin/payments/#{payment.id}"
       expect(response.status).to eq(404)
     end
 
     it "#update" do
-      patch "/ko-fi/admin/payments/#{payment.id}.json"
+      patch "/ko-fi/admin/payments/#{payment.id}"
       expect(response.status).to eq(404)
     end
   end
@@ -26,22 +26,22 @@ RSpec.describe "admin controller authz" do
     fab!(:reward)
 
     it "#index" do
-      get "/ko-fi/admin/rewards.json"
+      get "/ko-fi/admin/rewards"
       expect(response.status).to eq(404)
     end
 
     it "#show" do
-      get "/ko-fi/admin/rewards/#{reward.id}.json"
+      get "/ko-fi/admin/rewards/#{reward.id}"
       expect(response.status).to eq(404)
     end
 
     it "#update" do
-      post "/ko-fi/admin/rewards/#{reward.id}.json"
+      post "/ko-fi/admin/rewards/#{reward.id}"
       expect(response.status).to eq(404)
     end
 
     it "#destroy" do
-      delete "/ko-fi/admin/rewards/#{reward.id}.json"
+      delete "/ko-fi/admin/rewards/#{reward.id}"
       expect(response.status).to eq(404)
     end
   end
