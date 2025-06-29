@@ -45,7 +45,14 @@ module DiscourseKofi
       end
 
       def claim
-        # TODO
+        params.require(:reference)
+        begin
+          payment =
+            PaymentProcessor.new.claim_payment(current_user, params[:reference])
+          render_serialized(payment, UserPaymentSerializer)
+        rescue PaymentClaimError => error
+          render json: { failed: error.failure }, status: 400
+        end
       end
     end
   end

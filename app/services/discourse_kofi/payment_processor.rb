@@ -3,6 +3,13 @@
 require "uri"
 
 module DiscourseKofi
+  class PaymentClaimError < StandardError
+    attr_reader :failure
+    def initialize(failure)
+      @failure = failure
+    end
+  end
+
   class PaymentProcessor
     def initialize
       @accounts = AccountManagement.new
@@ -22,22 +29,22 @@ module DiscourseKofi
 
     def claim_payment(user, reference)
       txid = extract_txid(reference)
-      return :invalid_reference if txid.nil?
+      raise PaymentClaimError.new(:invalid_reference) if txid.nil?
       payment = Payment.find_by_kofi_transaction_id(txid)
-      return :unknown_reference if payment.nil?
-      return :already_claimed unless payment.account.nil?
+      raise PaymentClaimError.new(:unknown_reference) if payment.nil?
+      raise PaymentClaimError.new(:already_claimed) unless payment.account.nil?
 
       begin
         account = @accounts.get_user_account(user, payment.email)
       rescue StandardError
-        return :account_failure
+        raise PaymentClaimError.new(:account_failure)
       end
 
       payment.account = account
       payment.is_public = false if account.always_hide
       reward_user(payment)
       payment.save
-      :ok
+      payment
     end
 
     def extract_txid(reference)

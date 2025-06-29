@@ -28,7 +28,7 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
     payment.save
 
     result = @proc.claim_payment(user, payment.kofi_transaction_id)
-    expect(result).to be :ok
+    expect(result).to eq payment
 
     updated_payment = DiscourseKofi::Payment.find(payment.id)
     expect(updated_payment.account).not_to be_nil
@@ -39,18 +39,29 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
     payment.account = account
     payment.save
 
-    result = @proc.claim_payment(user, payment.kofi_transaction_id)
-    expect(result).to be :already_claimed
+    expect {
+      @proc.claim_payment(user, payment.kofi_transaction_id)
+    }.to raise_error(
+      an_instance_of(DiscourseKofi::PaymentClaimError).and having_attributes(
+              failure: :already_claimed
+            )
+    )
   end
 
   it "cannot claim an unknown payment" do
-    result = @proc.claim_payment(user, SecureRandom.uuid)
-    expect(result).to be :unknown_reference
+    expect { @proc.claim_payment(user, SecureRandom.uuid) }.to raise_error(
+      an_instance_of(DiscourseKofi::PaymentClaimError).and having_attributes(
+              failure: :unknown_reference
+            )
+    )
   end
 
   it "cannot claim an an invalid reference" do
-    result = @proc.claim_payment(user, "invalid")
-    expect(result).to be :invalid_reference
+    expect { @proc.claim_payment(user, "invalid") }.to raise_error(
+      an_instance_of(DiscourseKofi::PaymentClaimError).and having_attributes(
+              failure: :invalid_reference
+            )
+    )
   end
 
   it "can resolve a payment via an existing account" do
