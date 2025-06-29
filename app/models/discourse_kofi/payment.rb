@@ -126,7 +126,6 @@ end
 #  kofi_transaction_id           :string           not null
 #  tier_name                     :string
 #  payment_type                  :string           not null
-#  rewarded                      :boolean          default(FALSE), not null
 #  account_id                    :bigint
 #  user_id                       :bigint
 #  created_at                    :datetime         not null
@@ -135,7 +134,7 @@ end
 # Indexes
 #
 #  index_discourse_kofi_payments_on_account_id           (account_id)
-#  index_discourse_kofi_payments_on_kofi_transaction_id  (kofi_transaction_id)
+#  index_discourse_kofi_payments_on_kofi_transaction_id  (kofi_transaction_id) UNIQUE
 #  index_discourse_kofi_payments_on_message_id           (message_id) UNIQUE
 #  index_discourse_kofi_payments_on_payment_type         (payment_type)
 #  index_discourse_kofi_payments_on_tier_name            (tier_name) WHERE (tier_name IS NOT NULL)

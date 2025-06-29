@@ -33,7 +33,6 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
     updated_payment = DiscourseKofi::Payment.find(payment.id)
     expect(updated_payment.account).not_to be_nil
     expect(updated_payment.user).to eq user
-    expect(updated_payment.rewarded).to be true
   end
 
   it "cannot claim a claimed payment" do
@@ -65,7 +64,6 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
     updated_payment = ::DiscourseKofi::Payment.find(payment.id)
     expect(updated_payment.account).to eq account
     expect(updated_payment.user).to eq user
-    expect(updated_payment.rewarded).to be true
   end
 
   it "can resolve a payment via a new account" do
@@ -80,7 +78,6 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
     expect(updated_payment.account).not_to be_nil
     expect(updated_payment.account).not_to eq account
     expect(updated_payment.user).to eq user
-    expect(updated_payment.rewarded).to be true
   end
 
   it "awards a user a badge" do
@@ -92,7 +89,6 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
 
     @proc.reward_user(payment)
 
-    expect(payment.rewarded).to be true
     badge = UserBadge.find_by(badge: reward.badge, user: account.user)
     expect(badge).not_to be_nil
   end
@@ -109,7 +105,6 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
 
     @proc.reward_user(payment)
 
-    expect(payment.rewarded).to be true
     group = GroupUser.find_by(group: reward.group, user: account.user)
     expect(group).not_to be_nil
   end

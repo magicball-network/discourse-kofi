@@ -59,6 +59,7 @@ end
 #  id            :bigint           not null, primary key
 #  badge_id      :bigint
 #  group_id      :bigint
+#  enabled       :boolean          default(FALSE), not null
 #  subscription  :boolean          not null
 #  tier_name     :string
 #  payment_types :string           is an Array

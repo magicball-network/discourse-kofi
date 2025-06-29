@@ -13,11 +13,12 @@ end
 #
 # Table name: discourse_kofi_accounts
 #
-#  id         :bigint           not null, primary key
-#  email      :string           not null
-#  user_id    :bigint           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :bigint           not null, primary key
+#  email       :string           not null
+#  user_id     :bigint           not null
+#  always_hide :boolean          default(FALSE), not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 # Indexes
 #

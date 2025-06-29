@@ -10,7 +10,7 @@ module ::DiscourseKofi
   class BaseRewardSerializer < ApplicationSerializer
     root "reward"
 
-    attributes :id, :subscription
+    attributes :id, :enabled, :subscription
 
     has_one :group, serializer: IdNameSerializer, embed: :objects
   end

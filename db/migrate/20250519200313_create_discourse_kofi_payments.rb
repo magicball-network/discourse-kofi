@@ -6,6 +6,7 @@ class CreateDiscourseKofiPayments < ActiveRecord::Migration[7.2]
     create_table :discourse_kofi_accounts do |t|
       t.string :email, null: false, index: { unique: true }
       t.references :user, null: false, index: true, foreign_key: true
+      t.boolean :always_hide, null: false, default: false
       t.timestamps
     end
 
@@ -22,12 +23,11 @@ class CreateDiscourseKofiPayments < ActiveRecord::Migration[7.2]
       t.string :currency, null: false
       t.boolean :is_subscription_payment, null: false
       t.boolean :is_first_subscription_payment, null: false
-      t.string :kofi_transaction_id, null: false, index: true
+      t.string :kofi_transaction_id, null: false, index: { unique: true }
       t.string :tier_name, index: { where: "tier_name is not null" }
 
       # Non-webhook fields
       t.string :payment_type, null: false, index: true
-      t.boolean :rewarded, default: false, null: false
 
       t.references :account, foreign_key: { to_table: :discourse_kofi_accounts }
       t.references :user, index: true, foreign_key: true

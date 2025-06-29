@@ -7,7 +7,9 @@ class CreateDiscourseKofiRewards < ActiveRecord::Migration[7.2]
       t.references :badge, foreign_key: true
       t.references :group, foreign_key: true
 
+      t.boolean :enabled, null: false, default: false
       t.boolean :subscription, null: false
+
       # If subscription
       t.string :tier_name
 

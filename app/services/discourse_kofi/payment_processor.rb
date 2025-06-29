@@ -53,15 +53,14 @@ module DiscourseKofi
     end
 
     def reward_user(payment)
-      return if payment.user.nil? || payment.rewarded
+      return if payment.user.nil?
       process_rewards(payment)
       process_subscription(payment) if payment.type_subscription?
-      payment.rewarded = true
     end
 
     def process_rewards(payment)
       rewards =
-        Reward.where(subscription: false).where(
+        Reward.where(enabled: true, subscription: false).where(
           ":payment_type = ANY(payment_types)",
           payment_type: payment.payment_type
         )
