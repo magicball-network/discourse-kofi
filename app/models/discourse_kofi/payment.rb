@@ -96,6 +96,14 @@ module ::DiscourseKofi
       update_user
     end
 
+    def anonymize
+      self.from_name = ""
+      self.message = ""
+      self.anonymized = true
+    end
+
+    private
+
     def update_user
       if self.account.nil?
         self.user = nil
@@ -130,6 +138,7 @@ end
 #  user_id                       :bigint
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
+#  anonymized                    :boolean          default(FALSE), not null
 #
 # Indexes
 #

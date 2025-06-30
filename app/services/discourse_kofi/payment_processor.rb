@@ -22,7 +22,10 @@ module DiscourseKofi
       account = @accounts.find_account(payment.email)
       return if account.nil?
       payment.account = account
+      # possibly update email if it was matched on email hash
+      payment.email = account.email
       payment.is_public = false if account.always_hide
+      payment.anonymize if account.anonymized
       reward_user(payment)
       payment.save
     end
@@ -62,10 +65,12 @@ module DiscourseKofi
     end
 
     def reward_user(payment)
-      return if payment.user.nil?
+      return if payment.user.nil? || payment.anonymized
       process_rewards(payment)
       process_subscription(payment) if payment.type_subscription?
     end
+
+    private
 
     def process_rewards(payment)
       rewards =

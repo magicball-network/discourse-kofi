@@ -4,7 +4,7 @@ module DiscourseKofi
   class AccountManagement
     def find_account(email)
       return nil unless email
-      account = Account.find_by_email(email)
+      account = lookup_account(email)
       if account.nil?
         user = User.find_by_email(email)
         return nil unless user
@@ -17,7 +17,7 @@ module DiscourseKofi
 
     def get_user_account(user, email)
       return nil unless user && email
-      account = Account.find_by_email(email)
+      account = lookup_account(email)
       if account.nil?
         account = Account.new(email: email, user: user)
         account.save
@@ -26,6 +26,16 @@ module DiscourseKofi
         raise "Account registered to different user" if account.user != user
       end
       account
+    end
+
+    private
+
+    def lookup_account(email)
+      email_hash = Account.hash_email(email)
+      Account
+        .where(email: email)
+        .or(Account.where(email_hash: email_hash))
+        .first
     end
   end
 end
