@@ -68,6 +68,10 @@ module ::DiscourseKofi
       TEST_TRANSACTION_ID == kofi_transaction_id
     end
 
+    def email=(value)
+      super(Email.downcase(value))
+    end
+
     def type=(value)
       super
       update_payment_type
@@ -94,11 +98,18 @@ module ::DiscourseKofi
     def account=(value)
       super
       update_user
+      if !self.account.nil?
+        # possibly updates email if it was matched on email hash
+        self.email = self.account.email
+        self.is_public = false if self.account.always_hide
+        make_anonymous if self.account.anonymized
+      end
     end
 
-    def anonymize
+    def make_anonymous
       self.from_name = ""
       self.message = ""
+      self.is_public = false
       self.anonymized = true
     end
 

@@ -31,6 +31,7 @@ module DiscourseKofi
     private
 
     def lookup_account(email)
+      email = Email.downcase(email)
       email_hash = Account.hash_email(email)
       Account
         .where(email: email)

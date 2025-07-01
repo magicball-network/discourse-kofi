@@ -19,7 +19,11 @@ module ::DiscourseKofi
       Digest::SHA2.hexdigest(Email.downcase(email))
     end
 
-    def anonymize(email)
+    def email=(value)
+      super(Email.downcase(value))
+    end
+
+    def make_anonymous(email)
       # assumes the email is an anonymized one
       self.email = email
       self.anonymized = true

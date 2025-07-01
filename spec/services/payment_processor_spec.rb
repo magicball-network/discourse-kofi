@@ -7,7 +7,7 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
   let(:account) { Fabricate(:account, user: user) }
   let(:payment) { Fabricate(:payment) }
 
-  before(:example) { @proc = DiscourseKofi::PaymentProcessor.new }
+  before { @proc = DiscourseKofi::PaymentProcessor.new }
 
   it "returns a valid transaction id" do
     expect(
@@ -91,6 +91,23 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
     expect(updated_payment.user).to eq user
   end
 
+  it "will anonymize a payment when the account has been anonymized" do
+    payment.email = account.email
+    payment.save
+
+    account.make_anonymous("12345@anonymous.invalid")
+    account.save
+
+    @proc.resolve_payment(payment.id)
+    updated_payment = ::DiscourseKofi::Payment.find(payment.id)
+    expect(updated_payment.account).to eq account
+    expect(updated_payment.anonymized).to be true
+    expect(updated_payment.from_name).to eq ""
+    expect(updated_payment.email).to eq "12345@anonymous.invalid"
+    expect(updated_payment.message).to eq ""
+    expect(updated_payment.is_public).to be false
+  end
+
   it "awards a user a badge" do
     reward = Fabricate(:reward)
 
@@ -118,5 +135,19 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
 
     group = GroupUser.find_by(group: reward.group, user: account.user)
     expect(group).not_to be_nil
+  end
+
+  it "will not reward an anonymized payment" do
+    reward = Fabricate(:reward)
+
+    payment.account = account
+    payment.amount = reward.amount + 1
+    payment.save
+
+    payment.make_anonymous
+    @proc.reward_user(payment)
+
+    badge = UserBadge.find_by(badge: reward.badge, user: account.user)
+    expect(badge).to be_nil
   end
 end

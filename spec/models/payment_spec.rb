@@ -39,12 +39,18 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
     expect(stored_payment.verification_token).to be_nil
   end
 
+  it "email is stored in lower case" do
+    payment = Fabricate(:payment, email: "Mixed-Case-Email@Example.test")
+    expect(payment.email).to eq "mixed-case-email@example.test"
+  end
+
   it "will set the user based on the account" do
     account = Fabricate(:account)
     payment = Fabricate(:payment)
 
     payment.account = account
     expect(payment.user).to be account.user
+    expect(payment.email).to eq account.email
 
     payment.account = nil
     expect(payment.user).to be_nil
@@ -64,5 +70,25 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
     aggregate = ::DiscourseKofi::Payment.user_total(account.user)
     expect(aggregate["donation"]).to eq 15
     expect(aggregate["subscription"]).to eq 35
+  end
+
+  it "can anonymize a payment" do
+    payment = Fabricate(:payment)
+    payment.make_anonymous
+
+    expect(payment.anonymized).to be true
+    expect(payment.from_name).to eq ""
+    expect(payment.message).to eq ""
+    expect(payment.is_public).to be false
+  end
+
+  it "anonymized account makes payment anonymized" do
+    account = Fabricate(:account)
+    account.make_anonymous("12345@anonymous.invalid")
+    payment = Fabricate(:payment)
+    payment.account = account
+
+    expect(payment.anonymized).to be true
+    expect(payment.email).to eq "12345@anonymous.invalid"
   end
 end
