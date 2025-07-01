@@ -74,6 +74,20 @@ if ENV["RUBY_LSP_TEST_RUNNER"] ||
           end
         end
       end
+
+      module RubyLsp
+        class LspReporter
+          def at_coverage_exit
+            coverage_results = gather_coverage_results
+            basepath = URI::Generic.from_path(path: File.expand_path(ENV["RUBY_LSP_RSPEC_RELPATH"])).to_s
+            coverage_results.reject! do |path, data|
+              !path.start_with?(basepath) || path.end_with?(".ruby-lsp/ruby_lsp_rspec_patch.rb")
+            end
+            File.write(File.join(ENV["RUBY_LSP_RSPEC_RELPATH"], ".ruby-lsp", "coverage_result.json"), coverage_results.to_json)
+            internal_shutdown
+          end
+        end
+      end
     RUBY
     File.open(patch_file, "w") { |file| file.write(patch) }
   end
