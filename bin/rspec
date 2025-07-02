@@ -52,8 +52,8 @@ if ENV["RUBY_LSP_TEST_RUNNER"] ||
   puts "Augmented for ruby-lsp. port: #{ENV["RUBY_LSP_REPORTER_PORT"]}"
 
   patch_file = ".ruby-lsp/ruby_lsp_rspec_patch.rb"
-  if !Pathname.new(patch_file).exist?
-    # Patch the ruby-lsp-rspec's reporter to correct test ids
+  if !Pathname.new(patch_file).exist? ||
+       File.mtime(__FILE__) > File.mtime(patch_file)
     patch = <<~'RUBY'
       module RubyLsp
         module RSpec
@@ -63,6 +63,7 @@ if ENV["RUBY_LSP_TEST_RUNNER"] ||
               @relative_path = ENV["RUBY_LSP_RSPEC_RELPATH"]
             end
 
+            # Patch the ruby-lsp-rspec's reporter to correct test ids
             def generate_id(example)
               [example, *example.example_group.parent_groups].reverse.map(&:location).map(&method(:make_relative)).join("::")
             end
@@ -79,6 +80,7 @@ if ENV["RUBY_LSP_TEST_RUNNER"] ||
         class LspReporter
           def at_coverage_exit
             coverage_results = gather_coverage_results
+            # Discard paths not part of this plugin
             basepath = URI::Generic.from_path(path: File.expand_path(ENV["RUBY_LSP_RSPEC_RELPATH"])).to_s
             coverage_results.reject! do |path, data|
               !path.start_with?(basepath) || path.end_with?(".ruby-lsp/ruby_lsp_rspec_patch.rb")
