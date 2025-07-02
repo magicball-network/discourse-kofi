@@ -22,9 +22,11 @@ module DiscourseKofi
       account = @accounts.find_account(payment.email)
       return if account.nil?
 
-      payment.account = account
-      reward_user(payment)
-      payment.save
+      payment.transaction do
+        payment.account = account
+        reward_user(payment)
+        payment.save
+      end
     end
 
     def claim_payment(user, reference)
@@ -34,16 +36,18 @@ module DiscourseKofi
       raise PaymentClaimError.new(:unknown_reference) if payment.nil?
       raise PaymentClaimError.new(:already_claimed) unless payment.account.nil?
 
-      begin
-        account = @accounts.get_user_account(user, payment.email)
-      rescue StandardError
-        raise PaymentClaimError.new(:account_failure)
-      end
+      payment.transaction do
+        begin
+          account = @accounts.get_user_account(user, payment.email)
+        rescue StandardError
+          raise PaymentClaimError.new(:account_failure)
+        end
 
-      payment.account = account
-      payment.is_public = false if account.always_hide
-      reward_user(payment)
-      payment.save
+        payment.account = account
+        payment.is_public = false if account.always_hide
+        reward_user(payment)
+        payment.save
+      end
       payment
     end
 
@@ -63,8 +67,10 @@ module DiscourseKofi
 
     def reward_user(payment)
       return if payment.user.nil? || payment.anonymized
-      process_rewards(payment)
-      process_subscription(payment) if payment.type_subscription?
+      payment.transaction do
+        process_rewards(payment)
+        process_subscription(payment) if payment.type_subscription?
+      end
     end
 
     private

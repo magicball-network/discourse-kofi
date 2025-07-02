@@ -95,6 +95,26 @@ RSpec.describe DiscourseKofi::Reward, type: :model do
        ]
   end
 
+  it "must have at least one payment type" do
+    reward = ::DiscourseKofi::Reward.new
+    reward.badge = badge
+    reward.amount = 123.45
+    reward.payment_types = %i[]
+
+    expect(reward.valid?).to be false
+    expect(reward.errors[:payment_types]).to eq ["can't be blank"]
+  end
+
+  it "donation types is an array" do
+    reward = ::DiscourseKofi::Reward.new
+    reward.badge = badge
+    reward.amount = 123.45
+    reward.payment_types = {}
+
+    expect(reward.valid?).to be false
+    expect(reward.errors[:payment_types]).to eq ["must be an array"]
+  end
+
   it "must have a positive amount" do
     reward = ::DiscourseKofi::Reward.new
     reward.badge = badge
