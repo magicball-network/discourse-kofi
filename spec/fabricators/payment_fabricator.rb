@@ -31,4 +31,5 @@ Fabricator(:subscription, from: "DiscourseKofi::Payment") do
   kofi_transaction_id { SecureRandom.uuid }
   is_subscription_payment true
   is_first_subscription_payment false
+  tier_name { Faker::Subscription.plan }
 end

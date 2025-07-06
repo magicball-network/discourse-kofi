@@ -8,3 +8,13 @@ en:
     kofi_dashboard_total_types: 'Show totals for these payment types'
     kofi_dashboard_anonymous_view: 'What details should be shown for unauthenticated users'
     kofi_dashboard_authenticated_view: 'What should be shown for authenticated users'
+  kofi:
+    payments:
+      import:
+        tx_already_known: 'Transaction already registered'
+        test_transaction: 'Test transaction ID'
+        invalid_datetime: 'Invalid date/time: %{datetime}'
+        invalid_type: 'Invalid transaction type: %{type}'
+        invalid_amount: 'Invalid amount: %{amount}'
+        zero_amount: 'Zero or negative amount'
+        missing_tier_name: 'Subscription payment requires an item value as tier name'

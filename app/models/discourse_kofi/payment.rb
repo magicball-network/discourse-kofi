@@ -44,6 +44,19 @@ module ::DiscourseKofi
     # Verification token is only used when a message is received, not persisted
     attr_accessor :verification_token
 
+    validates :message_id,
+              :timestamp,
+              :type,
+              :currency,
+              :kofi_transaction_id,
+              :payment_type,
+              presence: true
+
+    validates :amount, numericality: { greater_than: 0 }
+    validates :tier_name, presence: true, if: :is_subscription_payment
+    validates :tier_name, absence: true, unless: :is_subscription_payment
+    validate :valid_transaction_id
+
     before_save :update_payment_type, :update_user
 
     def self.from_json(json)
@@ -120,6 +133,13 @@ module ::DiscourseKofi
         self.user = nil
       else
         self.user = self.account.user
+      end
+    end
+
+    def valid_transaction_id
+      if test_transaction?
+        errors.add :transaction_id,
+                   "Cannot store a payment with the test transaction ID"
       end
     end
   end

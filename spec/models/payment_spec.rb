@@ -18,25 +18,27 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
     expect(payment.amount).to eq 3.00
     expect(
       payment.url
-    ).to eq "https://ko-fi.com/Home/CoffeeShop?txid=00000000-1111-2222-3333-444444444444"
+    ).to eq "https://ko-fi.com/Home/CoffeeShop?txid=a8b80b8f-1df0-4a23-ba5f-67582b656bc9"
     expect(payment.email).to eq "jo.example@kofi.example"
     expect(payment.currency).to eq "USD"
     expect(payment.is_subscription_payment).to be true
     expect(payment.is_first_subscription_payment).to be true
     expect(
       payment.kofi_transaction_id
-    ).to eq "00000000-1111-2222-3333-444444444444"
+    ).to eq "a8b80b8f-1df0-4a23-ba5f-67582b656bc9"
     expect(payment.tier_name).to eq "Gold"
 
-    expect(payment.test_transaction?).to be true
+    expect(payment.test_transaction?).to be false
     expect(payment.type_donation?).to be true
 
-    expect(payment.save).to eq true
+    expect(payment.valid?).to be true
+    expect(payment.save).to be true
 
     stored_payment = ::DiscourseKofi::Payment.find(payment.id)
     expect(stored_payment.message_id).to eq payment.message_id
     expect(stored_payment.payment_type).to eq "donation"
     expect(stored_payment.verification_token).to be_nil
+    stored_payment.destroy
   end
 
   it "email is stored in lower case" do
