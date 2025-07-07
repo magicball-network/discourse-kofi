@@ -93,4 +93,14 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
     expect(payment.anonymized).to be true
     expect(payment.email).to eq "12345@anonymous.invalid"
   end
+
+  it "cannot save the test transaction" do
+    payment = Fabricate(:payment)
+    payment.kofi_transaction_id = DiscourseKofi::Payment::TEST_TRANSACTION_ID
+    expect(payment.test_transaction?).to be true
+    expect(payment.valid?).to be false
+    expect(payment.errors).to match_array(
+      [include("test transaction cannot be stored")]
+    )
+  end
 end

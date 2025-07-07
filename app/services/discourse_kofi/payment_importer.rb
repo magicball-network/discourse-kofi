@@ -10,7 +10,7 @@ module DiscourseKofi
       result = { payments: [], invalid_rows: [] }
 
       Payment.transaction do
-        csv = CSV.open(csv_file, headers: true)
+        csv = CSV.open(csv_file, headers: true, skip_blanks: true)
         csv.each do |row|
           if row["TransactionId"].present?
             read_csv(csv.lineno, row, make_private, result)

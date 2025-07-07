@@ -138,8 +138,7 @@ module ::DiscourseKofi
 
     def valid_transaction_id
       if test_transaction?
-        errors.add :transaction_id,
-                   "Cannot store a payment with the test transaction ID"
+        errors.add :kofi_transaction_id, "test transaction cannot be stored"
       end
     end
   end

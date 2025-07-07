@@ -64,6 +64,19 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
     )
   end
 
+  it "cannot claim an payment for an email linked to a different user" do
+    account = Fabricate(:account)
+    payment = Fabricate(:payment, email: account.email)
+
+    expect {
+      @proc.claim_payment(user, payment.kofi_transaction_id)
+    }.to raise_error(
+      an_instance_of(DiscourseKofi::PaymentClaimError).and having_attributes(
+              failure: :account_failure
+            )
+    )
+  end
+
   it "can resolve a payment via an existing account" do
     email = Faker::Internet.email
     payment.email = email
