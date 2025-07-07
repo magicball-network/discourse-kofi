@@ -35,13 +35,19 @@ module ::DiscourseKofi
 
     def valid_payment_types
       if !payment_types.kind_of?(Array)
-        errors.add(:payment_types, "must be an array")
+        errors.add(
+          :payment_types,
+          I18n.t("kofi.rewards.validation.payment_types_array")
+        )
       else
         payment_types.each do |payment_type|
           if !Payment::PAYMENT_TYPES.keys.include?(payment_type.to_sym)
             errors.add(
               :payment_types,
-              "'#{payment_type}' is not a valid payment type"
+              I18n.t(
+                "kofi.rewards.validation.invalid_payment_type",
+                type: payment_type
+              )
             )
           end
         end

@@ -11,6 +11,7 @@ en:
   kofi:
     payments:
       import:
+        invalid_csv: 'Failed loading CSV file at line: ${line_number}'
         tx_already_known: 'Transaction already registered'
         test_transaction: 'Test transaction ID'
         invalid_datetime: 'Invalid date/time: %{datetime}'
@@ -18,3 +19,10 @@ en:
         invalid_amount: 'Invalid amount: %{amount}'
         zero_amount: 'Zero or negative amount'
         missing_tier_name: 'Subscription payment requires an item value as tier name'
+      validation:
+        test_transaction: 'test transaction cannot be stored'
+    rewards:
+      validation:
+        payment_types_array: 'must be an array'
+        invalid_payment_type: "'%{type}' is not a valid payment type"
+
