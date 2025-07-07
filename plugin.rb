@@ -17,5 +17,7 @@ end
 require_relative "lib/discourse_kofi/engine"
 
 after_initialize do
+  require_relative "app/jobs/module"
+
   on(:user_anonymized) { |user| DiscourseKofi::Anonymizer.anonymize_user(user) }
 end

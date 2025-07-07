@@ -18,6 +18,10 @@ module DiscourseKofi
         end
       end
 
+      result[:payments].each do |payment_id|
+        ::Jobs.enqueue(Jobs::ResolvePayment, payment_id: payment_id)
+      end
+
       result
     end
 
