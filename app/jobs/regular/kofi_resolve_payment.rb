@@ -6,7 +6,7 @@ module ::Jobs
 
     def execute(args)
       return unless SiteSetting.kofi_enabled
-      PaymentProcessor.new.resolve_payment(args[:payment_id])
+      DiscourseKofi::PaymentProcessor.new.resolve_payment(args[:payment_id])
     end
   end
 end
