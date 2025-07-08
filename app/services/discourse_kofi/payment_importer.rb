@@ -19,7 +19,7 @@ module DiscourseKofi
       end
 
       result[:payments].each do |payment_id|
-        ::Jobs.enqueue(Jobs::ResolvePayment, payment_id: payment_id)
+        Jobs.enqueue(:kofi_resolve_payment, payment_id: payment_id)
       end
 
       result

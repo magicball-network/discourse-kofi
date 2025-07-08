@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module DiscourseKofi::Jobs
-  class ResolvePayment < ::Jobs::Base
+module ::Jobs
+  class KofiResolvePayment < ::Jobs::Base
     sidekiq_options queue: "low"
 
     def execute(args)
