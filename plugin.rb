@@ -13,11 +13,11 @@ enabled_site_setting :kofi_enabled
 module ::DiscourseKofi
   PLUGIN_NAME = "discourse-kofi"
 end
+module ::DiscourseKofi::Jobs
+end
 
 require_relative "lib/discourse_kofi/engine"
 
 after_initialize do
-  require_relative "app/jobs/regular/kofi_resolve_payment"
-
   on(:user_anonymized) { |user| DiscourseKofi::Anonymizer.anonymize_user(user) }
 end
