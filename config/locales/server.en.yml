@@ -11,7 +11,7 @@ en:
   kofi:
     payments:
       import:
-        invalid_csv: 'Failed loading CSV file at line: ${line_number}'
+        invalid_csv: 'Failed loading CSV file. %{error}'
         tx_already_known: 'Transaction already registered'
         test_transaction: 'Test transaction ID'
         invalid_datetime: 'Invalid date/time: %{datetime}'

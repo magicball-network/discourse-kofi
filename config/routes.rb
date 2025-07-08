@@ -15,8 +15,10 @@ DiscourseKofi::Engine.routes.draw do
 
     namespace :admin, constraints: AdminConstraint.new do
       resources :rewards
-      resources :payments, only: %i[index show update]
-      resources :accounts
+      resources :payments, only: %i[index show update] do
+        post "import", on: :collection
+      end
+      resources :accounts, only: %i[index show destroy]
     end
   end
 end

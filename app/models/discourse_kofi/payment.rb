@@ -77,6 +77,10 @@ module ::DiscourseKofi
         .to_h
     end
 
+    def kofi_transaction_id=(value)
+      super(value&.downcase)
+    end
+
     def test_transaction?
       TEST_TRANSACTION_ID == kofi_transaction_id
     end

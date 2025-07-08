@@ -36,6 +36,22 @@ module DiscourseKofi
           render_json_error payment.errors
         end
       end
+
+      def import
+        csv_file = params.permit(:file).fetch(:file, nil)
+        raise Discourse::InvalidParameters if csv_file.try(:tempfile).nil?
+        make_private =
+          params[:make_private] == "true" || params[:make_private].nil?
+        result =
+          PaymentImporter.import_csv(csv_file, make_private: make_private)
+        render json: result
+      rescue CSV::MalformedCSVError => er
+        render_json_error I18n.t(
+                            "kofi.payments.import.invalid_csv",
+                            error: er.message
+                          ),
+                          status: 400
+      end
     end
   end
 end

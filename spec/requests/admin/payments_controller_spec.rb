@@ -53,4 +53,34 @@ RSpec.describe DiscourseKofi::Admin::PaymentsController do
       expect(parsed[:payment][:is_public]).to be false
     end
   end
+
+  describe "#import" do
+    it "can import a payments CSV file" do
+      file = plugin_file_fixture("import.csv")
+      post "/ko-fi/admin/payments/import",
+           params: {
+             make_private: "true",
+             file: fixture_file_upload(file)
+           }
+
+      expect(response.status).to eq(200)
+      expect(response.parsed_body["invalid_rows"]).to match_array([])
+      payments = response.parsed_body["payments"]
+      expect(payments.length).to eq(4)
+      expect(DiscourseKofi::Payment.find(payments).length).to eq(4)
+    end
+
+    it "fails importing a broken csv file" do
+      file = plugin_file_fixture("invalid.csv")
+      post "/ko-fi/admin/payments/import",
+           params: {
+             file: fixture_file_upload(file)
+           }
+
+      expect(response.status).to eq(400)
+      expect(response.parsed_body["errors"]).to match_array(
+        include(I18n.t("kofi.payments.import.invalid_csv", error: ""))
+      )
+    end
+  end
 end

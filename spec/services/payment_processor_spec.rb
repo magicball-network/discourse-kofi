@@ -18,6 +18,9 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
         "https://ko-fi.com/Home/CoffeeShop?txid=00000000-1111-2222-3333-444444444444"
       )
     ).to eq "00000000-1111-2222-3333-444444444444"
+    expect(
+      @proc.extract_txid("ABCDEF00-1111-2222-3333-444444444444")
+    ).to eq "abcdef00-1111-2222-3333-444444444444"
 
     expect(@proc.extract_txid("https://ko-fi.com/Home/CoffeeShop")).to be_nil
     expect(@proc.extract_txid("X0000000-1111-2222-3333-44444444444X")).to be_nil

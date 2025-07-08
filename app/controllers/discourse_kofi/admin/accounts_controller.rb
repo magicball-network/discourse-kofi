@@ -13,10 +13,6 @@ module DiscourseKofi
         # TODO
       end
 
-      def update
-        # TODO
-      end
-
       def destroy
         # TODO
       end

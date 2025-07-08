@@ -20,6 +20,11 @@ RSpec.describe "admin controller authz" do
       patch "/ko-fi/admin/payments/#{payment.id}"
       expect(response.status).to eq(404)
     end
+
+    it "#import" do
+      post "/ko-fi/admin/import/#{payment.id}"
+      expect(response.status).to eq(404)
+    end
   end
 
   describe "rewards" do

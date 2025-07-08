@@ -58,10 +58,10 @@ module DiscourseKofi
       rescue StandardError
         # ignore
       end
-      if /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.match?(
+      if /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.match?(
            reference
          )
-        reference
+        reference.downcase
       end
     end
 
