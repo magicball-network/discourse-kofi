@@ -18,7 +18,9 @@ DiscourseKofi::Engine.routes.draw do
       resources :payments, only: %i[index show update] do
         post "import", on: :collection
       end
-      resources :accounts, only: %i[index show destroy]
+      resources :accounts, only: %i[index show destroy] do
+        post "anonymize", on: :collection
+      end
     end
   end
 end

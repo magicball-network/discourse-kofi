@@ -11,6 +11,7 @@ module DiscourseKofi
         accounts =
           Account
             .where(user: current_user)
+            .order(created_at: :desc)
             .offset(params[:offset] || 0)
             .limit(50)
 

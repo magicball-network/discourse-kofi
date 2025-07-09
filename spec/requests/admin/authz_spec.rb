@@ -50,4 +50,28 @@ RSpec.describe "admin controller authz" do
       expect(response.status).to eq(404)
     end
   end
+
+  describe "accounts" do
+    fab!(:account)
+
+    it "#index" do
+      get "/ko-fi/admin/accounts"
+      expect(response.status).to eq(404)
+    end
+
+    it "#show" do
+      get "/ko-fi/admin/accounts/#{account.id}"
+      expect(response.status).to eq(404)
+    end
+
+    it "#destroy" do
+      delete "/ko-fi/admin/accounts/#{account.id}"
+      expect(response.status).to eq(404)
+    end
+
+    it "#anonymize" do
+      post "/ko-fi/admin/accounts/anonymize"
+      expect(response.status).to eq(404)
+    end
+  end
 end
