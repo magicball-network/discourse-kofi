@@ -34,11 +34,17 @@ module DiscourseKofi
       end
 
       def destroy
-        # TODO
-      end
-
-      def anonymize
-        # TODO create an anonymized account
+        params.require(:id)
+        account = Account.find(params[:id])
+        raise Discourse::NotFound unless account
+        account.transaction do
+          Payment.where(account: account).update_all(
+            account_id: nil,
+            user_id: nil
+          )
+          account.destroy
+        end
+        render json: success_json
       end
     end
   end

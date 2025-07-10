@@ -83,4 +83,24 @@ RSpec.describe DiscourseKofi::Admin::PaymentsController do
       )
     end
   end
+
+  describe "#anonymize" do
+    it "creates an anonymized account" do
+      payment = Fabricate(:payment)
+
+      post "/ko-fi/admin/payments/anonymize", params: { email: payment.email }
+      expect(response.status).to eq(200)
+
+      reloaded_payment = DiscourseKofi::Payment.find(payment.id)
+      expect(reloaded_payment.account).not_to be_nil
+      expect(reloaded_payment.account.email).not_to eq(payment.email)
+      expect(reloaded_payment.user).to be_nil
+      expect(reloaded_payment.account.anonymized).to be true
+      expect(reloaded_payment.anonymized).to be true
+      expect(reloaded_payment.from_name).to eq ""
+      expect(reloaded_payment.message).to eq ""
+      expect(reloaded_payment.is_public).to be false
+      expect(reloaded_payment.email).not_to eq(payment.email)
+    end
+  end
 end

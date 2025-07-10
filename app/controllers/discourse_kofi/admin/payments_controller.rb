@@ -52,6 +52,12 @@ module DiscourseKofi
                           ),
                           status: 400
       end
+
+      def anonymize
+        params.require(:email)
+        Anonymizer.anonymize_payments(params[:email])
+        render json: success_json
+      end
     end
   end
 end

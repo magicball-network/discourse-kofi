@@ -22,7 +22,12 @@ RSpec.describe "admin controller authz" do
     end
 
     it "#import" do
-      post "/ko-fi/admin/import/#{payment.id}"
+      post "/ko-fi/admin/payments/import"
+      expect(response.status).to eq(404)
+    end
+
+    it "#anonymize" do
+      post "/ko-fi/admin/payments/anonymize"
       expect(response.status).to eq(404)
     end
   end
@@ -66,11 +71,6 @@ RSpec.describe "admin controller authz" do
 
     it "#destroy" do
       delete "/ko-fi/admin/accounts/#{account.id}"
-      expect(response.status).to eq(404)
-    end
-
-    it "#anonymize" do
-      post "/ko-fi/admin/accounts/anonymize"
       expect(response.status).to eq(404)
     end
   end

@@ -73,4 +73,26 @@ RSpec.describe DiscourseKofi::Admin::AccountsController do
       expect(response.status).to eq(404)
     end
   end
+
+  describe "#destroy" do
+    it "unlinks payment on account destroy" do
+      payment = Fabricate(:payment, account: account1)
+      payment.save
+
+      delete "/ko-fi/admin/accounts/#{account1.id}"
+      expect(response.status).to eq(200)
+
+      get "/ko-fi/admin/accounts/#{account1.id}"
+      expect(response.status).to eq(404)
+
+      reloaded_payment = DiscourseKofi::Payment.find(payment.id)
+      expect(reloaded_payment.account).to be_nil
+      expect(reloaded_payment.user).to be_nil
+    end
+
+    it "cannot destroy an unknown account" do
+      delete "/ko-fi/admin/accounts/999999999999"
+      expect(response.status).to eq(404)
+    end
+  end
 end
