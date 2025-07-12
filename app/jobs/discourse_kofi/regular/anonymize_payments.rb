@@ -11,15 +11,17 @@ module ::DiscourseKofi::Jobs
       anonymize_payments(account) if account.present? && account.anonymized
     end
 
+    private
+
     def anonymize_payments(account)
       count = 0
       account.transaction do
         payments = account.payments.where(anonymized: false).limit(BATCH_SIZE)
+        count = payments.count
         payments.each do |payment|
           payment.make_anonymous(account.email)
           payment.save
         end
-        count = payments.count
       end
       if count >= BATCH_SIZE
         ::Jobs.enqueue(AnonymizePayments, account_id: account.id)
