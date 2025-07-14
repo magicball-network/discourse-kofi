@@ -8,9 +8,9 @@ RSpec.describe DiscourseKofi::Admin::AccountsController do
     sign_in(admin)
   end
 
-  fab!(:account1) { Fabricate(:account) }
-  fab!(:account2) { Fabricate(:account, user: account1.user) }
-  fab!(:account3) { Fabricate(:account) }
+  fab!(:account1) { Fabricate(:kofi_account) }
+  fab!(:account2) { Fabricate(:kofi_account, user: account1.user) }
+  fab!(:account3) { Fabricate(:kofi_account) }
 
   describe "#index" do
     it "lists all accounts" do
@@ -76,7 +76,7 @@ RSpec.describe DiscourseKofi::Admin::AccountsController do
 
   describe "#destroy" do
     it "unlinks payment on account destroy" do
-      payment = Fabricate(:payment, account: account1)
+      payment = Fabricate(:kofi_payment, account: account1)
       payment.save
 
       delete "/ko-fi/admin/accounts/#{account1.id}"

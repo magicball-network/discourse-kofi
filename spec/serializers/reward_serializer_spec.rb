@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe DiscourseKofi::RewardSerializer do
-  let(:reward) { Fabricate(:reward, group: Fabricate(:group)) }
+  let(:reward) { Fabricate(:kofi_reward, group: Fabricate(:group)) }
 
   it "contains reward details" do
     json = DiscourseKofi::RewardSerializer.new(reward, { root: false }).as_json
@@ -22,7 +22,7 @@ RSpec.describe DiscourseKofi::RewardSerializer do
   end
 
   it "will not serialize a subscription reward" do
-    reward = Fabricate(:subscription_reward)
+    reward = Fabricate(:kofi_subscription_reward)
     expect {
       DiscourseKofi::RewardSerializer.new(reward).as_json
     }.to raise_error(ArgumentError, "Cannot serialize subscription rewards")

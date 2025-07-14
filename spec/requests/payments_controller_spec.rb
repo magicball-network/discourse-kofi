@@ -7,15 +7,15 @@ RSpec.describe DiscourseKofi::PaymentsController do
   end
 
   describe "#index" do
-    fab!(:account)
-    fab!(:public_donation) { Fabricate(:payment, amount: 10) }
+    fab!(:kofi_account)
+    fab!(:public_donation) { Fabricate(:kofi_payment, amount: 10) }
     fab!(:resolved_donation) do
-      Fabricate(:payment, amount: 15, account: account)
+      Fabricate(:kofi_payment, amount: 15, account: kofi_account)
     end
     fab!(:private_donation) do
-      Fabricate(:payment, amount: 20, is_public: false)
+      Fabricate(:kofi_payment, amount: 20, is_public: false)
     end
-    fab!(:public_subscription) { Fabricate(:subscription, amount: 30) }
+    fab!(:public_subscription) { Fabricate(:kofi_subscription, amount: 30) }
 
     it "returns an empty result when disabled" do
       SiteSetting.kofi_dashboard_enabled = "disabled"
@@ -60,7 +60,7 @@ RSpec.describe DiscourseKofi::PaymentsController do
     end
 
     it "returns authenticated data" do
-      sign_in(account.user)
+      sign_in(kofi_account.user)
 
       get "/ko-fi/payments"
       expect(response.status).to eq(200)

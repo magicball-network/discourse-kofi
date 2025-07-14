@@ -2,7 +2,7 @@
 
 RSpec.describe DiscourseKofi::UserPaymentSerializer do
   let(:payment) do
-    Fabricate(:payment, amount: 100, account: Fabricate(:account))
+    Fabricate(:kofi_payment, amount: 100, account: Fabricate(:kofi_account))
   end
 
   it "includes user specific details" do

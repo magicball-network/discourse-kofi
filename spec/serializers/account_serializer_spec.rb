@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe DiscourseKofi::AccountSerializer do
-  let(:account) { Fabricate(:account) }
+  let(:account) { Fabricate(:kofi_account) }
 
   it "includes default element" do
     json =

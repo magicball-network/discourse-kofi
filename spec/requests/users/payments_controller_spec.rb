@@ -3,21 +3,28 @@
 RSpec.describe DiscourseKofi::Users::PaymentsController do
   before do
     SiteSetting.kofi_enabled = true
-    sign_in(account.user)
+    sign_in(kofi_account.user)
   end
 
-  fab!(:account)
-  fab!(:public_donation) { Fabricate(:payment, amount: 10, account: account) }
+  fab!(:kofi_account)
+  fab!(:public_donation) do
+    Fabricate(:kofi_payment, amount: 10, account: kofi_account)
+  end
   fab!(:private_donation) do
-    Fabricate(:payment, amount: 20, is_public: false, account: account)
+    Fabricate(
+      :kofi_payment,
+      amount: 20,
+      is_public: false,
+      account: kofi_account
+    )
   end
   fab!(:public_subscription) do
-    Fabricate(:subscription, amount: 30, account: account)
+    Fabricate(:kofi_subscription, amount: 30, account: kofi_account)
   end
 
-  fab!(:other_donation1) { Fabricate(:payment) }
-  fab!(:other_account) { Fabricate(:account) }
-  fab!(:other_donation2) { Fabricate(:payment, account: other_account) }
+  fab!(:other_donation1) { Fabricate(:kofi_payment) }
+  fab!(:other_account) { Fabricate(:kofi_account) }
+  fab!(:other_donation2) { Fabricate(:kofi_payment, account: other_account) }
 
   describe "#index" do
     it "returns user all payments" do
@@ -75,7 +82,7 @@ RSpec.describe DiscourseKofi::Users::PaymentsController do
 
       payment = DiscourseKofi::Payment.find(other_donation1.id)
       # A new account was created
-      expect(payment.account.user).to eq account.user
+      expect(payment.account.user).to eq kofi_account.user
       expect(payment.account.email).to eq other_donation1.email
     end
 

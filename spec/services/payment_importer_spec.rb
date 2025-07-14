@@ -53,7 +53,7 @@ RSpec.describe DiscourseKofi::PaymentImporter do
   end
 
   it "excludes invalid rows" do
-    payment = Fabricate(:payment)
+    payment = Fabricate(:kofi_payment)
     payment.kofi_transaction_id = "55555555-1111-2222-3333-444444444444"
     payment.save
 

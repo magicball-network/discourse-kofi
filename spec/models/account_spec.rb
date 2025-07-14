@@ -2,7 +2,7 @@
 
 RSpec.describe DiscourseKofi::Account, type: :model do
   it "computes the email hash once" do
-    account = Fabricate(:account)
+    account = Fabricate(:kofi_account)
     account.save
 
     hash_value = account.email_hash
@@ -13,14 +13,14 @@ RSpec.describe DiscourseKofi::Account, type: :model do
   end
 
   it "is not possible to set the email_hash" do
-    account = Fabricate(:account)
+    account = Fabricate(:kofi_account)
     expect { account.email_hash = "foo " }.to raise_error(
       ActiveRecord::ReadonlyAttributeError
     )
   end
 
   it "anonymized an account" do
-    account = Fabricate(:account)
+    account = Fabricate(:kofi_account)
     account.make_anonymous("12345@anonymous.invalid")
 
     expect(account.anonymized).to be true

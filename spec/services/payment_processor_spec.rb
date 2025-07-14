@@ -4,8 +4,8 @@ require "securerandom"
 
 RSpec.describe DiscourseKofi::PaymentProcessor do
   let(:user) { Fabricate(:user) }
-  let(:account) { Fabricate(:account, user: user) }
-  let(:payment) { Fabricate(:payment) }
+  let(:account) { Fabricate(:kofi_account, user: user) }
+  let(:payment) { Fabricate(:kofi_payment) }
 
   before { @proc = DiscourseKofi::PaymentProcessor.new }
 
@@ -68,8 +68,8 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
   end
 
   it "cannot claim an payment for an email linked to a different user" do
-    account = Fabricate(:account)
-    payment = Fabricate(:payment, email: account.email)
+    account = Fabricate(:kofi_account)
+    payment = Fabricate(:kofi_payment, email: account.email)
 
     expect {
       @proc.claim_payment(user, payment.kofi_transaction_id)
@@ -125,7 +125,7 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
   end
 
   it "awards a user a badge" do
-    reward = Fabricate(:reward)
+    reward = Fabricate(:kofi_reward)
 
     payment.account = account
     payment.amount = reward.amount + 1
@@ -138,7 +138,7 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
   end
 
   it "reward joins a user to a group" do
-    reward = Fabricate(:reward)
+    reward = Fabricate(:kofi_reward)
     reward.badge = nil
     reward.group = Fabricate(:group)
     reward.save
@@ -154,7 +154,7 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
   end
 
   it "will not reward an anonymized payment" do
-    reward = Fabricate(:reward)
+    reward = Fabricate(:kofi_reward)
 
     payment.account = account
     payment.amount = reward.amount + 1

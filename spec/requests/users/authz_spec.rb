@@ -4,7 +4,7 @@ RSpec.describe "users controller authz" do
   before { SiteSetting.kofi_enabled = true }
 
   describe "payments" do
-    fab!(:payment)
+    fab!(:kofi_payment)
 
     it "#index" do
       get "/ko-fi/users/payments"
@@ -12,18 +12,18 @@ RSpec.describe "users controller authz" do
     end
 
     it "#show" do
-      get "/ko-fi/users/payments/#{payment.id}"
+      get "/ko-fi/users/payments/#{kofi_payment.id}"
       expect(response.status).to eq(403)
     end
 
     it "#update" do
-      patch "/ko-fi/users/payments/#{payment.id}"
+      patch "/ko-fi/users/payments/#{kofi_payment.id}"
       expect(response.status).to eq(403)
     end
   end
 
   describe "accounts" do
-    fab!(:account)
+    fab!(:kofi_account)
 
     it "#index" do
       get "/ko-fi/users/accounts"
@@ -31,12 +31,12 @@ RSpec.describe "users controller authz" do
     end
 
     it "#show" do
-      get "/ko-fi/users/accounts/#{account.id}"
+      get "/ko-fi/users/accounts/#{kofi_account.id}"
       expect(response.status).to eq(403)
     end
 
     it "#update" do
-      patch "/ko-fi/users/accounts/#{account.id}"
+      patch "/ko-fi/users/accounts/#{kofi_account.id}"
       expect(response.status).to eq(403)
     end
   end

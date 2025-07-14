@@ -4,10 +4,10 @@ RSpec.describe DiscourseKofi::Jobs::AnonymizePayments do
   before { SiteSetting.kofi_enabled = true }
 
   it "anonymized payments" do
-    account = Fabricate(:account)
-    payment1 = Fabricate(:payment, account: account)
+    account = Fabricate(:kofi_account)
+    payment1 = Fabricate(:kofi_payment, account: account)
     DiscourseKofi::Jobs::AnonymizePayments::BATCH_SIZE.times do
-      Fabricate(:payment, account: account)
+      Fabricate(:kofi_payment, account: account)
     end
 
     account.make_anonymous("1234@anonymous.invalid")
@@ -27,8 +27,8 @@ RSpec.describe DiscourseKofi::Jobs::AnonymizePayments do
   end
 
   it "does not anonymize if the account has not" do
-    account = Fabricate(:account)
-    payment = Fabricate(:payment, account: account)
+    account = Fabricate(:kofi_account)
+    payment = Fabricate(:kofi_payment, account: account)
 
     allow(::Jobs).to receive(:enqueue)
 

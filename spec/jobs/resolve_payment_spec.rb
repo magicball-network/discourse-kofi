@@ -4,8 +4,8 @@ RSpec.describe DiscourseKofi::Jobs::ResolvePayment do
   before { SiteSetting.kofi_enabled = true }
 
   it "resolves a payment" do
-    account = Fabricate(:account)
-    payment = Fabricate(:payment, email: account.email)
+    account = Fabricate(:kofi_account)
+    payment = Fabricate(:kofi_payment, email: account.email)
 
     described_class.new.execute({ payment_id: payment.id })
 

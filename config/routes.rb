@@ -26,4 +26,17 @@ end
 
 Discourse::Application.routes.draw do
   mount ::DiscourseKofi::Engine, at: "/ko-fi"
+
+  get "/admin/plugins/discourse-kofi/rewards" => "admin/plugins#index",
+      :constraints => AdminConstraint.new
+  get "/admin/plugins/discourse-kofi/rewards/:reward_id" =>
+        "admin/plugins#index",
+      :constraints => AdminConstraint.new
+  get "/admin/plugins/discourse-kofi/payments" => "admin/plugins#index",
+      :constraints => AdminConstraint.new
+  get "/admin/plugins/discourse-kofi/accounts" => "admin/plugins#index",
+      :constraints => AdminConstraint.new
+  get "/admin/plugins/discourse-kofi/accounts/:account_id" =>
+        "admin/plugins#index",
+      :constraints => AdminConstraint.new
 end

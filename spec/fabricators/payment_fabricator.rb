@@ -3,7 +3,7 @@
 require "faker"
 require "securerandom"
 
-Fabricator(:payment, from: "DiscourseKofi::Payment") do
+Fabricator(:kofi_payment, from: "DiscourseKofi::Payment") do
   message_id { SecureRandom.uuid }
   timestamp { DateTime.new }
   type "Donation"
@@ -18,7 +18,7 @@ Fabricator(:payment, from: "DiscourseKofi::Payment") do
   is_first_subscription_payment false
 end
 
-Fabricator(:subscription, from: "DiscourseKofi::Payment") do
+Fabricator(:kofi_subscription, from: "DiscourseKofi::Payment") do
   message_id { SecureRandom.uuid }
   timestamp { DateTime.new }
   type "Subscription"

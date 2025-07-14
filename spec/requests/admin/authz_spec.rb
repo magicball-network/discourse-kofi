@@ -4,7 +4,7 @@ RSpec.describe "admin controller authz" do
   before { SiteSetting.kofi_enabled = true }
 
   describe "payments" do
-    fab!(:payment)
+    fab!(:kofi_payment)
 
     it "#index" do
       get "/ko-fi/admin/payments"
@@ -12,12 +12,12 @@ RSpec.describe "admin controller authz" do
     end
 
     it "#show" do
-      get "/ko-fi/admin/payments/#{payment.id}"
+      get "/ko-fi/admin/payments/#{kofi_payment.id}"
       expect(response.status).to eq(404)
     end
 
     it "#update" do
-      patch "/ko-fi/admin/payments/#{payment.id}"
+      patch "/ko-fi/admin/payments/#{kofi_payment.id}"
       expect(response.status).to eq(404)
     end
 
@@ -33,7 +33,7 @@ RSpec.describe "admin controller authz" do
   end
 
   describe "rewards" do
-    fab!(:reward)
+    fab!(:kofi_reward)
 
     it "#index" do
       get "/ko-fi/admin/rewards"
@@ -41,23 +41,23 @@ RSpec.describe "admin controller authz" do
     end
 
     it "#show" do
-      get "/ko-fi/admin/rewards/#{reward.id}"
+      get "/ko-fi/admin/rewards/#{kofi_reward.id}"
       expect(response.status).to eq(404)
     end
 
     it "#update" do
-      post "/ko-fi/admin/rewards/#{reward.id}"
+      post "/ko-fi/admin/rewards/#{kofi_reward.id}"
       expect(response.status).to eq(404)
     end
 
     it "#destroy" do
-      delete "/ko-fi/admin/rewards/#{reward.id}"
+      delete "/ko-fi/admin/rewards/#{kofi_reward.id}"
       expect(response.status).to eq(404)
     end
   end
 
   describe "accounts" do
-    fab!(:account)
+    fab!(:kofi_account)
 
     it "#index" do
       get "/ko-fi/admin/accounts"
@@ -65,12 +65,12 @@ RSpec.describe "admin controller authz" do
     end
 
     it "#show" do
-      get "/ko-fi/admin/accounts/#{account.id}"
+      get "/ko-fi/admin/accounts/#{kofi_account.id}"
       expect(response.status).to eq(404)
     end
 
     it "#destroy" do
-      delete "/ko-fi/admin/accounts/#{account.id}"
+      delete "/ko-fi/admin/accounts/#{kofi_account.id}"
       expect(response.status).to eq(404)
     end
   end

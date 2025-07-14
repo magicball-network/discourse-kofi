@@ -4,8 +4,8 @@ RSpec.describe DiscourseKofi::AccountManagement do
   fab!(:user)
   fab!(:other_user) { Fabricate(:user) }
 
-  fab!(:account) { Fabricate(:account, user: user) }
-  fab!(:other_account) { Fabricate(:account, user: other_user) }
+  fab!(:account) { Fabricate(:kofi_account, user: user) }
+  fab!(:other_account) { Fabricate(:kofi_account, user: other_user) }
 
   before { @accounts = DiscourseKofi::AccountManagement.new }
 
@@ -58,9 +58,9 @@ RSpec.describe DiscourseKofi::AccountManagement do
 
   it "updates existing payments when creating a new account" do
     email = Faker::Internet.email
-    payment1 = Fabricate(:payment, email: email)
-    payment2 = Fabricate(:payment, email: email)
-    resolved_payment = Fabricate(:payment, account: account)
+    payment1 = Fabricate(:kofi_payment, email: email)
+    payment2 = Fabricate(:kofi_payment, email: email)
+    resolved_payment = Fabricate(:kofi_payment, account: account)
     resolved_payment.email = email
     resolved_payment.save
 

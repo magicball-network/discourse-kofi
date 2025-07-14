@@ -8,40 +8,42 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
     sign_in(admin)
   end
 
-  fab!(:reward)
-  fab!(:subscription_reward)
+  fab!(:kofi_reward)
+  fab!(:kofi_subscription_reward)
 
   describe "#index" do
     it "returns all rewards" do
       get "/ko-fi/admin/rewards"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
-      expect(parsed[:rewards]).to contain_exactly(include(id: reward.id))
+      expect(parsed[:rewards]).to contain_exactly(include(id: kofi_reward.id))
       expect(parsed[:subscriptions]).to contain_exactly(
-        include(id: subscription_reward.id)
+        include(id: kofi_subscription_reward.id)
       )
     end
   end
 
   describe "#show" do
     it "returns a reward" do
-      get "/ko-fi/admin/rewards/#{reward.id}"
+      get "/ko-fi/admin/rewards/#{kofi_reward.id}"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
-      expect(parsed[:reward][:id]).to eq reward.id
+      expect(parsed[:reward][:id]).to eq kofi_reward.id
       expect(parsed[:reward][:subscription]).to be false
-      expect(parsed[:reward][:amount]).to eq reward.amount.as_json
+      expect(parsed[:reward][:amount]).to eq kofi_reward.amount.as_json
 
       expect(parsed[:reward][:tier_name]).to be_nil
     end
 
     it "returns a subscription reward" do
-      get "/ko-fi/admin/rewards/#{subscription_reward.id}"
+      get "/ko-fi/admin/rewards/#{kofi_subscription_reward.id}"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
-      expect(parsed[:reward][:id]).to eq subscription_reward.id
+      expect(parsed[:reward][:id]).to eq kofi_subscription_reward.id
       expect(parsed[:reward][:subscription]).to be true
-      expect(parsed[:reward][:tier_name]).to eq subscription_reward.tier_name
+      expect(
+        parsed[:reward][:tier_name]
+      ).to eq kofi_subscription_reward.tier_name
 
       expect(parsed[:reward][:amount]).to be_nil
     end
@@ -140,7 +142,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
           .with("kofi_reward_change", anything)
           .once
 
-        patch "/ko-fi/admin/rewards/#{reward.id}",
+        patch "/ko-fi/admin/rewards/#{kofi_reward.id}",
               params: {
                 group_id: nil,
                 amount: 123.45,
@@ -149,7 +151,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
 
         expect(response.status).to eq(200)
         parsed = response.parsed_body
-        expect(parsed[:reward][:id]).to eq reward.id
+        expect(parsed[:reward][:id]).to eq kofi_reward.id
         expect(parsed[:reward][:subscription]).to be false
         expect(parsed[:reward][:group]).to be_nil
         expect(parsed[:reward][:amount]).to eq "123.45"
@@ -159,7 +161,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
       end
 
       it "cannot change the subscription kind" do
-        patch "/ko-fi/admin/rewards/#{reward.id}",
+        patch "/ko-fi/admin/rewards/#{kofi_reward.id}",
               params: {
                 subscription: true
               }
@@ -170,7 +172,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
       end
 
       it "cannot make invalid changes" do
-        patch "/ko-fi/admin/rewards/#{reward.id}",
+        patch "/ko-fi/admin/rewards/#{kofi_reward.id}",
               params: {
                 tier_name: "something"
               }
@@ -193,10 +195,10 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
           .with("kofi_reward_deletion", anything)
           .once
 
-        delete "/ko-fi/admin/rewards/#{reward.id}"
+        delete "/ko-fi/admin/rewards/#{kofi_reward.id}"
         expect(response.status).to eq(200)
 
-        get "/ko-fi/admin/rewards/#{reward.id}"
+        get "/ko-fi/admin/rewards/#{kofi_reward.id}"
         expect(response.status).to eq(404)
       end
 

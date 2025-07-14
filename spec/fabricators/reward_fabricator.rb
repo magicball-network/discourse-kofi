@@ -2,14 +2,14 @@
 
 require "faker"
 
-Fabricator(:reward, from: "DiscourseKofi::Reward") do
+Fabricator(:kofi_reward, from: "DiscourseKofi::Reward") do
   enabled true
   badge
   payment_types [:donation]
   amount { Faker::Commerce.price }
 end
 
-Fabricator(:subscription_reward, from: "DiscourseKofi::Reward") do
+Fabricator(:kofi_subscription_reward, from: "DiscourseKofi::Reward") do
   enabled true
   subscription true
   group

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe DiscourseKofi::PaymentSerializer do
-  let(:account) { Fabricate(:account) }
-  let(:payment) { Fabricate(:payment, amount: 100) }
+  let(:account) { Fabricate(:kofi_account) }
+  let(:payment) { Fabricate(:kofi_payment, amount: 100) }
 
   it "includes configured elements" do
     json =

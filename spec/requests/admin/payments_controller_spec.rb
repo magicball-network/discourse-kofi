@@ -8,18 +8,25 @@ RSpec.describe DiscourseKofi::Admin::PaymentsController do
     sign_in(admin)
   end
 
-  fab!(:account)
-  fab!(:public_donation) { Fabricate(:payment, amount: 10, account: account) }
+  fab!(:kofi_account)
+  fab!(:public_donation) do
+    Fabricate(:kofi_payment, amount: 10, account: kofi_account)
+  end
   fab!(:private_donation) do
-    Fabricate(:payment, amount: 20, is_public: false, account: account)
+    Fabricate(
+      :kofi_payment,
+      amount: 20,
+      is_public: false,
+      account: kofi_account
+    )
   end
   fab!(:public_subscription) do
-    Fabricate(:subscription, amount: 30, account: account)
+    Fabricate(:kofi_subscription, amount: 30, account: kofi_account)
   end
 
-  fab!(:other_donation1) { Fabricate(:payment) }
-  fab!(:other_account) { Fabricate(:account) }
-  fab!(:other_donation2) { Fabricate(:payment, account: other_account) }
+  fab!(:other_donation1) { Fabricate(:kofi_payment) }
+  fab!(:other_account) { Fabricate(:kofi_account) }
+  fab!(:other_donation2) { Fabricate(:kofi_payment, account: other_account) }
 
   describe "#index" do
     it "returns all payments" do
@@ -27,7 +34,7 @@ RSpec.describe DiscourseKofi::Admin::PaymentsController do
       expect(response.status).to eq(200)
       parsed = response.parsed_body
       expect(parsed[:payments]).to contain_exactly(
-        include(id: public_donation.id),
+        include(id: public_donation.id, anonymized: false),
         include(id: private_donation.id),
         include(id: public_subscription.id),
         include(id: other_donation1.id),
@@ -86,7 +93,7 @@ RSpec.describe DiscourseKofi::Admin::PaymentsController do
 
   describe "#anonymize" do
     it "creates an anonymized account" do
-      payment = Fabricate(:payment)
+      payment = Fabricate(:kofi_payment)
 
       post "/ko-fi/admin/payments/anonymize", params: { email: payment.email }
       expect(response.status).to eq(200)

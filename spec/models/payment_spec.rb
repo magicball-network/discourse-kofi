@@ -42,13 +42,13 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
   end
 
   it "email is stored in lower case" do
-    payment = Fabricate(:payment, email: "Mixed-Case-Email@Example.test")
+    payment = Fabricate(:kofi_payment, email: "Mixed-Case-Email@Example.test")
     expect(payment.email).to eq "mixed-case-email@example.test"
   end
 
   it "will set the user based on the account" do
-    account = Fabricate(:account)
-    payment = Fabricate(:payment)
+    account = Fabricate(:kofi_account)
+    payment = Fabricate(:kofi_payment)
 
     payment.account = account
     expect(payment.user).to be account.user
@@ -59,15 +59,30 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
   end
 
   it "aggregates payments" do
-    account = Fabricate(:account)
+    account = Fabricate(:kofi_account)
     account.save
 
-    Fabricate(:payment, account: account, amount: 5, type: "Donation").save
-    Fabricate(:payment, account: account, amount: 10, type: "Donation").save
-    Fabricate(:payment, account: account, amount: 15, type: "Subscription").save
-    Fabricate(:payment, account: account, amount: 20, type: "Subscription").save
-    Fabricate(:payment, amount: 9000, type: "Donation").save
-    Fabricate(:payment, amount: 9000, type: "Subscription").save
+    Fabricate(:kofi_payment, account: account, amount: 5, type: "Donation").save
+    Fabricate(
+      :kofi_payment,
+      account: account,
+      amount: 10,
+      type: "Donation"
+    ).save
+    Fabricate(
+      :kofi_payment,
+      account: account,
+      amount: 15,
+      type: "Subscription"
+    ).save
+    Fabricate(
+      :kofi_payment,
+      account: account,
+      amount: 20,
+      type: "Subscription"
+    ).save
+    Fabricate(:kofi_payment, amount: 9000, type: "Donation").save
+    Fabricate(:kofi_payment, amount: 9000, type: "Subscription").save
 
     aggregate = ::DiscourseKofi::Payment.user_total(account.user)
     expect(aggregate["donation"]).to eq 15
@@ -75,7 +90,7 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
   end
 
   it "can anonymize a payment" do
-    payment = Fabricate(:payment)
+    payment = Fabricate(:kofi_payment)
     payment.make_anonymous
 
     expect(payment.anonymized).to be true
@@ -85,9 +100,9 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
   end
 
   it "anonymized account makes payment anonymized" do
-    account = Fabricate(:account)
+    account = Fabricate(:kofi_account)
     account.make_anonymous("12345@anonymous.invalid")
-    payment = Fabricate(:payment)
+    payment = Fabricate(:kofi_payment)
     payment.account = account
 
     expect(payment.anonymized).to be true
@@ -95,7 +110,7 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
   end
 
   it "cannot save the test transaction" do
-    payment = Fabricate(:payment)
+    payment = Fabricate(:kofi_payment)
     payment.kofi_transaction_id = DiscourseKofi::Payment::TEST_TRANSACTION_ID
     expect(payment.test_transaction?).to be true
     expect(payment.valid?).to be false
