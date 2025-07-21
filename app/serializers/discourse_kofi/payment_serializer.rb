@@ -11,8 +11,9 @@ module ::DiscourseKofi
                :payment_type,
                :amount_currency,
                :username,
-               :user_id,
                :message
+
+    has_one :user, serializer: BasicUserSerializer, embed: :objects
 
     def initialize(object, options = {})
       super
@@ -66,13 +67,13 @@ module ::DiscourseKofi
 
     def username
       return nil unless show_details(:user)
-      return object.user.name if object.user
+      return object.user.username if object.user
       object.from_name
     end
 
-    def user_id
+    def user
       return nil unless show_details(:user)
-      object.user.id if object.user
+      object.user if object.user
     end
 
     def show_details(field, always_public = false)

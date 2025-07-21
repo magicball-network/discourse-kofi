@@ -76,8 +76,8 @@ RSpec.describe DiscourseKofi::PaymentsController do
           id: resolved_donation.id,
           amount_currency: "$15.00",
           message: resolved_donation.message,
-          username: resolved_donation.user.name,
-          user_id: resolved_donation.user.id
+          username: resolved_donation.user.username,
+          user: include(id: resolved_donation.user.id)
         ),
         include(
           id: private_donation.id,

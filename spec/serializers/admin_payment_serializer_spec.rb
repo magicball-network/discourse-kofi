@@ -16,8 +16,8 @@ RSpec.describe DiscourseKofi::AdminPaymentSerializer do
     expect(json[:payment_type]).to eq "donation"
     expect(json[:amount_currency]).to eq "$100.00"
     expect(json[:message]).to eq payment.message
-    expect(json[:username]).to eq payment.user.name
-    expect(json[:user_id]).to eq payment.user.id
+    expect(json[:username]).to eq payment.user.username
+    expect(json[:user][:id]).to eq payment.user.id
     expect(json[:kofi_transaction_id]).to eq payment.kofi_transaction_id
     expect(json[:is_public]).to eq payment.is_public
     expect(json[:from_name]).to eq payment.from_name

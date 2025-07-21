@@ -55,7 +55,7 @@ module ::DiscourseKofi
       end
 
       payment.save
-      # Todo: launch process task
+      ::Jobs.enqueue(Jobs::ResolvePayment, payment_id: payment.id)
 
       head :ok
     end

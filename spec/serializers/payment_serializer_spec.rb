@@ -50,7 +50,7 @@ RSpec.describe DiscourseKofi::PaymentSerializer do
         { root: false, visible_details: %w[user] }
       ).as_json
 
-    expect(json[:username]).to eq account.user.name
-    expect(json[:user_id]).to eq account.user.id
+    expect(json[:username]).to eq account.user.username
+    expect(json[:user][:id]).to eq account.user.id
   end
 end
