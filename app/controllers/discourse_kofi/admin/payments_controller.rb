@@ -6,9 +6,7 @@ module DiscourseKofi
       requires_plugin DiscourseKofi::PLUGIN_NAME
 
       def index
-        # TODO filtering
-        payments =
-          Payment.order(timestamp: :desc).offset(params[:offset] || 0).limit(50)
+        payments = PaymentQueryBuilder.new(params).find_payments(25)
         render_json_dump(
           payments: serialize_data(payments, AdminPaymentSerializer)
         )
