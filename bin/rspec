@@ -16,6 +16,8 @@
 ## directory.
 
 require "pathname"
+require "tmpdir"
+
 discourse_root = File.expand_path("../../../", Pathname.new(__dir__).realpath)
 plugin_relpath =
   File.join(
