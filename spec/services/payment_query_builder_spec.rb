@@ -44,13 +44,7 @@ RSpec.describe DiscourseKofi::PaymentQueryBuilder do
     payment = DiscourseKofi::PaymentQueryBuilder.new({})
     payments = payment.find_payments()
 
-    expect(payments).to contain_exactly(
-      payment1,
-      payment2,
-      payment3,
-      payment4,
-      payment5
-    )
+    expect(payments).to eq([payment5, payment4, payment3, payment2, payment1])
   end
 
   it "has a pre-filter" do
@@ -58,14 +52,23 @@ RSpec.describe DiscourseKofi::PaymentQueryBuilder do
       DiscourseKofi::PaymentQueryBuilder.new({}, { user: payment1.user })
     payments = payment.find_payments()
 
-    expect(payments).to contain_exactly(payment1, payment2)
+    expect(payments).to eq([payment2, payment1])
+
+    payment =
+      DiscourseKofi::PaymentQueryBuilder.new(
+        { search: payment2.from_name },
+        { user: payment1.user }
+      )
+    payments = payment.find_payments()
+
+    expect(payments).to eq([payment2])
   end
 
   it "does pagination" do
     payment = DiscourseKofi::PaymentQueryBuilder.new({ page: 1 })
     payments = payment.find_payments(3)
 
-    expect(payments).to contain_exactly(payment4, payment5)
+    expect(payments).to eq([payment5, payment4])
   end
 
   it "does ordering" do
