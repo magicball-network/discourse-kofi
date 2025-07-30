@@ -18,22 +18,37 @@
 require "pathname"
 require "tmpdir"
 
-discourse_root = File.expand_path("../../../", Pathname.new(__dir__).realpath)
+# Determine plugin path
+script_path = Pathname.new($0)
+script_path = Pathname.new(File.absolute_path($0)) unless script_path.absolute?
+plugin_path = script_path.parent
+plugin_path = plugin_path.parent if plugin_path.basename.to_s == "bin"
+
+if !File.exist?(File.join(plugin_path, "plugin.rb"))
+  STDERR.puts "Discourse plugin not detected at: #{plugin_path}"
+  exit(1)
+end
+
+discourse_root = File.expand_path("../../", plugin_path)
+
+if !File.exist?(File.join(discourse_root, "config", "discourse_defaults.conf"))
+  STDERR.puts "Discourse root directory not detected at: #{discourse_root}"
+  exit(1)
+end
+
 plugin_relpath =
-  File.join(
-    "./",
-    Pathname.new(__dir__).parent.realpath.relative_path_from(discourse_root),
-    "/"
-  )
+  File.join("./", plugin_path.relative_path_from(discourse_root), "/")
+
 ENV["BUNDLE_GEMFILE"] = File.join(discourse_root, "Gemfile")
 ENV["LOAD_PLUGINS"] = "1"
 ENV["RAILS_ENV"] = "test"
 
-argv = ARGV
+argv = ARGV.dup
 
 if ENV["RUBY_LSP_TEST_RUNNER"] ||
-     (ENV["RUBYOPT"] && ENV["RUBYOPT"].include?("ruby_lsp/test_reporters"))
-  # Executed from ruby-lsp, either directly or from the commandline via ruby-lsp-test-exec
+     (ENV["RUBYOPT"] && ENV["RUBYOPT"].include?("ruby_lsp/test_reporters")) ||
+     (ARGV.include?("RubyLsp::RSpec::RSpecFormatter"))
+  # Executed from ruby-lsp, either directly or from the commandline
 
   unless ENV["RUBY_LSP_REPORTER_PORT"]
     # Set the lsp port as environment variable as it cannot be resolved
@@ -100,13 +115,19 @@ if ENV["RUBY_LSP_TEST_RUNNER"] ||
   ENV["RUBY_LSP_RSPEC_RELPATH"] = plugin_relpath
 else
   # Probably started directly from the commandline, correct file references
-  has_file_refs = false
+  append_current_dir = true
+  # TODO: poor mans guessing of which arguments to expand
+  # e.g. does not expand: -rsome/relative/path; but will expand -r some/relative/path
   argv.map! do |arg|
     next arg if arg.start_with?("-")
-    has_file_refs = true
-    Pathname.new(arg).absolute? ? arg : File.join(plugin_relpath, arg)
+    path = Pathname.new(arg.split(/[:\[]/).first)
+    # If we cannot find the path it might be a commandline argument. But if it is a typo
+    # then rspec will report an incorrect path
+    next arg if !path.exist?
+    append_current_dir = false
+    path.absolute? ? arg : File.join(plugin_relpath, arg)
   end
-  argv << plugin_relpath unless has_file_refs
+  argv << plugin_relpath if append_current_dir
 end
 
 # rubocop:disable Discourse/NoChdir
