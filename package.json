@@ -2,9 +2,10 @@
   "private": true,
   "devDependencies": {
     "@discourse/lint-configs": "^2.22.0",
-    "eslint": "9.27.0",
+    "eslint": "9.29.0",
     "prettier": "3.5.3",
-    "stylelint": "16.19.1"
+    "stylelint": "16.20.0",
+    "ember-template-lint": "^7.9.1"
   },
   "engines": {
     "node": ">= 22",

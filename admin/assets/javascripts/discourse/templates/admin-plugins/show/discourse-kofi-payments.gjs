@@ -41,11 +41,6 @@ export default RouteTemplate(
             <thead class="heading-container">
               <tr>
                 <th class="col heading">
-                  <!--<DButton
-                  class="btn-flat bulk-select"
-                  @icon="list-check"
-                  @action={{@controller.toggleBulkSelect}}
-                />-->
                   <TableHeaderToggle
                     @onToggle={{@controller.updateOrder}}
                     @field="timestamp"
@@ -99,7 +94,7 @@ export default RouteTemplate(
             <tbody>
               {{#each @controller.payments as |payment|}}
                 <tr>
-                  <td><RelativeDate @date="{{payment.timestamp}}" /></td>
+                  <td><RelativeDate @date={{payment.timestamp}} /></td>
                   <td class="kofi_payment_type">{{payment.payment_type}}</td>
                   <td class="kofi_payment_tier">{{payment.tier_name}}</td>
                   <td>{{payment.amount_currency}}</td>

@@ -16,7 +16,6 @@ pre-commit:
       run: bundle exec stree check {staged_files}
     prettier:
       glob: "*.{js,gjs}"
-      include: "app/assets/javascripts|plugins/.+?/assets/javascripts"
       run: pnpm prettier --list-different {staged_files}
     #prettier-scss:
     #  glob: "*.scss"
@@ -24,8 +23,10 @@ pre-commit:
     #  run: pnpm prettier --list-different {staged_files}
     eslint:
       glob: "*.{js,gjs}"
-      include: "app/assets/javascripts|plugins/.+?/assets/javascripts"
       run: pnpm eslint --quiet {staged_files}
+    ember-template-lint:
+      glob: "*.{js,gjs}"
+      run: pnpm ember-template-lint {staged_files}
     yaml-syntax:
       glob: "*.yml"
       run: bundle exec yaml-lint {staged_files}
@@ -36,16 +37,18 @@ pre-commit:
 fix-staged:
   parallel: false
   commands:
-    prettier:
-      glob: "*.{js,gjs}"
-      include: "assets/javascripts"
-      run: pnpm prettier --write {staged_files}
     rubocop:
       glob: "*.rb"
       run: bundle exec rubocop --force-exclusion -A {staged_files}
     syntax_tree:
       glob: "*.rb"
       run: bundle exec stree write Gemfile {staged_files}
+    prettier:
+      glob: "*.{js,gjs}"
+      run: pnpm prettier --write {staged_files}
+    ember-template-lint:
+      glob: "*.{js,gjs}"
+      run: pnpm ember-template-lint --fix {staged_files}
 
 lints:
   parallel: true
@@ -54,13 +57,16 @@ lints:
       glob: "*.rb"
       run: bundle exec rubocop --parallel {all_files}
     prettier:
-      run: pnpm prettier --list-different **/*.js
-    prettier-gjs:
-      run: pnpm prettier --list-different **/*.gjs
+      glob: "*.{js,gjs}"
+      run: pnpm prettier --list-different {all_files}
     #prettier-scss:
     #  run: pnpm prettier --list-different **/*.scss
     eslint:
-      run: pnpm eslint --quiet --ext .js --ext .gjs .
+      glob: "*.{js,gjs}"
+      run: pnpm eslint --quiet {all_files}
+    ember-template-lint:
+      glob: "*.{js,gjs}"
+      run: pnpm ember-template-lint {all_files}
     syntax_tree:
       glob: "*.rb"
       run: bundle exec stree check {all_files}
