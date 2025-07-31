@@ -2,11 +2,7 @@
 
 source "https://rubygems.org"
 
-eval_gemfile(File.expand_path("../../Gemfile", __dir__))
-
 group :development do
-  gemspec name: "discourse", path: "../../", require: false
-  gem "lefthook"
-  gem "ruby-lsp", require: false
-  gem "ruby-lsp-rspec", require: false
+  gem "rubocop-discourse"
+  gem "syntax_tree"
 end
