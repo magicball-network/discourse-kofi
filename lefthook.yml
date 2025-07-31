@@ -14,31 +14,30 @@ pre-commit:
     syntax_tree:
       glob: "*.rb"
       run: bundle exec stree check {staged_files}
-    #prettier:
-    #  glob: "*.js"
-    #  include: "app/assets/javascripts|plugins/.+?/assets/javascripts"
-    #  run: pnpm prettier --list-different {staged_files}
+    prettier:
+      glob: "*.{js,gjs}"
+      include: "app/assets/javascripts|plugins/.+?/assets/javascripts"
+      run: pnpm prettier --list-different {staged_files}
     #prettier-scss:
     #  glob: "*.scss"
     #  include: "app/assets/stylesheets|plugins/.+?/assets/stylesheets"
     #  run: pnpm prettier --list-different {staged_files}
-    #eslint:
-    #  glob: "*.js"
-    #  include: "app/assets/javascripts|plugins/.+?/assets/javascripts"
-    #  run: pnpm eslint --quiet {staged_files}
-    #ember-template-lint:
-    #  glob: "*.hbs"
-    #  include: "app/assets/javascripts|plugins/.+?/assets/javascripts"
-    #  run: pnpm ember-template-lint {staged_files}
+    eslint:
+      glob: "*.{js,gjs}"
+      include: "app/assets/javascripts|plugins/.+?/assets/javascripts"
+      run: pnpm eslint --quiet {staged_files}
     yaml-syntax:
       glob: "*.yml"
       run: bundle exec yaml-lint {staged_files}
+    i18n-lint:
+      glob: "**/{client,server}.en.yml"
+      run: bundle exec ruby ../../script/i18n_lint.rb {staged_files}
 
 fix-staged:
   parallel: false
   commands:
     prettier:
-      glob: "*.js"
+      glob: "*.{js,gjs}"
       include: "assets/javascripts"
       run: pnpm prettier --write {staged_files}
     rubocop:
@@ -54,17 +53,20 @@ lints:
     rubocop:
       glob: "*.rb"
       run: bundle exec rubocop --parallel {all_files}
-    #prettier:
-    #  run: pnpm prettier --list-different **/*.js
+    prettier:
+      run: pnpm prettier --list-different **/*.js
+    prettier-gjs:
+      run: pnpm prettier --list-different **/*.gjs
     #prettier-scss:
     #  run: pnpm prettier --list-different **/*.scss
-    #eslint:
-    #  run: pnpm eslint -f compact --quiet --ext .js .
-    #ember-template-lint:
-    #  run: pnpm ember-template-lint .
+    eslint:
+      run: pnpm eslint --quiet --ext .js --ext .gjs .
     syntax_tree:
       glob: "*.rb"
       run: bundle exec stree check {all_files}
     yaml-syntax:
       glob: "*.yml"
       run: bundle exec yaml-lint {all_files}
+    i18n-lint:
+      glob: "**/{client,server}.en.yml"
+      run: bundle exec ruby ../../script/i18n_lint.rb {all_files}

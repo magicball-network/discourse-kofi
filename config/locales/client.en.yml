@@ -2,10 +2,54 @@ en:
   js:
     discourse_kofi:
       title: "Ko-fi"
+      admin:
+        rewards:
+          title: Rewards
+          description: Rewards and and subscription management.
+        payments:
+          title: Payments
+          description: Received payments via ko-fi.
+        accounts:
+          title: Accounts
+          description: Ko-fi account links to Discourse users.
+        import:
+          title: Import
+          description: Import a Ko-fi CSV transaction export.
+        anonymize:
+          title: Anonymize
+          description: Remove personal identifiable information from payments.
+      payments:
+        search_placeholder: Search payments
+        actions:
+          make_private:
+            title: Make payment private
+            confirmation:
+              This will hide the user information and message of the selected payment in public display. <br /><br />
+              This action cannot be undone.
+            confirm: Hide user payment details
+        timestamp:
+          title: Date
+        type:
+          title: Type
+        tier_name:
+          title: Tier
+        amount:
+          title: Amount
+        from:
+          title: From
+        transaction_id:
+          title: Transaction ID
+        public:
+          title: Public
+          description: User payment details are displayed
+        private:
+          title: Private
+          description: User payment details are hidden
+        anonymized:
+          title: Anonymized
+          description: Payment has been anonymized
   admin_js:
     admin:
       site_settings:
         categories:
           discourse_kofi: "Ko-fi"
-      rewards:
-        title: "Rewards"

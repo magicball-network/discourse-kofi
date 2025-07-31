@@ -10,10 +10,13 @@
 
 enabled_site_setting :kofi_enabled
 
+register_svg_icon "eye-slash"
+
 module ::DiscourseKofi
   PLUGIN_NAME = "discourse-kofi"
-end
-module ::DiscourseKofi::Jobs
+
+  module Jobs
+  end
 end
 
 require_relative "lib/discourse_kofi/engine"

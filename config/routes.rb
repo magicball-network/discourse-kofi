@@ -39,4 +39,8 @@ Discourse::Application.routes.draw do
   get "/admin/plugins/discourse-kofi/accounts/:account_id" =>
         "admin/plugins#index",
       :constraints => AdminConstraint.new
+  get "/admin/plugins/discourse-kofi/import" => "admin/plugins#index",
+      :constraints => AdminConstraint.new
+  get "/admin/plugins/discourse-kofi/anonymize" => "admin/plugins#index",
+      :constraints => AdminConstraint.new
 end
