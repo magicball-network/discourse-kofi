@@ -237,7 +237,6 @@ GEM
       base64
     kgio (2.11.4)
     language_server-protocol (3.17.0.5)
-    lefthook (1.12.2)
     libv8-node (22.7.0.4)
     libv8-node (22.7.0.4-aarch64-linux)
     libv8-node (22.7.0.4-arm64-darwin)
@@ -738,7 +737,6 @@ DEPENDENCIES
   iso8601
   json
   json_schemer
-  lefthook
   listen
   lograge
   logstash-event
