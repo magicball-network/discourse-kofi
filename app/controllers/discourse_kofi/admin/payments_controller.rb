@@ -15,15 +15,15 @@ module DiscourseKofi
       def show
         params.require(:id)
         payment = Payment.find(params[:id])
-        raise Discourse::NotFound unless payment
 
         render_serialized(payment, AdminPaymentSerializer)
+      rescue ActiveRecord::RecordNotFound
+        raise Discourse::NotFound
       end
 
       def update
         params.require(:id)
         payment = Payment.find(params[:id])
-        raise Discourse::NotFound unless payment
 
         # Only allow updating the visibility
         payment.is_public = params[:is_public] if params[:is_public].present?
@@ -33,6 +33,8 @@ module DiscourseKofi
         else
           render_json_error payment.errors
         end
+      rescue ActiveRecord::RecordNotFound
+        raise Discourse::NotFound
       end
 
       def import

@@ -28,15 +28,15 @@ module DiscourseKofi
       def show
         params.require(:id)
         account = Account.find(params[:id])
-        raise Discourse::NotFound unless account
 
         render_serialized(account, AdminAccountSerializer)
+      rescue ActiveRecord::RecordNotFound
+        raise Discourse::NotFound
       end
 
       def destroy
         params.require(:id)
         account = Account.find(params[:id])
-        raise Discourse::NotFound unless account
         account.transaction do
           Payment.where(account: account).update_all(
             account_id: nil,
@@ -45,6 +45,8 @@ module DiscourseKofi
           account.destroy
         end
         render json: success_json
+      rescue ActiveRecord::RecordNotFound
+        raise Discourse::NotFound
       end
     end
   end

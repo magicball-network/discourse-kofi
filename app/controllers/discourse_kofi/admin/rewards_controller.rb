@@ -75,9 +75,9 @@ module DiscourseKofi
 
       def find_reward
         params.require(:id)
-        reward = Reward.find(params[:id])
-        raise Discourse::NotFound unless reward
-        reward
+        Reward.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        raise Discourse::NotFound
       end
 
       def update_reward_from_params(reward, opts = {})
