@@ -7,7 +7,6 @@ import { i18n } from "discourse-i18n";
 import AdminPayment from "../models/admin-payment";
 
 export default class AdminPluginsShowDiscourseKofiPaymentsController extends Controller {
-  @service modal;
   @service dialog;
 
   search = "";
