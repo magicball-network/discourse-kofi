@@ -17,9 +17,9 @@ export default {
           description: "discourse_kofi.admin.payments.description",
         },
         {
-          label: "discourse_kofi.admin.rewards.title",
+          label: "discourse_kofi.admin.rewards-management.title",
           route: "adminPlugins.show.discourse-kofi-rewards",
-          description: "discourse_kofi.admin.rewards.description",
+          description: "discourse_kofi.admin.rewards-management.description",
         },
         {
           label: "discourse_kofi.admin.accounts.title",

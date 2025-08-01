@@ -4,7 +4,7 @@ import { service } from "@ember/service";
 import { TrackedArray } from "@ember-compat/tracked-built-ins";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import { i18n } from "discourse-i18n";
-import AdminPayment from "../models/admin-payment";
+import AdminPayment from "../../../models/admin-payment";
 
 export default class AdminPluginsShowDiscourseKofiPaymentsController extends Controller {
   @service dialog;
