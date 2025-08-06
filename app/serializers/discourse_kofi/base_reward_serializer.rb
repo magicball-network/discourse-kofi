@@ -3,10 +3,6 @@
 require "active_support/json"
 
 module ::DiscourseKofi
-  class IdNameSerializer < ApplicationSerializer
-    attributes :id, :name
-  end
-
   class BaseRewardSerializer < ApplicationSerializer
     root "reward"
 

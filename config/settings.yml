@@ -5,6 +5,7 @@ discourse_kofi:
   kofi_webhook_token:
     default: ''
     client: false
+    secret: true
   kofi_account:
     default: ''
     client: true

@@ -11,5 +11,6 @@ export default {
     this.route("discourse-kofi-accounts", { path: "accounts" });
     this.route("discourse-kofi-import", { path: "import" });
     this.route("discourse-kofi-anonymize", { path: "anonymize" });
+    this.route("discourse-kofi-status", { path: "status" });
   },
 };

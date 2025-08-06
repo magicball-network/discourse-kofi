@@ -3,9 +3,18 @@ en:
     discourse_kofi:
       title: "Ko-fi"
       admin:
-        rewards:
+        rewards-management:
           title: Rewards
           description: Rewards and and subscription management.
+        rewards:
+          title: Rewards
+          description: One-off rewards received for the current total of payments made.
+        subscriptions:
+          title: Subscriptions
+          description: |
+            Rewards received based on ko-fi subscription tiers. 
+            Subscriptions are re-evaluated daily. If the last subscription payment was more than a month ago
+            the user will be removed from the associated group.
         payments:
           title: Payments
           description: Received payments via ko-fi.
@@ -41,13 +50,103 @@ en:
           title: Transaction ID
         public:
           title: Public
-          description: User payment details are displayed
+          description: User payment details are displayed.
         private:
           title: Private
-          description: User payment details are hidden
+          description: User payment details are hidden.
         anonymized:
           title: Anonymized
-          description: Payment has been anonymized
+          description: Payment has been anonymized.
+      rewards:
+        actions:
+          create:
+            title: New reward
+            description:
+              Create a new one-off reward for paying a given total sum of money.
+              It must grant either a badge, a group membership, or both.
+            saved: Reward created.
+          edit:
+            label: Edit
+            title: Edit reward
+            description: ""
+            saved: Reward updated.
+          reprocess:
+            title: Reprocess
+            description: Reprocess payments by users and award this reward.
+            confirmation: |
+              This will reprocess the past payments made by users and check if this rewards applies to them.<br />
+              Processing can take quite some time to complete depending on the number of users who have made payments in the past.<br /><br />
+              Reprocessing will not revoke awards based on the previous configuration of this award.<br /><br />
+              Are you sure you want to reprocess the payments and award users for paying at least <em class="text-successful">%{amount}</em>?
+            confirm: Reprocess payments
+            started: Started reprocessing payments...
+          delete:
+            title: Delete reward
+            confirmation: |
+              Permanently delete reward #%{id}? Awarded after paying <em class="text-successful">%{amount}</em>? <br /><br />
+              This does not revoke the previously awarded badges or group memberships.
+            confirm: Delete reward
+            deleted: Reward deleted.
+        errors:
+          payment_types:
+            missing: Need to configure at least one payment type.
+          badge_or_group:
+            missing: Need to configure at least a badge or a group membership.
+        id:
+          title: ID
+        enabled:
+          title: Enabled
+        badge:
+          title: Badge
+          description: Award the user with this badge.
+        group:
+          title: Group membership
+          description: Add the user to this group.
+        amount:
+          title: Minimum amount
+          description: Reward is granted when the total amount of payments by this user is greater or equal to this value.
+        payment_types:
+          title: Payment types
+          description: Payment types to include when computing the total payment amount.
+      subscriptions:
+        actions:
+          create:
+            title: New subscription
+            description:
+              Create a new subscription, which is a monthly payment of a specified tier.
+            saved: Subscription created.
+          edit:
+            label: Edit
+            title: Edit subscription
+            description: ""
+            saved: Subscription updated.
+          reprocess:
+            title: Reprocess
+            description: Reprocess payments by users for this subscription
+            confirmation: |
+              This will reprocess all active subscriptions, and related subscription payments of the users.<br />
+              Users will be added and remove from the group depending on the changes made to this configuration.<br /><br />
+              Are you sure you want to reprocess subscript #${id}?
+            confirm: Reprocess payments
+            started: Started reprocessing payments...
+          delete:
+            title: Delete subscription
+            confirmation: |
+              Permanently delete reward #%{id}? Associated with the ko-fi tier <em class="text-successful">%{tier_name}</em>? <br /><br />
+              Deleting this subscription will also remove users from the associated group, 
+              unless they have an other subscription that grants them access to the group <em>%{group.name}</em>.
+            confirm: Delete subscription
+            deleted: Subscription deleted.
+        id:
+          title: ID
+        enabled:
+          title: Enabled
+        group:
+          title: Group membership
+          description: Add the user to this group. If the subscription is expired the user will be removed from the group.
+        tier_name:
+          title: Ko-fi tier name
+          description: This value must match the name of the tier in Ko-fi, otherwise the subscription will not match.
   admin_js:
     admin:
       site_settings:
