@@ -5,7 +5,7 @@ require "securerandom"
 
 Fabricator(:kofi_payment, from: "DiscourseKofi::Payment") do
   message_id { SecureRandom.uuid }
-  timestamp { DateTime.new }
+  timestamp { DateTime.now }
   type "Donation"
   is_public true
   from_name { Faker::Name.name }
@@ -20,7 +20,7 @@ end
 
 Fabricator(:kofi_subscription, from: "DiscourseKofi::Payment") do
   message_id { SecureRandom.uuid }
-  timestamp { DateTime.new }
+  timestamp { DateTime.now }
   type "Subscription"
   is_public true
   from_name { Faker::Name.name }
