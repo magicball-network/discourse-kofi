@@ -26,7 +26,7 @@ RSpec.describe DiscourseKofi::Jobs::AnonymizePayments do
     )
   end
 
-  it "does not anonymize if the account has not" do
+  it "does not anonymize if the account has not been" do
     account = Fabricate(:kofi_account)
     payment = Fabricate(:kofi_payment, account: account)
 

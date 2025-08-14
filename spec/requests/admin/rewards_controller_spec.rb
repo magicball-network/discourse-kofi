@@ -180,7 +180,7 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
         expect(response.status).to eq(422)
       end
 
-      it "cannot unpdate an unknown reward" do
+      it "cannot update an unknown reward" do
         patch "/ko-fi/admin/rewards/9999999999999", params: {}
 
         expect(response.status).to eq(404)

@@ -51,9 +51,15 @@ module DiscourseKofi
         end
       end
 
+      def reprocess
+        RewardProcessor.reprocess(find_reward)
+        render json: success_json
+      end
+
       def destroy
         Reward.transaction do
           reward = find_reward
+          # TODO delete subscriptions
           StaffActionLogger.new(current_user).log_custom(
             "kofi_reward_deletion",
             log_details(reward)

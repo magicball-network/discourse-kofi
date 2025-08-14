@@ -14,7 +14,9 @@ DiscourseKofi::Engine.routes.draw do
     end
 
     namespace :admin, constraints: AdminConstraint.new do
-      resources :rewards
+      resources :rewards do
+        post "reprocess", on: :member
+      end
       resources :payments, only: %i[index show update] do
         post "import", on: :collection
         post "anonymize", on: :collection
@@ -42,5 +44,7 @@ Discourse::Application.routes.draw do
   get "/admin/plugins/discourse-kofi/import" => "admin/plugins#index",
       :constraints => AdminConstraint.new
   get "/admin/plugins/discourse-kofi/anonymize" => "admin/plugins#index",
+      :constraints => AdminConstraint.new
+  get "/admin/plugins/discourse-kofi/status" => "admin/plugins#index",
       :constraints => AdminConstraint.new
 end
