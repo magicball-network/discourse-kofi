@@ -6,7 +6,7 @@ module ::DiscourseKofi::Jobs
 
     def execute(args)
       return unless SiteSetting.kofi_enabled
-      payment = Payment.find_by(id: args[:payment_id])
+      payment = DiscourseKofi::Payment.find_by(id: args[:payment_id])
       return unless payment
       DiscourseKofi::PaymentProcessor.new.reward_user(payment)
     end
