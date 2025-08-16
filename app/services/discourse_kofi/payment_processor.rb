@@ -65,22 +65,26 @@ module DiscourseKofi
       end
     end
 
-    def reward_user(payment)
+    def reward_user(payment, only_reward = nil)
       return if payment.user.nil? || payment.anonymized
       payment.transaction do
-        process_rewards(payment)
-        process_subscription(payment) if payment.type_subscription?
+        process_rewards(payment, only_reward)
+        process_subscription(payment, only_reward) if payment.type_subscription?
       end
     end
 
     private
 
-    def process_rewards(payment)
-      rewards =
-        Reward.where(enabled: true, subscription: false).where(
-          ":payment_type = ANY(payment_types)",
-          payment_type: payment.payment_type
-        )
+    def process_rewards(payment, only_reward = nil)
+      if only_reward.present?
+        rewards = [only_reward]
+      else
+        rewards =
+          Reward.where(enabled: true, subscription: false).where(
+            ":payment_type = ANY(payment_types)",
+            payment_type: payment.payment_type
+          )
+      end
       return if rewards.empty?
 
       user_totals = Payment.user_total(payment.user)
@@ -105,9 +109,31 @@ module DiscourseKofi
       end
     end
 
-    def process_subscription(payment)
-      # TODO
-      # find associated group if any
+    def process_subscription(payment, only_reward = nil)
+      if only_reward.present?
+        if !only_reward.subscription ||
+             payment.tier_name.casecmp(only_reward.tier_name).zero?
+          return
+        end
+        rewards = [only_reward]
+      else
+        rewards =
+          Reward.where(enabled: true, subscription: true).where(
+            "lower(tier_name) = ?",
+            payment.tier_name.downcase
+          )
+      end
+      return if rewards.empty?
+
+      subscriptions =
+        Subscription.where(user: payment.user).filter { |s| s.expired? }
+      #TODO find active sub
+      #add new if no active
+      #reward add/remove from group
+      #check expiration
+      #
+      # just to silence rubocop:
+      subscriptions.empty?
     end
   end
 end

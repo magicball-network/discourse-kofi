@@ -22,12 +22,17 @@ module DiscourseKofi
           .group("user_id")
           .select("max(id) as id")
       payments.each do |payment|
-        ::Jobs.enqueue(Jobs::RewardUser, payment_id: payment.id)
+        ::Jobs.enqueue(
+          Jobs::RewardUser,
+          payment_id: payment.id,
+          reward_id: reward.id
+        )
       end
     end
 
     def self.reprocess_subscription(reward)
       #TODO
+      # find relevant payments for reward tier past and previous?
     end
   end
 end

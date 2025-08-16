@@ -12,7 +12,7 @@ en:
         subscriptions:
           title: Subscriptions
           description: |
-            Rewards received based on ko-fi subscription tiers. 
+            Rewards received based on ko-fi membership tiers. 
             Subscriptions are re-evaluated daily. If the last subscription payment was more than a month ago
             the user will be removed from the associated group.
         payments:
@@ -75,8 +75,11 @@ en:
             description: Reprocess payments by users and award this reward.
             confirmation: |
               This will reprocess the past payments made by users and check if this rewards applies to them.<br />
-              Processing can take quite some time to complete depending on the number of users who have made payments in the past.<br /><br />
-              Reprocessing will not revoke awards based on the previous configuration of this award.<br /><br />
+              Processing can take quite some time to complete depending on the number of users who have made payments in the past.
+              <br /><br />
+              Reprocessing will not revoke awards based on the previous configuration of this award.
+              
+              <br /><br />
               Are you sure you want to reprocess the payments and award users for paying at least <em class="text-successful">%{amount}</em>?
             confirm: Reprocess payments
             started: Started reprocessing payments...
@@ -146,7 +149,7 @@ en:
           description: Add the user to this group. If the subscription is expired the user will be removed from the group.
         tier_name:
           title: Ko-fi tier name
-          description: This value must match the name of the tier in Ko-fi, otherwise the subscription will not match.
+          description: This value must match the name of the membership tier in Ko-fi, otherwise the subscription will not match.
   admin_js:
     admin:
       site_settings:

@@ -153,6 +153,25 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
     expect(group).not_to be_nil
   end
 
+  it "will only reward a single reward" do
+    reward = Fabricate(:kofi_reward, amount: 10)
+    reward.save
+    reward2 = Fabricate(:kofi_reward, amount: 10)
+    reward2.save
+
+    payment.account = account
+    payment.amount = 100
+    payment.save
+
+    @proc.reward_user(payment, reward)
+
+    badge = UserBadge.find_by(badge: reward.badge, user: account.user)
+    expect(badge).not_to be_nil
+
+    badge = UserBadge.find_by(badge: reward2.badge, user: account.user)
+    expect(badge).to be_nil
+  end
+
   it "will not reward an anonymized payment" do
     reward = Fabricate(:kofi_reward)
 
