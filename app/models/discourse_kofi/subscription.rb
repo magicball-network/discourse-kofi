@@ -42,10 +42,11 @@ end
 #
 # Indexes
 #
-#  index_discourse_kofi_subscriptions_on_group_id         (group_id)
-#  index_discourse_kofi_subscriptions_on_last_payment_id  (last_payment_id)
-#  index_discourse_kofi_subscriptions_on_reward_id        (reward_id)
-#  index_discourse_kofi_subscriptions_on_user_id          (user_id)
+#  index_discourse_kofi_subscriptions_on_group_id               (group_id)
+#  index_discourse_kofi_subscriptions_on_last_payment_id        (last_payment_id)
+#  index_discourse_kofi_subscriptions_on_reward_id              (reward_id)
+#  index_discourse_kofi_subscriptions_on_user_id                (user_id)
+#  index_discourse_kofi_subscriptions_on_user_id_and_reward_id  (user_id,reward_id) UNIQUE
 #
 # Foreign Keys
 #

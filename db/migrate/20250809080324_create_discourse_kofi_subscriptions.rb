@@ -24,5 +24,11 @@ class CreateDiscourseKofiSubscriptions < ActiveRecord::Migration[7.2]
 
       t.timestamps
     end
+
+    add_index(
+      :discourse_kofi_subscriptions,
+      %i[user_id reward_id],
+      unique: true
+    )
   end
 end
