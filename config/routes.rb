@@ -22,6 +22,8 @@ DiscourseKofi::Engine.routes.draw do
         post "anonymize", on: :collection
       end
       resources :accounts, only: %i[index show destroy]
+
+      get "status" => "status#index"
     end
   end
 end

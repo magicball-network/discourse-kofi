@@ -29,7 +29,15 @@ module ::DiscourseKofi
         Rails.logger.warn(
           "Invalid Ko-fi webhook token received in request: #{payment.verification_token}."
         )
-        # TODO: report somewhere?
+        WebhookStatus.update(
+          error:
+            I18n.t(
+              "kofi.webhook.status.invalid_token",
+              msg_id: payment.message_id,
+              tx_id: payment.kofi_transaction_id,
+              verification_token: payment.verification_token
+            )
+        )
         return head :forbidden
       end
 
@@ -37,7 +45,14 @@ module ::DiscourseKofi
         Rails.logger.info(
           "Received Ko-fi test transaction, message id: #{payment.message_id}."
         )
-        # TODO: report somewhere?
+        WebhookStatus.update(
+          success:
+            I18n.t(
+              "kofi.webhook.status.test_transaction",
+              msg_id: payment.message_id,
+              tx_id: payment.kofi_transaction_id
+            )
+        )
         return head :ok
       end
 
@@ -45,14 +60,39 @@ module ::DiscourseKofi
         Rails.logger.warn(
           "Ko-fi message #{payment.message_id} already processed."
         )
+        WebhookStatus.update(
+          success:
+            I18n.t(
+              "kofi.webhook.status.duplicate_message",
+              msg_id: payment.message_id,
+              tx_id: payment.kofi_transaction_id
+            )
+        )
         return head :ok
       end
       if Payment.find_by_kofi_transaction_id(payment.kofi_transaction_id)
         Rails.logger.warn(
           "Ko-fi transaction #{payment.kofi_transaction_id} already processed."
         )
+        WebhookStatus.update(
+          success:
+            I18n.t(
+              "kofi.webhook.status.known_transaction",
+              msg_id: payment.message_id,
+              tx_id: payment.kofi_transaction_id
+            )
+        )
         return head :ok
       end
+
+      WebhookStatus.update(
+        success:
+          I18n.t(
+            "kofi.webhook.status.message_received",
+            msg_id: payment.message_id,
+            tx_id: payment.kofi_transaction_id
+          )
+      )
 
       payment.save
       ::Jobs.enqueue(Jobs::ResolvePayment, payment_id: payment.id)

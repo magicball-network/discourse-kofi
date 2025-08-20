@@ -10,6 +10,13 @@ en:
     kofi_dashboard_anonymous_view: 'What details should be shown for unauthenticated users'
     kofi_dashboard_authenticated_view: 'What should be shown for authenticated users'
   kofi:
+    webhook:
+      status:
+        invalid_token: 'Received message %{msg_id} with invalid webhook token: %{verification_token}.'
+        test_transaction: 'Received a test transaction, message %{msg_id}.'
+        duplicate_message: 'Received message %{msg_id} for transaction: %{tx_id}. Duplicate message.'
+        known_transaction: 'Received message %{msg_id} for transaction: %{tx_id}. Known transaction.'
+        message_received: 'Received message %{msg_id} for transaction: %{tx_id}.'
     payments:
       import:
         invalid_csv: 'Failed loading CSV file. %{error}'

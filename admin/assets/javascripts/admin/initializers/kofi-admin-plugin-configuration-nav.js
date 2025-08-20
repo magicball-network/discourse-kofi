@@ -12,6 +12,11 @@ export default {
     withPluginApi((api) => {
       api.addAdminPluginConfigurationNav("discourse-kofi", [
         {
+          label: "discourse_kofi.admin.status.title",
+          route: "adminPlugins.show.discourse-kofi-status",
+          description: "discourse_kofi.admin.status.description",
+        },
+        {
           label: "discourse_kofi.admin.payments.title",
           route: "adminPlugins.show.discourse-kofi-payments",
           description: "discourse_kofi.admin.payments.description",

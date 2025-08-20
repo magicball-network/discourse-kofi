@@ -74,4 +74,11 @@ RSpec.describe "admin controller authz" do
       expect(response.status).to eq(404)
     end
   end
+
+  describe "status" do
+    it "#index" do
+      get "/ko-fi/admin/status"
+      expect(response.status).to eq(404)
+    end
+  end
 end

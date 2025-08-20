@@ -27,6 +27,14 @@ en:
         anonymize:
           title: Anonymize
           description: Remove personal identifiable information from payments.
+        status:
+          title: Status
+          webhook-token-configured: 'Webhook token configured'
+          last-success-message: 'Last successful message received:'
+          webhook-test-hint:
+            Try <a href="https://ko-fi.com/manage/webhooks" target="_blank">sending a test message</a>
+            from Ko-fi to verify the configuration.
+          last-error-message: 'Received error on:'
       payments:
         search_placeholder: Search payments
         actions:
@@ -77,8 +85,7 @@ en:
               This will reprocess the past payments made by users and check if this rewards applies to them.<br />
               Processing can take quite some time to complete depending on the number of users who have made payments in the past.
               <br /><br />
-              Reprocessing will not revoke awards based on the previous configuration of this award.
-              
+              Reprocessing will not revoke awards based on the previous configuration of this award.              
               <br /><br />
               Are you sure you want to reprocess the payments and award users for paying at least <em class="text-successful">%{amount}</em>?
             confirm: Reprocess payments
@@ -128,8 +135,9 @@ en:
             description: Reprocess payments by users for this subscription
             confirmation: |
               This will reprocess all active subscriptions, and related subscription payments of the users.<br />
-              Users will be added and remove from the group depending on the changes made to this configuration.<br /><br />
-              Are you sure you want to reprocess subscript #${id}?
+              Users will be added and remove from the group depending on the changes made to this configuration.
+              <br /><br />
+              Are you sure you want to reprocess subscription #${id}?
             confirm: Reprocess payments
             started: Started reprocessing payments...
           delete:
