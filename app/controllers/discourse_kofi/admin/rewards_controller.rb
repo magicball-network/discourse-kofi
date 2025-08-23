@@ -101,11 +101,6 @@ module DiscourseKofi
           reward.id = nil if opts[:new]
           reward.save!
         end
-
-        if opts[:new].blank?
-          #TODO schedule mass reward
-        end
-
         errors
       rescue ActiveRecord::RecordInvalid
         errors.push(*reward.errors.full_messages)

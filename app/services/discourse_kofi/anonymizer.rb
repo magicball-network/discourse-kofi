@@ -21,6 +21,7 @@ module DiscourseKofi
     private
 
     def self.anonymize_account(account)
+      return if account.anonymized
       account.transaction do
         account.make_anonymous(create_anonymized_email)
         account.save

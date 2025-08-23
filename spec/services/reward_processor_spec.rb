@@ -21,9 +21,15 @@ RSpec.describe DiscourseKofi::RewardProcessor do
 
     expect(::Jobs).to have_received(:enqueue)
       .once
-      .with(DiscourseKofi::Jobs::RewardUser, { payment_id: subscription.id })
+      .with(
+        DiscourseKofi::Jobs::RewardUser,
+        { payment_id: subscription.id, reward_id: reward.id }
+      )
       .once
-      .with(DiscourseKofi::Jobs::RewardUser, { payment_id: payment2.id })
+      .with(
+        DiscourseKofi::Jobs::RewardUser,
+        { payment_id: payment2.id, reward_id: reward.id }
+      )
 
     expect(::Jobs).to_not have_received(:enqueue).with(
       DiscourseKofi::Jobs::RewardUser,

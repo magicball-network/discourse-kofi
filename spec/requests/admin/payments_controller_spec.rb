@@ -43,6 +43,22 @@ RSpec.describe DiscourseKofi::Admin::PaymentsController do
     end
   end
 
+  describe "#show" do
+    it "can show a payment" do
+      get "/ko-fi/admin/payments/#{public_donation.id}"
+      expect(response.status).to eq(200)
+      parsed = response.parsed_body
+      expect(parsed[:payment]).to include(
+        kofi_transaction_id: public_donation.kofi_transaction_id
+      )
+    end
+
+    it "cannot show an unknown payment" do
+      get "/ko-fi/admin/payments/99999999999"
+      expect(response.status).to eq(404)
+    end
+  end
+
   describe "#update" do
     it "can update the public flag" do
       patch "/ko-fi/admin/payments/#{public_donation.id}",
@@ -58,6 +74,11 @@ RSpec.describe DiscourseKofi::Admin::PaymentsController do
       expect(response.status).to eq(200)
       parsed = response.parsed_body
       expect(parsed[:payment][:is_public]).to be false
+    end
+
+    it "cannot update and unknown payment" do
+      patch "/ko-fi/admin/payments/9999999999999", params: { is_public: false }
+      expect(response.status).to eq(404)
     end
   end
 
