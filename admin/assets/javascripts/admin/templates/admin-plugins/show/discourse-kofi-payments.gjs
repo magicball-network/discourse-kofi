@@ -15,13 +15,25 @@ export default RouteTemplate(
   <template>
     <div class="admin-content">
       <p></p>
-      <div class="admin-controls">
+      <div class="admin-controls admin-site-settings-filter-controls">
         <div class="controls">
-          <PeriodChooser
-            @fullDay={{false}}
-            @period={{@controller.period}}
-            @onChange={{@controller.updatePeriod}}
-          />
+          <div class="inline-form">
+            <PeriodChooser
+              @fullDay={{false}}
+              @period={{@controller.period}}
+              @onChange={{@controller.updatePeriod}}
+            />
+            <DButton
+              @icon="envelope"
+              @action={{@controller.toggleEmailVisible}}
+              @label={{if
+                @controller.emailsVisible
+                "discourse_kofi.actions.hide_emails.title"
+                "discourse_kofi.actions.show_emails.title"
+              }}
+              class="btn-default"
+            />
+          </div>
         </div>
         <div class="search controls">
           <TextField
@@ -111,7 +123,13 @@ export default RouteTemplate(
                     <span
                       class="kofi_payment_from_name"
                     >{{payment.from_name}}</span>
-                    <div class="kofi_payment_email">{{payment.email}}</div>
+                    <div class="kofi_payment_email">
+                      {{#if @controller.emailsVisible}}
+                        {{payment.email}}
+                      {{else}}
+                        ...@...
+                      {{/if}}
+                    </div>
                     <div class="kofi_payment_message">{{payment.message}}</div>
                   </td>
                   <td

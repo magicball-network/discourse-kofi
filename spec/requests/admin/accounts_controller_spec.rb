@@ -38,7 +38,7 @@ RSpec.describe DiscourseKofi::Admin::AccountsController do
     end
 
     it "filters on email" do
-      get "/ko-fi/admin/accounts", params: { filter: account1.email[3, 10] }
+      get "/ko-fi/admin/accounts", params: { search: account1.email[3, 10] }
 
       expect(response.status).to eq(200)
       parsed = response.parsed_body
@@ -48,7 +48,7 @@ RSpec.describe DiscourseKofi::Admin::AccountsController do
     it "filters on username" do
       get "/ko-fi/admin/accounts",
           params: {
-            filter: account1.user.username[1, 6].upcase
+            search: account1.user.username[1, 6].upcase
           }
 
       expect(response.status).to eq(200)

@@ -21,7 +21,9 @@ DiscourseKofi::Engine.routes.draw do
         post "import", on: :collection
         post "anonymize", on: :collection
       end
-      resources :accounts, only: %i[index show destroy]
+      resources :accounts, only: %i[index show update destroy] do
+        post "anonymize", on: :member
+      end
 
       get "status" => "status#index"
     end

@@ -16,7 +16,7 @@ module DiscourseKofi
       @query = init_query(pre_filter)
     end
 
-    def find_payments(limit = 25)
+    def find_payments(limit = 50)
       page = @params[:page].to_i - 1
       page = 0 if page < 0
       query.limit(limit).offset(page * limit)

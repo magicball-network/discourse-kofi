@@ -9,6 +9,8 @@ import AdminPayment from "../../../models/admin-payment";
 export default class AdminPluginsShowDiscourseKofiPaymentsController extends Controller {
   @service dialog;
 
+  queryParams = ["search"];
+
   search = "";
   order = "timestamp";
   asc = null;
@@ -16,12 +18,19 @@ export default class AdminPluginsShowDiscourseKofiPaymentsController extends Con
 
   loading = false;
 
+  emailsVisible = false;
+
   _page = 1;
   _results = new TrackedArray();
   _canLoadMore = true;
 
   get payments() {
     return this._results.flat();
+  }
+
+  @action
+  toggleEmailVisible() {
+    this.set("emailsVisible", !this.get("emailsVisible"));
   }
 
   @action

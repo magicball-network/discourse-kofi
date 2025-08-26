@@ -6,20 +6,7 @@ module DiscourseKofi
       requires_plugin DiscourseKofi::PLUGIN_NAME
 
       def index
-        accounts =
-          Account
-            .order(created_at: :desc)
-            .offset(params[:offset] || 0)
-            .limit(50)
-
-        if params[:filter].present?
-          accounts =
-            accounts.joins(:user).where(
-              "email ILIKE :filter or users.username_lower ILIKE :filter",
-              filter: "%#{params[:filter].downcase}%"
-            )
-        end
-
+        accounts = AccountQueryBuilder.new(params).find_accounts(25)
         render_json_dump(
           accounts: serialize_data(accounts, AdminAccountSerializer)
         )
@@ -30,6 +17,32 @@ module DiscourseKofi
         account = Account.find(params[:id])
 
         render_serialized(account, AdminAccountSerializer)
+      rescue ActiveRecord::RecordNotFound
+        raise Discourse::NotFound
+      end
+
+      def update
+        params.require(:id)
+        account = Account.find(params[:id])
+
+        # Only allow updating the default visibility
+        account.always_hide = params[:always_hide] if params[
+          :always_hide
+        ].present?
+        account.save
+        if account.valid?
+          render json: success_json
+        else
+          render_json_error account.errors
+        end
+      rescue ActiveRecord::RecordNotFound
+        raise Discourse::NotFound
+      end
+
+      def anonymize
+        params.require(:id)
+        Anonymizer.anonymize_account(Account.find(params[:id]))
+        render json: success_json
       rescue ActiveRecord::RecordNotFound
         raise Discourse::NotFound
       end

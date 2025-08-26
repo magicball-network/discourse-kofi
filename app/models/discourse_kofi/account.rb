@@ -10,6 +10,9 @@ module ::DiscourseKofi
 
     belongs_to :user
     has_many :payments, class_name: "DiscourseKofi::Payment"
+    has_one :latest_payment,
+            -> { Payment.order(timestamp: "desc").limit(1) },
+            class_name: "DiscourseKofi::Payment"
 
     before_create do
       self.email_hash = Account.hash_email(self.email) if self.email_hash.nil?

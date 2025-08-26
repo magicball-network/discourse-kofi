@@ -18,8 +18,6 @@ module DiscourseKofi
       end
     end
 
-    private
-
     def self.anonymize_account(account)
       return if account.anonymized
       account.transaction do
@@ -28,6 +26,8 @@ module DiscourseKofi
         update_payments(account)
       end
     end
+
+    private
 
     def self.create_anonymized_account(email)
       Account.transaction do

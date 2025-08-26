@@ -35,6 +35,11 @@ en:
             Try <a href="https://ko-fi.com/manage/webhooks" target="_blank">sending a test message</a>
             from Ko-fi to verify the configuration.
           last-error-message: 'Received error on:'
+      actions:
+        show_emails:
+          title: Show emails
+        hide_emails:
+          title: Hide emails
       payments:
         search_placeholder: Search payments
         actions:
@@ -158,6 +163,31 @@ en:
         tier_name:
           title: Ko-fi tier name
           description: This value must match the name of the membership tier in Ko-fi, otherwise the subscription will not match.
+      accounts:
+        actions:
+          always_hide:
+            title: Payments are never public
+          not_always_hide:
+            title: Allow public payments
+          anonymize:
+            title: Anonymize account and payments
+          delete:
+            title: Delete
+        search_placeholder: Search accounts
+        user:
+          title: User
+        email:
+          title: Account email
+        always_hide:
+          title: Hide payment details
+          description: Future payments are never public
+        latest_payment:
+          title: Latest payment
+        anonymized:
+          title: Anonymized
+          description: Personal identifiable information is removed from payments
+        created_at:
+          title: Created on
   admin_js:
     admin:
       site_settings:
