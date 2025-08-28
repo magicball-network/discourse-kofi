@@ -33,9 +33,7 @@ module DiscourseKofi
         order << "#{order_directive} #{custom_direction} NULLS LAST"
       end
 
-      if !custom_order.present?
-        order << "timestamp desc" if !custom_order.present?
-      end
+      order << "timestamp desc" if order.empty?
 
       query = Payment.where(pre_filter).order(order.reject(&:blank?).join(","))
 

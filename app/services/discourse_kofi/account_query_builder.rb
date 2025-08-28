@@ -2,7 +2,11 @@
 
 module DiscourseKofi
   class AccountQueryBuilder
-    ORDER_MAPPING = { "user" => "users.username", "created_at" => "created_at" }
+    ORDER_MAPPING = {
+      "user" => "users.username",
+      "created_at" => "created_at",
+      "email" => "email"
+    }
 
     attr_reader :query
 
@@ -28,9 +32,7 @@ module DiscourseKofi
         order << "#{order_directive} #{custom_direction} NULLS LAST"
       end
 
-      if !custom_order.present?
-        order << "created_at desc" if !custom_order.present?
-      end
+      order << "created_at desc" if order.empty?
 
       query =
         Account
