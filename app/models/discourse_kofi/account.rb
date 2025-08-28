@@ -31,6 +31,7 @@ module ::DiscourseKofi
       self.email = email
       self.anonymized = true
       self.always_hide = true
+      self.user = nil
     end
   end
 end

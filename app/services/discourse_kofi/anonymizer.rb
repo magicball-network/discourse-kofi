@@ -5,7 +5,7 @@ require "digest"
 module DiscourseKofi
   class Anonymizer
     def self.anonymize_user(user)
-      Account.find_by_user(user).each { |account| anonymize_account(account) }
+      Account.where(user: user).each { |account| anonymize_account(account) }
     end
 
     def self.anonymize_payments(email)
