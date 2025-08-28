@@ -11,7 +11,7 @@ module ::DiscourseKofi
     belongs_to :user
     has_many :payments, class_name: "DiscourseKofi::Payment"
     has_one :latest_payment,
-            -> { Payment.order(timestamp: "desc").limit(1) },
+            -> { Payment.order(timestamp: "desc") },
             class_name: "DiscourseKofi::Payment"
 
     before_create do
