@@ -9,7 +9,8 @@ import AdminPayment from "../../../models/admin-payment";
 export default class AdminPluginsShowDiscourseKofiPaymentsController extends Controller {
   @service dialog;
 
-  queryParams = ["search"];
+  queryParams = [{ initialSearch: "q" }];
+  initialSearch = "";
 
   search = "";
   order = "timestamp";

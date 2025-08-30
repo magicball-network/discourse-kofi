@@ -5,11 +5,11 @@ import ConditionalLoadingSpinner from "discourse/components/conditional-loading-
 import DButton from "discourse/components/d-button";
 import DropdownMenu from "discourse/components/dropdown-menu";
 import LoadMore from "discourse/components/load-more";
-import RelativeDate from "discourse/components/relative-date";
 import TableHeaderToggle from "discourse/components/table-header-toggle";
 import TextField from "discourse/components/text-field";
 import avatar from "discourse/helpers/avatar";
 import icon from "discourse/helpers/d-icon";
+import formatDate from "discourse/helpers/format-date";
 import { i18n } from "discourse-i18n";
 import DMenu from "float-kit/components/d-menu";
 
@@ -133,18 +133,19 @@ export default RouteTemplate(
                     {{/if}}
                   </td>
                   <td class="d-admin-row__detail">
-                    <RelativeDate @date={{account.created_at}} />
+                    {{formatDate account.created_at leaveAgo="true"}}
                   </td>
                   <td class="d-admin-row__detail">
                     <LinkTo
                       @route="adminPlugins.show.discourse-kofi-payments"
                       @query={{hash
-                        search=account.latest_payment.kofi_transaction_id
+                        q=account.latest_payment.kofi_transaction_id
                       }}
                     >
-                      <RelativeDate
-                        @date={{account.latest_payment.timestamp}}
-                      />
+                      {{formatDate
+                        account.latest_payment.timestamp
+                        leaveAgo="true"
+                      }}
                     </LinkTo>
                   </td>
                   <td class="d-admin-row__controls">

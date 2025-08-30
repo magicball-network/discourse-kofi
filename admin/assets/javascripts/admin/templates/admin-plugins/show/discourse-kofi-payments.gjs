@@ -3,11 +3,11 @@ import RouteTemplate from "ember-route-template";
 import ConditionalLoadingSpinner from "discourse/components/conditional-loading-spinner";
 import DButton from "discourse/components/d-button";
 import LoadMore from "discourse/components/load-more";
-import RelativeDate from "discourse/components/relative-date";
 import TableHeaderToggle from "discourse/components/table-header-toggle";
 import TextField from "discourse/components/text-field";
 import avatar from "discourse/helpers/avatar";
 import icon from "discourse/helpers/d-icon";
+import formatDate from "discourse/helpers/format-date";
 import { i18n } from "discourse-i18n";
 import PeriodChooser from "select-kit/components/period-chooser";
 
@@ -106,7 +106,7 @@ export default RouteTemplate(
             <tbody>
               {{#each @controller.payments as |payment|}}
                 <tr>
-                  <td><RelativeDate @date={{payment.timestamp}} /></td>
+                  <td>{{formatDate payment.timestamp leaveAgo="true"}}</td>
                   <td class="kofi_payment_type">{{payment.payment_type}}</td>
                   <td class="kofi_payment_tier">{{payment.tier_name}}</td>
                   <td>{{payment.amount_currency}}</td>
