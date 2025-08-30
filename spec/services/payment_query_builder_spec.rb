@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe DiscourseKofi::PaymentQueryBuilder do
-  let(:account) { Fabricate(:kofi_account) }
-  let(:payment1) do
+  fab!(:account) { Fabricate(:kofi_account) }
+  fab!(:payment1) do
     Fabricate(
       :kofi_payment,
       amount: 10,
@@ -10,7 +10,7 @@ RSpec.describe DiscourseKofi::PaymentQueryBuilder do
       timestamp: DateTime.iso8601("2025-06-01T00:00:00")
     )
   end
-  let(:payment2) do
+  fab!(:payment2) do
     Fabricate(
       :kofi_payment,
       amount: 90,
@@ -18,21 +18,21 @@ RSpec.describe DiscourseKofi::PaymentQueryBuilder do
       timestamp: DateTime.iso8601("2025-06-02T00:00:00")
     )
   end
-  let(:payment3) do
+  fab!(:payment3) do
     Fabricate(
       :kofi_payment,
       amount: 50,
       timestamp: DateTime.iso8601("2025-06-03T00:00:00")
     )
   end
-  let(:payment4) do
+  fab!(:payment4) do
     Fabricate(
       :kofi_payment,
       amount: 30,
       timestamp: DateTime.iso8601("2025-06-04T00:00:00")
     )
   end
-  let(:payment5) do
+  fab!(:payment5) do
     Fabricate(
       :kofi_payment,
       amount: 70,
@@ -66,7 +66,7 @@ RSpec.describe DiscourseKofi::PaymentQueryBuilder do
 
   it "does pagination" do
     payment = DiscourseKofi::PaymentQueryBuilder.new({ page: 1 })
-    payments = payment.find_payments(3)
+    payments = payment.find_payments(2)
 
     expect(payments).to eq([payment5, payment4])
   end
