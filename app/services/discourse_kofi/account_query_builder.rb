@@ -49,10 +49,16 @@ module DiscourseKofi
     def add_search(query, search)
       search = search.strip.downcase
       return query if search.blank?
-      query.where(
-        "email ilike :search_like or users.username ilike :search_like",
-        search_like: "%#{search}%"
-      )
+      if search.start_with?("id:")
+        query.where(id: search.split(":", 2).last)
+      elsif search.start_with?("uid:")
+        query.where("users.id = ?", search.split(":", 2).last)
+      else
+        query.where(
+          "discourse_kofi_accounts.email ilike :search_like or users.username ilike :search_like",
+          search_like: "%#{search}%"
+        )
+      end
     end
   end
 end

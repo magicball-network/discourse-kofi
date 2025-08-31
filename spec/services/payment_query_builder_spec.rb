@@ -141,4 +141,29 @@ RSpec.describe DiscourseKofi::PaymentQueryBuilder do
     payments = payment.find_payments()
     expect(payments).to eq([payment5, payment4])
   end
+
+  it "can search for a specific transaction" do
+    payment =
+      DiscourseKofi::PaymentQueryBuilder.new(
+        { search: "tx:#{payment1.kofi_transaction_id}" }
+      )
+    payments = payment.find_payments()
+    expect(payments).to eq([payment1])
+  end
+
+  it "can search for a specific account" do
+    payment =
+      DiscourseKofi::PaymentQueryBuilder.new({ search: "aid:#{account.id}" })
+    payments = payment.find_payments()
+    expect(payments).to eq([payment2, payment1])
+  end
+
+  it "can search for a specific user" do
+    payment =
+      DiscourseKofi::PaymentQueryBuilder.new(
+        { search: "uid:#{account.user.id}" }
+      )
+    payments = payment.find_payments()
+    expect(payments).to eq([payment2, payment1])
+  end
 end

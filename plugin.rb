@@ -10,6 +10,7 @@
 
 enabled_site_setting :kofi_enabled
 
+register_svg_icon "kofi"
 register_svg_icon "eye-slash"
 
 module ::DiscourseKofi

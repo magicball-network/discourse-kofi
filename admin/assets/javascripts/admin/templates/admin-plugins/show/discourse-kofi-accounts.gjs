@@ -1,4 +1,4 @@
-import { fn, hash } from "@ember/helper";
+import { concat, fn, hash } from "@ember/helper";
 import { LinkTo } from "@ember/routing";
 import RouteTemplate from "ember-route-template";
 import ConditionalLoadingSpinner from "discourse/components/conditional-loading-spinner";
@@ -49,6 +49,9 @@ export default RouteTemplate(
           <table class="d-admin-table discourse-kofi-accounts-table">
             <thead class="heading-container">
               <tr>
+                <th class="col heading">{{i18n
+                    "discourse_kofi.accounts.id.title"
+                  }}</th>
                 <th class="col heading">
                   <TableHeaderToggle
                     @onToggle={{@controller.updateOrder}}
@@ -97,6 +100,7 @@ export default RouteTemplate(
             <tbody>
               {{#each @controller.accounts as |account|}}
                 <tr>
+                  <td class="d-admin-row__detail">{{account.id}}</td>
                   <td class="row__detail">
                     {{#if account.anonymized}}
                       {{icon
@@ -138,9 +142,7 @@ export default RouteTemplate(
                   <td class="d-admin-row__detail">
                     <LinkTo
                       @route="adminPlugins.show.discourse-kofi-payments"
-                      @query={{hash
-                        q=account.latest_payment.kofi_transaction_id
-                      }}
+                      @query={{hash q=(concat "aid:" account.id)}}
                     >
                       {{formatDate
                         account.latest_payment.timestamp
@@ -172,6 +174,18 @@ export default RouteTemplate(
                               class="btn-default"
                             />
                           </dropdown.item>
+                          <dropdown.item>
+                            <DButton
+                              @icon="eye-slash"
+                              @action={{fn
+                                @controller.makePaymentsNotPublic
+                                account
+                              }}
+                              @label="discourse_kofi.accounts.actions.hide_payment_details.title"
+                              class="btn-default"
+                            />
+                          </dropdown.item>
+                          <dropdown.item><hr /></dropdown.item>
                           <dropdown.item>
                             <DButton
                               @icon="user-secret"

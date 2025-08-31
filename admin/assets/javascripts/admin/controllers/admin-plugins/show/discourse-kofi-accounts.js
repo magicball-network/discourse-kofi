@@ -9,6 +9,9 @@ import AdminAccount from "../../../models/admin-account";
 export default class AdminPluginsShowDiscourseKofiAccountsController extends Controller {
   @service dialog;
 
+  queryParams = [{ initialSearch: "q" }];
+  initialSearch = "";
+
   search = "";
   order = "created_at";
   asc = null;
@@ -110,6 +113,38 @@ export default class AdminPluginsShowDiscourseKofiAccountsController extends Con
   }
 
   @action
+  makePaymentsNotPublic(account) {
+    const hidePayments = () => {
+      account
+        .hidePayments()
+        .then(() => {
+          this.toasts.success({
+            data: {
+              message: i18n(
+                "discourse_kofi.accounts.actions.hide_payment_details.updated",
+                account
+              ),
+            },
+          });
+          this.send("reloadModel");
+        })
+        .catch(popupAjaxError);
+    };
+
+    this.dialog.confirm({
+      title: i18n("discourse_kofi.accounts.actions.hide_payment_details.title"),
+      message: i18n(
+        "discourse_kofi.accounts.actions.hide_payment_details.confirmation",
+        account
+      ),
+      confirmButtonIcon: "eye-slash",
+      confirmButtonLabel:
+        "discourse_kofi.accounts.actions.hide_payment_details.confirm",
+      didConfirm: hidePayments,
+    });
+  }
+
+  @action
   makeAnonymous(account) {
     const performAnonymize = () => {
       account
@@ -130,10 +165,10 @@ export default class AdminPluginsShowDiscourseKofiAccountsController extends Con
 
     this.dialog.confirm({
       title: i18n("discourse_kofi.accounts.actions.anonymize.title"),
-      message: i18n(
-        "discourse_kofi.accounts.actions.anonymize.confirmation",
-        account
-      ),
+      message: i18n("discourse_kofi.accounts.actions.anonymize.confirmation", {
+        email: account.email,
+        username: account.user.username,
+      }),
       confirmButtonIcon: "user-secret",
       confirmButtonLabel: "discourse_kofi.accounts.actions.anonymize.confirm",
       confirmButtonClass: "btn-danger",
@@ -149,10 +184,8 @@ export default class AdminPluginsShowDiscourseKofiAccountsController extends Con
         .then(() => {
           this.toasts.success({
             data: {
-              message: i18n(
-                "discourse_kofi.accounts.actions.delete.deleted",
-                account
-              ),
+              message: i18n("discourse_kofi.accounts.actions.delete.deleted"),
+              account,
             },
           });
           this.send("reloadModel");
@@ -162,10 +195,9 @@ export default class AdminPluginsShowDiscourseKofiAccountsController extends Con
 
     this.dialog.confirm({
       title: i18n("discourse_kofi.accounts.actions.delete.title"),
-      message: i18n(
-        "discourse_kofi.accounts.actions.delete.confirmation",
-        account
-      ),
+      message: i18n("discourse_kofi.accounts.actions.delete.confirmation", {
+        username: account.user.username,
+      }),
       confirmButtonIcon: "trash-can",
       confirmButtonLabel: "discourse_kofi.accounts.actions.delete.confirm",
       confirmButtonClass: "btn-danger",

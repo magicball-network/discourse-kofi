@@ -88,4 +88,20 @@ RSpec.describe DiscourseKofi::AccountQueryBuilder do
     accounts = account.find_accounts()
     expect(accounts).to eq([account2, account1])
   end
+
+  it "can search for a specific account id" do
+    account =
+      DiscourseKofi::AccountQueryBuilder.new({ search: "id:#{account1.id}" })
+    accounts = account.find_accounts()
+    expect(accounts).to eq([account1])
+  end
+
+  it "can search for a specific user id" do
+    account =
+      DiscourseKofi::AccountQueryBuilder.new(
+        { search: "uid:#{account1.user.id}" }
+      )
+    accounts = account.find_accounts()
+    expect(accounts).to eq([account2, account1])
+  end
 end

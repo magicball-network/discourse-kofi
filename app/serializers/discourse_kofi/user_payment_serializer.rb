@@ -10,9 +10,8 @@ module ::DiscourseKofi
                :from_name,
                :email,
                :is_subscription_payment,
-               :tier_name
-
-    #TODO: account
+               :tier_name,
+               :account_id
 
     def show_details(field, always_public = false)
       true

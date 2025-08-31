@@ -1,4 +1,5 @@
-import { fn } from "@ember/helper";
+import { concat, fn, hash } from "@ember/helper";
+import { LinkTo } from "@ember/routing";
 import RouteTemplate from "ember-route-template";
 import ConditionalLoadingSpinner from "discourse/components/conditional-loading-spinner";
 import DButton from "discourse/components/d-button";
@@ -111,6 +112,17 @@ export default RouteTemplate(
                   <td class="kofi_payment_tier">{{payment.tier_name}}</td>
                   <td>{{payment.amount_currency}}</td>
                   <td class="kofi_payment_from">
+                    {{#if payment.account_id}}
+                      <LinkTo
+                        @route="adminPlugins.show.discourse-kofi-accounts"
+                        @query={{hash q=(concat "id:" payment.account_id)}}
+                        title={{i18n
+                          "discourse_kofi.payments.actions.show_account.title"
+                        }}
+                      >
+                        {{icon "kofi"}}
+                      </LinkTo>
+                    {{/if}}
                     {{#if payment.user}}
                       <a
                         class="avatar"
@@ -122,6 +134,7 @@ export default RouteTemplate(
                     {{/if}}
                     <span
                       class="kofi_payment_from_name"
+                      title={{i18n "discourse_kofi.payments.from_name.title"}}
                     >{{payment.from_name}}</span>
                     <div class="kofi_payment_email">
                       {{#if @controller.emailsVisible}}

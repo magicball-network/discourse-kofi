@@ -49,11 +49,22 @@ module DiscourseKofi
     def add_search(query, search)
       search = search.strip.downcase
       return query if search.blank?
-      query.left_joins(:user).where(
-        "kofi_transaction_id = :search or from_name ilike :search_like or email ilike :search_like or users.username ilike :search_like",
-        search: search,
-        search_like: "%#{search}%"
-      )
+      if search.start_with?("tx:")
+        query.where(kofi_transaction_id: search.split(":", 2).last)
+      elsif search.start_with?("uid:")
+        query.left_joins(:user).where("users.id = ?", search.split(":", 2).last)
+      elsif search.start_with?("aid:")
+        query.left_joins(:account).where(
+          "discourse_kofi_accounts.id = ?",
+          search.split(":", 2).last
+        )
+      else
+        query.left_joins(:user).where(
+          "kofi_transaction_id = :search or from_name ilike :search_like or email ilike :search_like or users.username ilike :search_like",
+          search: search,
+          search_like: "%#{search}%"
+        )
+      end
     end
 
     def add_period(query, start_date, end_date)

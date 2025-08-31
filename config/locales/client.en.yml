@@ -49,6 +49,8 @@ en:
               This will hide the user information and message of the selected payment in public display. <br /><br />
               This action cannot be undone.
             confirm: Hide user payment details
+          show_account:
+            title: Show account
         timestamp:
           title: Date
         type:
@@ -59,6 +61,8 @@ en:
           title: Amount
         from:
           title: From
+        from_name:
+          title: Payment from
         transaction_id:
           title: Transaction ID
         public:
@@ -167,13 +171,31 @@ en:
         actions:
           always_hide:
             title: Payments are never public
+            updated: Future payments will never be public.
           not_always_hide:
             title: Allow public payments
+            updated: Future payments will be public when the user allowed it.
+          hide_payment_details:
+            title: Make past payments private
+            confirmation: 
+              This will hide the user information and message of all past payments for this account in public display.<br /><br />
+              This action cannot be undone.
+            confirm: Hide user payment details
+            updated: User details have been hidden for past payments.
           anonymize:
             title: Anonymize account and payments
+            confirmation:
+              This will anonymize the account and all associated payments in the past and future (payments made by <em>%{email}</em>).
+              The account will no longer be associated with the user <em>%{username}</em>, and thereby they will no longer be rewarded.
+              <br /><br />
+              This action cannot be undone.
+            confirm: Anonymize account and payments
+            updated: The account has been anonymized
           delete:
             title: Delete
         search_placeholder: Search accounts
+        id:
+          title: ID
         user:
           title: User
         email:
