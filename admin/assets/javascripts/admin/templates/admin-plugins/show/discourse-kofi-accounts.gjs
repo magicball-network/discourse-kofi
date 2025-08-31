@@ -12,6 +12,7 @@ import icon from "discourse/helpers/d-icon";
 import formatDate from "discourse/helpers/format-date";
 import { i18n } from "discourse-i18n";
 import DMenu from "float-kit/components/d-menu";
+import ObscuredEmailAddress from "../../../components/obscured-email-address";
 
 export default RouteTemplate(
   <template>
@@ -120,13 +121,12 @@ export default RouteTemplate(
                     {{/if}}
                   </td>
                   <td class="row__detail">
-                    {{#if account.anonymized}}{{else if
-                      @controller.emailsVisible
-                    }}
-                      {{account.email}}
-                    {{else}}
-                      <span>...@...</span>
-                    {{/if}}
+                    {{#unless account.anonymized}}
+                      <ObscuredEmailAddress
+                        @email={{account.email}}
+                        @show={{@controller.emailsVisible}}
+                      />
+                    {{/unless}}
                   </td>
                   <td class="d-admin-row__detail">
                     {{#if account.always_hide}}

@@ -11,6 +11,7 @@ import icon from "discourse/helpers/d-icon";
 import formatDate from "discourse/helpers/format-date";
 import { i18n } from "discourse-i18n";
 import PeriodChooser from "select-kit/components/period-chooser";
+import ObscuredEmailAddress from "../../../components/obscured-email-address";
 
 export default RouteTemplate(
   <template>
@@ -137,11 +138,10 @@ export default RouteTemplate(
                       title={{i18n "discourse_kofi.payments.from_name.title"}}
                     >{{payment.from_name}}</span>
                     <div class="kofi_payment_email">
-                      {{#if @controller.emailsVisible}}
-                        {{payment.email}}
-                      {{else}}
-                        ...@...
-                      {{/if}}
+                      <ObscuredEmailAddress
+                        @email={{payment.email}}
+                        @show={{@controller.emailsVisible}}
+                      />
                     </div>
                     <div class="kofi_payment_message">{{payment.message}}</div>
                   </td>
