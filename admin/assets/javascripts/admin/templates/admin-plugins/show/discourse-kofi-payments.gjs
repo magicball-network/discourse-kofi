@@ -107,12 +107,20 @@ export default RouteTemplate(
 
             <tbody>
               {{#each @controller.payments as |payment|}}
-                <tr>
-                  <td>{{formatDate payment.timestamp leaveAgo="true"}}</td>
-                  <td class="kofi_payment_type">{{payment.payment_type}}</td>
-                  <td class="kofi_payment_tier">{{payment.tier_name}}</td>
-                  <td>{{payment.amount_currency}}</td>
-                  <td class="kofi_payment_from">
+                <tr class="d-admin-row__content">
+                  <td rowspan="2" class="d-admin-row__detail">
+                    {{formatDate payment.timestamp leaveAgo="true"}}
+                  </td>
+                  <td rowspan="2" class="d-admin-row__detail">
+                    {{payment.payment_type}}
+                  </td>
+                  <td rowspan="2" class="d-admin-row__detail">
+                    {{payment.tier_name}}
+                  </td>
+                  <td rowspan="2" class="d-admin-row__detail">
+                    {{payment.amount_currency}}
+                  </td>
+                  <td class="d-admin-row__detail kofi_payment_from">
                     {{#if payment.account_id}}
                       <LinkTo
                         @route="adminPlugins.show.discourse-kofi-accounts"
@@ -136,42 +144,41 @@ export default RouteTemplate(
                     <span
                       class="kofi_payment_from_name"
                       title={{i18n "discourse_kofi.payments.from_name.title"}}
-                    >{{payment.from_name}}</span>
+                    >
+                      {{payment.from_name}}
+                    </span>
                     <div class="kofi_payment_email">
                       <ObscuredEmailAddress
                         @email={{payment.email}}
                         @show={{@controller.emailsVisible}}
                       />
                     </div>
-                    <div class="kofi_payment_message">{{payment.message}}</div>
                   </td>
-                  <td
-                    class="kofi_payment_transaction_id"
-                  >{{payment.kofi_transaction_id}}</td>
-                  <td>
+                  <td class="d-admin-row__detail kofi_payment_transaction_id">
+                    {{payment.kofi_transaction_id}}
+                  </td>
+                  <td rowspan="2" class="d-admin-row__detail">
                     {{#if payment.anonymized}}
                       {{icon
                         "user-secret"
                         class="text-danger"
                         title="discourse_kofi.payments.anonymized.description"
                       }}
+                    {{else if payment.is_public}}
+                      {{icon
+                        "eye"
+                        class="text-successful"
+                        title="discourse_kofi.payments.public.description"
+                      }}
                     {{else}}
-                      {{#if payment.is_public}}
-                        {{icon
-                          "eye"
-                          class="text-successful"
-                          title="discourse_kofi.payments.public.description"
-                        }}
-                      {{else}}
-                        {{icon
-                          "eye-slash"
-                          class="text-muted"
-                          title="discourse_kofi.payments.private.description"
-                        }}
-                      {{/if}}
+                      {{icon
+                        "eye-slash"
+                        class="text-muted"
+                        title="discourse_kofi.payments.private.description"
+                      }}
                     {{/if}}
                   </td>
-                  <td>
+                  <td rowspan="2" class="d-admin-row__controls">
                     {{#if payment.is_public}}
                       <DButton
                         @icon="eye-slash"
@@ -180,6 +187,11 @@ export default RouteTemplate(
                         class="btn-small"
                       />
                     {{/if}}
+                  </td>
+                </tr>
+                <tr class="d-admin-row__content kofi_payment_message">
+                  <td colspan="2" class="d-admin-row__detail">
+                    {{payment.message}}
                   </td>
                 </tr>
               {{/each}}

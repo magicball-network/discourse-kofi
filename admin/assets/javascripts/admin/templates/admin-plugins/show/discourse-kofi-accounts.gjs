@@ -50,9 +50,9 @@ export default RouteTemplate(
           <table class="d-admin-table discourse-kofi-accounts-table">
             <thead class="heading-container">
               <tr>
-                <th class="col heading">{{i18n
-                    "discourse_kofi.accounts.id.title"
-                  }}</th>
+                <th class="col heading">
+                  {{i18n "discourse_kofi.accounts.id.title"}}
+                </th>
                 <th class="col heading">
                   <TableHeaderToggle
                     @onToggle={{@controller.updateOrder}}
@@ -100,9 +100,9 @@ export default RouteTemplate(
 
             <tbody>
               {{#each @controller.accounts as |account|}}
-                <tr>
+                <tr class="d-admin-row__content">
                   <td class="d-admin-row__detail">{{account.id}}</td>
-                  <td class="row__detail">
+                  <td class="d-admin-row__detail">
                     {{#if account.anonymized}}
                       {{icon
                         "user-secret"
@@ -120,7 +120,7 @@ export default RouteTemplate(
                       </a>
                     {{/if}}
                   </td>
-                  <td class="row__detail">
+                  <td class="d-admin-row__detail">
                     {{#unless account.anonymized}}
                       <ObscuredEmailAddress
                         @email={{account.email}}
