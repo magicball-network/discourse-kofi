@@ -50,7 +50,7 @@ en:
               This action cannot be undone.
             confirm: Hide user payment details
           show_account:
-            title: Show account
+            title: Go to account
         timestamp:
           title: Date
         type:

@@ -128,6 +128,7 @@ export default RouteTemplate(
                         title={{i18n
                           "discourse_kofi.payments.actions.show_account.title"
                         }}
+                        class="btn-flat btn-large"
                       >
                         {{icon "kofi"}}
                       </LinkTo>
