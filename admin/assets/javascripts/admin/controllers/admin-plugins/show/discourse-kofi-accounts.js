@@ -8,6 +8,7 @@ import AdminAccount from "../../../models/admin-account";
 
 export default class AdminPluginsShowDiscourseKofiAccountsController extends Controller {
   @service dialog;
+  @service toasts;
 
   queryParams = [{ initialSearch: "q" }];
   initialSearch = "";
@@ -95,7 +96,7 @@ export default class AdminPluginsShowDiscourseKofiAccountsController extends Con
   @action
   toggleAlwaysHide(account) {
     account
-      .update({ alwaysHide: !account.alwaysHide })
+      .toggleAlwaysHide()
       .then(() => {
         this.toasts.success({
           data: {
@@ -107,7 +108,6 @@ export default class AdminPluginsShowDiscourseKofiAccountsController extends Con
             ),
           },
         });
-        this.send("reloadModel");
       })
       .catch(popupAjaxError);
   }
@@ -126,7 +126,6 @@ export default class AdminPluginsShowDiscourseKofiAccountsController extends Con
               ),
             },
           });
-          this.send("reloadModel");
         })
         .catch(popupAjaxError);
     };
@@ -158,7 +157,6 @@ export default class AdminPluginsShowDiscourseKofiAccountsController extends Con
               ),
             },
           });
-          this.send("reloadModel");
         })
         .catch(popupAjaxError);
     };
@@ -188,7 +186,7 @@ export default class AdminPluginsShowDiscourseKofiAccountsController extends Con
               account,
             },
           });
-          this.send("reloadModel");
+          this.resetFilters();
         })
         .catch(popupAjaxError);
     };

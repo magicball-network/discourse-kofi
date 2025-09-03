@@ -185,7 +185,7 @@ export default RouteTemplate(
                               class="btn-default"
                             />
                           </dropdown.item>
-                          <dropdown.item><hr /></dropdown.item>
+                          <dropdown.divider />
                           <dropdown.item>
                             <DButton
                               @icon="user-secret"

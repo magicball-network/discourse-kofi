@@ -39,6 +39,17 @@ module DiscourseKofi
         raise Discourse::NotFound
       end
 
+      def privatize_payments
+        params.require(:id)
+        account = Account.find(params[:id])
+        account.transaction do
+          Payment.where(account: account).update_all(is_public: false)
+        end
+        render json: success_json
+      rescue ActiveRecord::RecordNotFound
+        raise Discourse::NotFound
+      end
+
       def anonymize
         params.require(:id)
         Anonymizer.anonymize_account(Account.find(params[:id]))

@@ -10,6 +10,7 @@ module DiscourseKofi
         return nil unless user
         account = Account.new(email: email, user: user)
         account.save
+        associate_with_unresolved_payments(account)
         #TODO: notify user
       end
       account
@@ -41,10 +42,12 @@ module DiscourseKofi
 
     def associate_with_unresolved_payments(account)
       # This assumes the account has just been created, so there are no account settings to apply
-      Payment.where(email: account.email, account: nil).update_all(
-        account_id: account.id,
-        user_id: account.user.nil? ? nil : account.user.id
-      )
+      Payment.transaction do
+        Payment.where(email: account.email, account: nil).update_all(
+          account_id: account.id,
+          user_id: account.user.nil? ? nil : account.user.id
+        )
+      end
     end
   end
 end

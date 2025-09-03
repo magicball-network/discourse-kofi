@@ -13,4 +13,33 @@ export default class AdminAccount extends EmberObject {
       return result;
     });
   }
+
+  toggleAlwaysHide() {
+    const newValue = !this.always_hide;
+    return ajax(`/ko-fi/admin/accounts/${this.id}`, {
+      method: "patch",
+      dataType: "json",
+      data: { always_hide: newValue },
+    }).then(() => {
+      this.set("always_hide", newValue);
+    });
+  }
+
+  hidePayments() {
+    return ajax(`/ko-fi/admin/accounts/${this.id}/privatize-payments`, {
+      method: "post",
+    });
+  }
+
+  anonymize() {
+    return ajax(`/ko-fi/admin/accounts/${this.id}/anonymize`, {
+      method: "post",
+    });
+  }
+
+  delete() {
+    return ajax(`/ko-fi/admin/accounts/${this.id}`, {
+      method: "delete",
+    });
+  }
 }

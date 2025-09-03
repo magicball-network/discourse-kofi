@@ -22,6 +22,7 @@ DiscourseKofi::Engine.routes.draw do
         post "anonymize", on: :collection
       end
       resources :accounts, only: %i[index show update destroy] do
+        post "privatize-payments", on: :member
         post "anonymize", on: :member
       end
 
