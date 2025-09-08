@@ -74,6 +74,104 @@ RSpec.describe DiscourseKofi::Admin::AccountsController do
     end
   end
 
+  describe "#update" do
+    it "updates hide_always" do
+      StaffActionLogger
+        .any_instance
+        .expects(:log_custom)
+        .with(
+          "kofi_account_change",
+          { always_hide: true, account_id: account1.id }
+        )
+        .once
+
+      patch "/ko-fi/admin/accounts/#{account1.id}",
+            params: {
+              always_hide: true
+            }
+      expect(response.status).to eq(200)
+      parsed = response.parsed_body
+      expect(parsed[:success]).to eq("OK")
+
+      get "/ko-fi/admin/accounts/#{account1.id}"
+      expect(response.status).to eq(200)
+      parsed = response.parsed_body
+      expect(parsed[:account][:always_hide]).to be(true)
+    end
+
+    it "cannot update an unknown account" do
+      StaffActionLogger.any_instance.expects(:log_custom).never
+
+      patch "/ko-fi/admin/accounts/999999999999", params: { always_hide: true }
+      expect(response.status).to eq(404)
+    end
+  end
+
+  describe "#privatize_payments" do
+    fab!(:payment1) { Fabricate(:kofi_payment, account: account1) }
+    fab!(:payment2) { Fabricate(:kofi_payment, account: account2) }
+
+    it "privatized existing payments" do
+      StaffActionLogger
+        .any_instance
+        .expects(:log_custom)
+        .with("kofi_payment_privatized", { account_id: account1.id })
+        .once
+
+      post "/ko-fi/admin/accounts/#{account1.id}/privatize-payments"
+      expect(response.status).to eq(200)
+      parsed = response.parsed_body
+      expect(parsed[:success]).to eq("OK")
+
+      reloaded_payment = DiscourseKofi::Payment.find(payment1.id)
+      expect(reloaded_payment.is_public).to be(false)
+      reloaded_payment = DiscourseKofi::Payment.find(payment2.id)
+      expect(reloaded_payment.is_public).to be(true)
+    end
+
+    it "does nothing for an unknown account" do
+      StaffActionLogger.any_instance.expects(:log_custom).never
+
+      post "/ko-fi/admin/accounts/999999999999/privatize-payments"
+      expect(response.status).to eq(404)
+
+      reloaded_payment = DiscourseKofi::Payment.find(payment1.id)
+      expect(reloaded_payment.is_public).to be(true)
+      reloaded_payment = DiscourseKofi::Payment.find(payment2.id)
+      expect(reloaded_payment.is_public).to be(true)
+    end
+  end
+
+  describe "#anonymize" do
+    it "anonymizes an account" do
+      allow(DiscourseKofi::Anonymizer).to receive(:anonymize_account)
+      StaffActionLogger
+        .any_instance
+        .expects(:log_custom)
+        .with("kofi_account_anonymized", { account_id: account1.id })
+        .once
+
+      post "/ko-fi/admin/accounts/#{account1.id}/anonymize"
+      expect(response.status).to eq(200)
+      parsed = response.parsed_body
+      expect(parsed[:success]).to eq("OK")
+
+      expect(DiscourseKofi::Anonymizer).to have_received(
+        :anonymize_account
+      ).with(eq(account1)).once
+    end
+
+    it "does nothing for an unknown account" do
+      allow(DiscourseKofi::Anonymizer).to receive(:anonymize_account)
+      StaffActionLogger.any_instance.expects(:log_custom).never
+
+      post "/ko-fi/admin/accounts/999999999999/anonymize"
+      expect(response.status).to eq(404)
+
+      expect(DiscourseKofi::Anonymizer).to_not have_received(:anonymize_account)
+    end
+  end
+
   describe "#destroy" do
     it "unlinks payment on account destroy" do
       payment = Fabricate(:kofi_payment, account: account1)

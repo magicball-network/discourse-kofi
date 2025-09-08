@@ -60,7 +60,8 @@ module DiscourseKofi
 
       def anonymize
         params.require(:id)
-        Anonymizer.anonymize_account(Account.find(params[:id]))
+        account = Account.find(params[:id])
+        Anonymizer.anonymize_account(account)
         StaffActionLogger.new(current_user).log_custom(
           "kofi_account_anonymized",
           { account_id: account.id }
