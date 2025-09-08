@@ -31,6 +31,10 @@ module DiscourseKofi
         ].present?
         account.save
         if account.valid?
+          StaffActionLogger.new(current_user).log_custom(
+            "kofi_account_change",
+            log_details(account, true)
+          )
           render json: success_json
         else
           render_json_error account.errors
@@ -45,6 +49,10 @@ module DiscourseKofi
         account.transaction do
           Payment.where(account: account).update_all(is_public: false)
         end
+        StaffActionLogger.new(current_user).log_custom(
+          "kofi_payment_privatized",
+          { account_id: account.id }
+        )
         render json: success_json
       rescue ActiveRecord::RecordNotFound
         raise Discourse::NotFound
@@ -53,6 +61,10 @@ module DiscourseKofi
       def anonymize
         params.require(:id)
         Anonymizer.anonymize_account(Account.find(params[:id]))
+        StaffActionLogger.new(current_user).log_custom(
+          "kofi_account_anonymized",
+          { account_id: account.id }
+        )
         render json: success_json
       rescue ActiveRecord::RecordNotFound
         raise Discourse::NotFound
@@ -68,9 +80,33 @@ module DiscourseKofi
           )
           account.destroy
         end
+        StaffActionLogger.new(current_user).log_custom(
+          "kofi_account_deletion",
+          log_details(account)
+        )
         render json: success_json
       rescue ActiveRecord::RecordNotFound
         raise Discourse::NotFound
+      end
+
+      ACCOUNT_FIELDS =
+        Account.attribute_names.excluding("id", "created_at", "updated_at")
+
+      def log_details(account, update = false)
+        details = {}
+        if update
+          account.previous_changes.each do |f, values|
+            details[f.to_sym] = values[1] if ACCOUNT_FIELDS.include?(f)
+          end
+        else
+          details =
+            ACCOUNT_FIELDS
+              .map { |f| [f, account.public_send(f)] }
+              .select { |f, v| v.present? }
+              .to_h
+        end
+        details[:account_id] = account.id
+        details
       end
     end
   end

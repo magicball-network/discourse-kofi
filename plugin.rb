@@ -24,5 +24,21 @@ end
 require_relative "lib/discourse_kofi/engine"
 
 after_initialize do
+  extend_list_method(
+    UserHistory,
+    :staff_actions,
+    %i[
+      kofi_reward_creation
+      kofi_reward_change
+      kofi_reward_deletion
+      kofi_account_change
+      kofi_payment_privatized
+      kofi_account_anonymized
+      kofi_account_deletion
+      kofi_payment_privatized
+      kofi_payment_change
+    ]
+  )
+
   on(:user_anonymized) { |user| DiscourseKofi::Anonymizer.anonymize_user(user) }
 end

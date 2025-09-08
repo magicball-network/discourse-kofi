@@ -29,6 +29,13 @@ module DiscourseKofi
         payment.is_public = params[:is_public] if params[:is_public].present?
         payment.save
         if payment.valid?
+          StaffActionLogger.new(current_user).log_custom(
+            "kofi_payment_change",
+            {
+              kofi_transaction_id: payment.kofi_transaction_id,
+              is_public: payment.is_public
+            }
+          )
           render json: success_json
         else
           render_json_error payment.errors
@@ -44,6 +51,10 @@ module DiscourseKofi
           params[:make_private] == "true" || params[:make_private].nil?
         result =
           PaymentImporter.import_csv(csv_file, make_private: make_private)
+        StaffActionLogger.new(current_user).log_custom(
+          "kofi_payment_import_csv",
+          { "Imported transactions: " => result.payments.length }
+        )
         render json: result
       rescue CSV::MalformedCSVError => er
         render_json_error I18n.t(

@@ -33,4 +33,3 @@ en:
       validation:
         payment_types_array: 'must be an array'
         invalid_payment_type: "'%{type}' is not a valid payment type"
-

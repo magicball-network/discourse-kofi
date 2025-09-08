@@ -215,3 +215,14 @@ en:
       site_settings:
         categories:
           discourse_kofi: "Ko-fi"
+      logs:
+        staff_actions:
+          actions:
+            kofi_reward_creation: Ko-fi reward creation
+            kofi_reward_change: Ko-fi reward change
+            kofi_reward_deletion: Ko-fi reward deletion
+            kofi_account_change: Ko-fi account change
+            kofi_account_anonymized: Ko-fi account anonymized
+            kofi_account_deletion: Ko-fi account deletion
+            kofi_payment_privatized: Ko-fi payments privatized
+            kofi_payment_change: Ko-fi payment change
