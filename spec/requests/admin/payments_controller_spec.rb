@@ -84,6 +84,12 @@ RSpec.describe DiscourseKofi::Admin::PaymentsController do
 
   describe "#import" do
     it "can import a payments CSV file" do
+      StaffActionLogger
+        .any_instance
+        .expects(:log_custom)
+        .with("kofi_payment_import_csv", { count: 4 })
+        .once
+
       file = plugin_file_fixture("import.csv")
       post "/ko-fi/admin/payments/import",
            params: {

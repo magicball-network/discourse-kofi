@@ -53,7 +53,7 @@ module DiscourseKofi
           PaymentImporter.import_csv(csv_file, make_private: make_private)
         StaffActionLogger.new(current_user).log_custom(
           "kofi_payment_import_csv",
-          { "Imported transactions: " => result.payments.length }
+          { count: result[:payments].length }
         )
         render json: result
       rescue CSV::MalformedCSVError => er
