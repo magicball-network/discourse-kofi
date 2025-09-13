@@ -40,5 +40,7 @@ after_initialize do
     ]
   )
 
+  Notification.types[:kofi_account_link] = 53_900
+
   on(:user_anonymized) { |user| DiscourseKofi::Anonymizer.anonymize_user(user) }
 end

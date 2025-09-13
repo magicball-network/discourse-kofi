@@ -210,6 +210,10 @@ en:
           description: Personal identifiable information is removed from payments
         created_at:
           title: Created on
+      notifications:
+        account_linked:
+          description: Ko-fi payments linked to your account
+          link_title: View Ko-fi accounts
   admin_js:
     admin:
       site_settings:

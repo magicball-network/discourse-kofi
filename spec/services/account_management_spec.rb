@@ -23,6 +23,15 @@ RSpec.describe DiscourseKofi::AccountManagement do
   it "creates an account for an existing user" do
     found = @accounts.find_account(user.email)
     expect(found.previously_new_record?).to be true
+    expect(found.user).to eq(user)
+    expect(found.email).to eq(user.email)
+
+    expect(user.notifications).to include(
+      have_attributes(
+        notification_type: Notification.types[:kofi_account_link],
+        data: { account_id: found.id }.to_json
+      )
+    )
   end
 
   it "returns nil when no account can be found or created" do

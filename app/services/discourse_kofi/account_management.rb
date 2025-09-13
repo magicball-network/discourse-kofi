@@ -11,7 +11,12 @@ module DiscourseKofi
         account = Account.new(email: email, user: user)
         account.save
         associate_with_unresolved_payments(account)
-        #TODO: notify user
+
+        notification = {
+          notification_type: Notification.types[:kofi_account_link],
+          data: { account_id: account.id }.to_json
+        }
+        user.notifications.create!(notification)
       end
       account
     end
