@@ -12,6 +12,14 @@ RSpec.describe DiscourseKofi::PaymentsController do
     fab!(:resolved_donation) do
       Fabricate(:kofi_payment, amount: 15, account: kofi_account)
     end
+    fab!(:resolved_private_donation) do
+      Fabricate(
+        :kofi_payment,
+        amount: 17,
+        account: kofi_account,
+        is_public: false
+      )
+    end
     fab!(:private_donation) do
       Fabricate(:kofi_payment, amount: 20, is_public: false)
     end
@@ -39,23 +47,11 @@ RSpec.describe DiscourseKofi::PaymentsController do
       parsed = response.parsed_body
       expect(parsed[:payments]).to contain_exactly(
         include(
-          id: public_donation.id,
-          amount_currency: "$10.00",
-          message: nil,
-          username: nil
-        ),
-        include(
           id: resolved_donation.id,
-          amount_currency: "$15.00",
-          message: nil,
-          username: nil
+          message: resolved_donation.message,
+          username: resolved_donation.user.username
         ),
-        include(
-          id: private_donation.id,
-          amount_currency: "$20.00",
-          message: nil,
-          username: nil
-        )
+        include(id: resolved_private_donation.id, message: nil, username: nil)
       )
     end
 
@@ -68,23 +64,17 @@ RSpec.describe DiscourseKofi::PaymentsController do
       expect(parsed[:payments]).to contain_exactly(
         include(
           id: public_donation.id,
-          amount_currency: "$10.00",
           message: public_donation.message,
           username: public_donation.from_name
         ),
         include(
           id: resolved_donation.id,
-          amount_currency: "$15.00",
           message: resolved_donation.message,
           username: resolved_donation.user.username,
           user: include(id: resolved_donation.user.id)
         ),
-        include(
-          id: private_donation.id,
-          amount_currency: "$20.00",
-          message: nil,
-          username: nil
-        )
+        include(id: resolved_private_donation.id, message: nil, username: nil),
+        include(id: private_donation.id, message: nil, username: nil)
       )
     end
   end

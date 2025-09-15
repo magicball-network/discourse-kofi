@@ -111,13 +111,15 @@ module DiscourseKofi
     end
 
     def self.parse_type(transaction_type)
-      # TODO: shop order
-      # TODO: commission
-      case transaction_type
-      when "Donation"
+      case transaction_type.downcase
+      when "donation", "tip"
         "Donation"
-      when "Monthly Donation"
+      when "monthly donation", "monthly tip"
         "Subscription"
+      when "commission"
+        "Commission"
+      when "shop order"
+        "Shop Order"
       else
         nil
       end

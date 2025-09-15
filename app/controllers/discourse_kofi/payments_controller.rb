@@ -15,21 +15,30 @@ module ::DiscourseKofi
         return
       end
 
-      payments =
-        Payment
-          .where(
-            "payment_type IN (:payment_types)",
-            payment_types: SiteSetting.kofi_dashboard_types.split("|")
-          )
-          .order(timestamp: :desc)
-          .limit(SiteSetting.kofi_dashboard_count)
-
       if current_user.present?
         visible_details =
           SiteSetting.kofi_dashboard_authenticated_view.split("|")
       else
         visible_details = SiteSetting.kofi_dashboard_anonymous_view.split("|")
       end
+
+      if visible_details.empty?
+        render json: []
+        return
+      end
+
+      query =
+        Payment.where(
+          "payment_type IN (:payment_types)",
+          payment_types: SiteSetting.kofi_dashboard_types.split("|")
+        )
+
+      if visible_details.exclude?("include_unknown")
+        query = query.where("user_id is not null")
+      end
+
+      payments =
+        query.order(timestamp: :desc).limit(SiteSetting.kofi_dashboard_count)
 
       render_json_dump(
         payments:

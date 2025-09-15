@@ -1,10 +1,10 @@
 DateTime (UTC),"From","Message","Item","Received","Given","Currency","TransactionType","TransactionId","Reference","SalesTax","SalesTaxPercentage","SalesTaxIncludesShipping","BuyerCountry","BuyerStateOrProvince","BuyerEmail","PaymentProvider"
 "01/13/2025 12:56","user1","Unknown transaction type","Ko-fi Support","12.00","0","EUR","UnknownTransactionType","7e037596-b595-4ab7-bd05-3a4308e834ec","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
-"InvalidDateTime","user1","Invalid date time","Ko-fi Support","12.00","0","EUR","Donation","7e037596-b595-4ab7-bd05-3a4308e834ec","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
-"01/13/2025 12:56","user1","Invalid amount","Ko-fi Support","InvalidAmount","0","EUR","Donation","7e037596-b595-4ab7-bd05-3a4308e834ec","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
-"01/13/2025 12:56","user1","Negative amount","Ko-fi Support","-999","0","EUR","Donation","7e037596-b595-4ab7-bd05-3a4308e834ec","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
-"01/13/2025 12:56","user1","Missing tier name","","12.00","0","EUR","Monthly Donation","7e037596-b595-4ab7-bd05-3a4308e834ec","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
-"01/13/2025 12:56","user1","Test transaction id","Ko-fi Support","12.00","0","EUR","Donation","00000000-1111-2222-3333-444444444444","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
-"01/13/2025 12:56","user1","Known transaction","Ko-fi Support","12.00","0","EUR","Donation","55555555-1111-2222-3333-444444444444","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
+"InvalidDateTime","user1","Invalid date time","Ko-fi Support","12.00","0","EUR","Tip","7e037596-b595-4ab7-bd05-3a4308e834ec","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
+"01/13/2025 12:56","user1","Invalid amount","Ko-fi Support","InvalidAmount","0","EUR","Tip","7e037596-b595-4ab7-bd05-3a4308e834ec","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
+"01/13/2025 12:56","user1","Negative amount","Ko-fi Support","-999","0","EUR","Tip","7e037596-b595-4ab7-bd05-3a4308e834ec","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
+"01/13/2025 12:56","user1","Missing tier name","","12.00","0","EUR","Monthly Tip","7e037596-b595-4ab7-bd05-3a4308e834ec","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
+"01/13/2025 12:56","user1","Test transaction id","Ko-fi Support","12.00","0","EUR","Tip","00000000-1111-2222-3333-444444444444","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
+"01/13/2025 12:56","user1","Known transaction","Ko-fi Support","12.00","0","EUR","Tip","55555555-1111-2222-3333-444444444444","T-1234567890","","","","","","user1@discourse-kofi.test","PayPal"
 
 ,,"no transaction id value",,

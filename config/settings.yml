@@ -1,7 +1,7 @@
 discourse_kofi:
   kofi_enabled:
     default: false
-    client: false
+    client: true
   kofi_webhook_token:
     default: ''
     client: false
@@ -17,6 +17,20 @@ discourse_kofi:
       - disabled
       - authenticated_only
       - enabled
+  kofi_dashboard_totals_types:
+    type: list
+    default: donation|subscription
+    client: false
+    allow_any: false
+    list_type: compact
+    choices: &payment_types
+      - donation
+      - subscription
+      - commission
+      - shop_order
+  kofi_dashboard_totals_days:
+    default: 365
+    client: false
   kofi_dashboard_count:
     default: 50
     client: true
@@ -26,21 +40,10 @@ discourse_kofi:
     client: false
     allow_any: false
     list_type: compact
-    choices: &payment_types
-      - donation
-      - subscription
-      - commission
-      - shop_order
-  kofi_dashboard_total_types:
-    type: list
-    default: donation
-    client: false
-    allow_any: false
-    list_type: compact
     choices: *payment_types
   kofi_dashboard_anonymous_view:
     type: list
-    default: amount
+    default: user|message
     client: false
     allow_any: false
     list_type: compact
@@ -51,8 +54,21 @@ discourse_kofi:
       - include_unknown
   kofi_dashboard_authenticated_view:
     type: list
-    default: amount|user|message|include_unknown
+    default: user|message|include_unknown
     client: false
     allow_any: false
     list_type: compact
     choices: *visibility
+  kofi_leaderboard_count:
+    default: 10
+    client: true
+  kofi_leaderboard_days:
+    default: 90
+    client: false
+  kofi_leaderboard_types:
+    type: list
+    default: donation|subscription|commission|shop_order
+    client: false
+    allow_any: false
+    list_type: compact
+    choices: *payment_types

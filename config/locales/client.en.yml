@@ -24,6 +24,23 @@ en:
         import:
           title: Import
           description: Import a Ko-fi CSV transaction export.
+          information:
+            You can import past payments which are not registered by 
+            <a href="https://ko-fi.com/manage/supportreceived">downloading a CSV from Ko-fi</a>,
+            and upload it here. Only received payments which are unknown will be added to the database.
+            Already known payments will be ignored.<br /><br />
+            As the CSV export does not contain information if the user wanted to have this information public, all
+            payments will be imported as private.
+          file: CSV file
+          make_private: Hide payment user information from public
+          import: Import payments
+          aborted: Select a CSV file to import.
+          results: Import results
+          summary: Imported %{count} payments.
+          errors: Import failures
+          error:
+            line: Line
+            message: Message
         anonymize:
           title: Anonymize
           description: Remove personal identifiable information from payments.
