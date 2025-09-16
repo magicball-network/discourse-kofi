@@ -44,6 +44,21 @@ en:
         anonymize:
           title: Anonymize
           description: Remove personal identifiable information from payments.
+          information:
+            When you anonymize a Discourse user account it will automatically anonymize all Ko-fi Payments
+            registered in the database, and also future received payment.<br />
+            For existing accounts, associated with Discourse users, you can also individually anonymize
+            associated accounts from the accounts screen.<br />
+            When you receive a request to forget a person, you can use this forum to create an anonymized account
+            for this email address and thereby anonymize all previous and future payments.<br /><br />
+            When anonymizing payments all identifiable information will be removed, including the original used
+            email address. The original email address will be pseudo-anonymized by hashing it using SHA2, this allows
+            for matching with future payments.<br /><br />
+            Anonymization of payments is non-reversible. Deleting an anonymized account will allow new payments to
+            be matched with a user, but past payments cannot be matched.
+          email: Email address
+          anonymize: Anonymize
+          account_created: Anonymized account created.
         status:
           title: Status
           webhook-token-configured: 'Webhook token configured'

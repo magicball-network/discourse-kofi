@@ -66,8 +66,12 @@ module DiscourseKofi
 
       def anonymize
         params.require(:email)
-        Anonymizer.anonymize_payments(params[:email])
-        render json: success_json
+        account = Anonymizer.anonymize_payments(params[:email])
+        if account
+          render_serialized(account, AdminAccountSerializer)
+        else
+          render json: failed_json, status: 400
+        end
       end
     end
   end

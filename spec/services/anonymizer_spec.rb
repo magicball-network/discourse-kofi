@@ -22,7 +22,9 @@ RSpec.describe DiscourseKofi::Anonymizer do
 
   it "anonymizes an existing account base on payment email" do
     original_email = account.email
-    DiscourseKofi::Anonymizer.anonymize_payments(original_email.upcase)
+    account =
+      DiscourseKofi::Anonymizer.anonymize_payments(original_email.upcase)
+    expect(account).not_to be_nil
 
     reloaded_account = DiscourseKofi::Account.find(account.id)
     expect(reloaded_account.anonymized).to be true
@@ -72,5 +74,11 @@ RSpec.describe DiscourseKofi::Anonymizer do
       DiscourseKofi::Jobs::AnonymizePayments,
       { account_id: account.id }
     )
+  end
+
+  it "does not anonymize invalid email addresses" do
+    result =
+      DiscourseKofi::Anonymizer.anonymize_payments("this is not a valid email")
+    expect(result).to be_nil
   end
 end

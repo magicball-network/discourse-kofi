@@ -9,10 +9,12 @@ module DiscourseKofi
     end
 
     def self.anonymize_payments(email)
+      return unless EmailAddressValidator.valid_value?(email)
       email = Email.downcase(email)
       account = Account.find_by_email(email)
       if account.present?
         anonymize_account(account)
+        account
       else
         create_anonymized_account(email)
       end
@@ -40,6 +42,7 @@ module DiscourseKofi
         )
 
         anonymize_account(account)
+        account
       end
     end
 
