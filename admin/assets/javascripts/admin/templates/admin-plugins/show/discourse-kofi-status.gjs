@@ -14,9 +14,13 @@ export default RouteTemplate(
         style="font-size: var(--font-up-6); padding: 1em;"
       >
         {{#if @model.healthy}}
-          {{icon "far-face-smile" class="text-successful"}}
+          {{icon "kofi" class="text-successful" title="All is well"}}
         {{else}}
-          {{icon "far-face-frown" class="text-danger"}}
+          {{icon
+            "far-face-frown"
+            class="text-danger"
+            title="Something is wrong"
+          }}
         {{/if}}
       </h1>
 
