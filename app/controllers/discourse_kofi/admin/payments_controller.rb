@@ -6,7 +6,7 @@ module DiscourseKofi
       requires_plugin DiscourseKofi::PLUGIN_NAME
 
       def index
-        payments = PaymentQueryBuilder.new(params).find_payments(25)
+        payments = PaymentQueryBuilder.new(params).find_payments()
         render_json_dump(
           payments: serialize_data(payments, AdminPaymentSerializer)
         )

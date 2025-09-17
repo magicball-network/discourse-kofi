@@ -39,5 +39,10 @@ RSpec.describe "users controller authz" do
       patch "/ko-fi/users/accounts/#{kofi_account.id}"
       expect(response.status).to eq(403)
     end
+
+    it "#privatize_payments" do
+      post "/ko-fi/users/accounts/#{kofi_account.id}/privatize-payments"
+      expect(response.status).to eq(403)
+    end
   end
 end

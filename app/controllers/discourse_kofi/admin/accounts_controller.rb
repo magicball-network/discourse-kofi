@@ -6,7 +6,7 @@ module DiscourseKofi
       requires_plugin DiscourseKofi::PLUGIN_NAME
 
       def index
-        accounts = AccountQueryBuilder.new(params).find_accounts(25)
+        accounts = AccountQueryBuilder.new(params).find_accounts()
         render_json_dump(
           accounts: serialize_data(accounts, AdminAccountSerializer)
         )

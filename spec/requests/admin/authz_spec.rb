@@ -69,6 +69,26 @@ RSpec.describe "admin controller authz" do
       expect(response.status).to eq(404)
     end
 
+    it "#update" do
+      patch "/ko-fi/admin/accounts/#{kofi_account.id}"
+      expect(response.status).to eq(404)
+    end
+
+    it "#update" do
+      patch "/ko-fi/admin/accounts/#{kofi_account.id}"
+      expect(response.status).to eq(404)
+    end
+
+    it "#privatize_payments" do
+      post "/ko-fi/admin/accounts/#{kofi_account.id}/privatize-payments"
+      expect(response.status).to eq(404)
+    end
+
+    it "#anonymize" do
+      post "/ko-fi/admin/accounts/#{kofi_account.id}/anonymize"
+      expect(response.status).to eq(404)
+    end
+
     it "#destroy" do
       delete "/ko-fi/admin/accounts/#{kofi_account.id}"
       expect(response.status).to eq(404)

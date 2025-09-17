@@ -10,7 +10,9 @@ DiscourseKofi::Engine.routes.draw do
       resources :payments, only: %i[index show update] do
         post "claim", on: :collection
       end
-      resources :accounts, only: %i[index show update]
+      resources :accounts, only: %i[index show update] do
+        post "privatize-payments", on: :member
+      end
     end
 
     namespace :admin, constraints: AdminConstraint.new do

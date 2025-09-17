@@ -47,4 +47,26 @@ RSpec.describe DiscourseKofi::Users::AccountsController do
       expect(response.status).to eq(404)
     end
   end
+
+  describe "#privatize_payments" do
+    fab!(:payment1) { Fabricate(:kofi_payment, account: kofi_account) }
+    fab!(:payment2) { Fabricate(:kofi_payment, account: other_account) }
+
+    it "privatized existing payments" do
+      post "/ko-fi/users/accounts/#{kofi_account.id}/privatize-payments"
+      expect(response.status).to eq(200)
+      parsed = response.parsed_body
+      expect(parsed[:success]).to eq("OK")
+
+      reloaded_payment = DiscourseKofi::Payment.find(payment1.id)
+      expect(reloaded_payment.is_public).to be(false)
+      reloaded_payment = DiscourseKofi::Payment.find(payment2.id)
+      expect(reloaded_payment.is_public).to be(true)
+    end
+
+    it "cannot privatize other accounts" do
+      post "/ko-fi/users/accounts/#{other_account.id}/privatize-payments"
+      expect(response.status).to eq(404)
+    end
+  end
 end

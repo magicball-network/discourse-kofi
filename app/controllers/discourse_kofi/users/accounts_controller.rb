@@ -9,12 +9,10 @@ module DiscourseKofi
 
       def index
         accounts =
-          Account
-            .where(user: current_user)
-            .order(created_at: :desc)
-            .offset(params[:offset] || 0)
-            .limit(50)
-
+          AccountQueryBuilder.new(
+            params,
+            { user: current_user }
+          ).find_accounts()
         render_json_dump(accounts: serialize_data(accounts, AccountSerializer))
       end
 
@@ -41,6 +39,18 @@ module DiscourseKofi
         else
           render_json_error account.errors
         end
+      end
+
+      def privatize_payments
+        params.require(:id)
+        account = Account.find_by(id: params[:id], user: current_user)
+        raise Discourse::NotFound unless account
+
+        account.transaction do
+          Payment.where(account: account).update_all(is_public: false)
+        end
+
+        render json: success_json
       end
     end
   end

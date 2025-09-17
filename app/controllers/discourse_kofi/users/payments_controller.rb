@@ -8,14 +8,11 @@ module DiscourseKofi
       requires_login
 
       def index
-        # TODO filtering
         payments =
-          Payment
-            .where(user: current_user)
-            .order(timestamp: :desc)
-            .offset(params[:offset] || 0)
-            .limit(50)
-
+          PaymentQueryBuilder.new(
+            params,
+            { user: current_user }
+          ).find_payments()
         render_json_dump(
           payments: serialize_data(payments, UserPaymentSerializer)
         )
