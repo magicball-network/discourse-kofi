@@ -246,6 +246,11 @@ en:
         account_linked:
           description: Ko-fi payments linked to your account
           link_title: View Ko-fi accounts
+      user:
+        navigation:
+          payments: Payments
+          accounts: Accounts
+          claim: Claim payment
   admin_js:
     admin:
       site_settings:

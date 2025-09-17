@@ -36,6 +36,10 @@ end
 Discourse::Application.routes.draw do
   mount ::DiscourseKofi::Engine, at: "/ko-fi"
 
+  get "/u/:username/ko-fi/payments" => "users#index"
+  get "/u/:username/ko-fi/accounts" => "users#index"
+  get "/u/:username/ko-fi/claim" => "users#index"
+
   get "/admin/plugins/discourse-kofi/rewards" => "admin/plugins#index",
       :constraints => AdminConstraint.new
   get "/admin/plugins/discourse-kofi/rewards/:reward_id" =>
