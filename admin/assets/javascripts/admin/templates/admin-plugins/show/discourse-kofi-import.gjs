@@ -7,7 +7,7 @@ import { i18n } from "discourse-i18n";
 
 export default RouteTemplate(
   <template>
-    <div class="admin-content kofi-import">
+    <div class="admin-content discourse-kofi-admin">
       <p>{{htmlSafe (i18n "discourse_kofi.admin.import.information")}}</p>
       <form class="form-horizontal">
         <div class="control-group">

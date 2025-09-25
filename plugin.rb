@@ -15,6 +15,9 @@ register_svg_icon "kofi-color"
 register_svg_icon "eye-slash"
 register_svg_icon "file-import"
 
+register_asset "stylesheets/common/admin.scss"
+register_asset "stylesheets/common/main.scss"
+
 module ::DiscourseKofi
   PLUGIN_NAME = "discourse-kofi"
 

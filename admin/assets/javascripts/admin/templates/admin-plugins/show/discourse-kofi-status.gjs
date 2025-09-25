@@ -8,18 +8,19 @@ import { i18n } from "discourse-i18n";
 
 export default RouteTemplate(
   <template>
-    <div class="admin-content kofi-status">
-      <h1
-        class="kofi-status-health"
-        style="font-size: var(--font-up-6); padding: 1em;"
-      >
+    <div class="admin-content discourse-kofi-status">
+      <h1 class="kofi-status-health">
         {{#if @model.healthy}}
-          {{icon "kofi" class="text-successful" title="All is well"}}
+          {{icon
+            "kofi"
+            class="text-successful"
+            title="discourse_kofi.admin.status.status_ok"
+          }}
         {{else}}
           {{icon
             "far-face-frown"
             class="text-danger"
-            title="Something is wrong"
+            title="discourse_kofi.admin.status.status_nok"
           }}
         {{/if}}
       </h1>

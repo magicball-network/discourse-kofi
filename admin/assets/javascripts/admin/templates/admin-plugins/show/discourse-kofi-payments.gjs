@@ -15,8 +15,7 @@ import ObscuredEmailAddress from "../../../components/obscured-email-address";
 
 export default RouteTemplate(
   <template>
-    <div class="admin-content">
-      <p></p>
+    <div class="admin-content discourse-kofi-admin">
       <div class="admin-controls admin-site-settings-filter-controls">
         <div class="controls">
           <div class="inline-form">
@@ -38,11 +37,13 @@ export default RouteTemplate(
           </div>
         </div>
         <div class="search controls">
-          <TextField
-            @value={{@controller.search}}
-            @placeholderKey="discourse_kofi.payments.search_placeholder"
-            @onChange={{@controller.updateSearch}}
-          />
+          <div class="inline-form">
+            <TextField
+              @value={{@controller.search}}
+              @placeholderKey="discourse_kofi.payments.search_placeholder"
+              @onChange={{@controller.updateSearch}}
+            />
+          </div>
         </div>
       </div>
 

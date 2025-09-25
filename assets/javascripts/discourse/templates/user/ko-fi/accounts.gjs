@@ -14,13 +14,15 @@ import DMenu from "float-kit/components/d-menu";
 
 export default RouteTemplate(
   <template>
-    <div class="">
-      <div class="user-additional-controls">
-        <TextField
-          @value={{@controller.search}}
-          @placeholderKey="discourse_kofi.accounts.search_placeholder"
-          @onChange={{@controller.updateSearch}}
-        />
+    <div class="discourse-kofi-user-controls">
+      <div class="controls user-additional-controls">
+        <div class="inline-form">
+          <TextField
+            @value={{@controller.search}}
+            @placeholderKey="discourse_kofi.accounts.search_placeholder"
+            @onChange={{@controller.updateSearch}}
+          />
+        </div>
       </div>
     </div>
 
@@ -29,7 +31,7 @@ export default RouteTemplate(
       @action={{@controller.loadMore}}
     >
       <div class="container">
-        <table class="discourse-kofi-accounts-table">
+        <table class="table discourse-kofi-user discourse-kofi-accounts-table">
           <thead class="heading-container">
             <tr>
               <th class="col heading">
@@ -70,9 +72,9 @@ export default RouteTemplate(
 
           <tbody>
             {{#each @controller.accounts as |account|}}
-              <tr class="">
-                <td class="">{{account.id}}</td>
-                <td class="">
+              <tr class="kofi-user-row__content">
+                <td class="kofi-user-row__content">{{account.id}}</td>
+                <td class="kofi-user-row__content">
                   {{account.email}}
                 </td>
                 <td class="">
@@ -83,10 +85,10 @@ export default RouteTemplate(
                     }}
                   {{/if}}
                 </td>
-                <td class="">
+                <td class="kofi-user-row__content">
                   {{formatDate account.created_at leaveAgo="true"}}
                 </td>
-                <td class="">
+                <td class="kofi-user-row__content">
                   <LinkTo
                     @route="user.ko-fi.payments"
                     @query={{hash q=(concat "aid:" account.id)}}
@@ -97,7 +99,7 @@ export default RouteTemplate(
                     }}
                   </LinkTo>
                 </td>
-                <td class="">
+                <td class="kofi-user-row__controls">
                   <DMenu
                     @identifier="discourse-kofi-account-item-menu"
                     @title={{i18n "more_options"}}
@@ -120,7 +122,7 @@ export default RouteTemplate(
                         </dropdown.item>
                         <dropdown.item>
                           <DButton
-                            @icon="eye-slash"
+                            @icon="far-eye-slash"
                             @action={{fn
                               @controller.makePaymentsNotPublic
                               account

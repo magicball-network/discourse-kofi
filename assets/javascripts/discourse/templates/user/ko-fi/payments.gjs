@@ -13,7 +13,7 @@ import PeriodChooser from "select-kit/components/period-chooser";
 
 export default RouteTemplate(
   <template>
-    <div class="">
+    <div class="discourse-kofi-user-controls">
       <div class="controls">
         <div class="inline-form">
           <PeriodChooser
@@ -23,12 +23,14 @@ export default RouteTemplate(
           />
         </div>
       </div>
-      <div class="user-additional-controls">
-        <TextField
-          @value={{@controller.search}}
-          @placeholderKey="discourse_kofi.payments.search_placeholder"
-          @onChange={{@controller.updateSearch}}
-        />
+      <div class="controls user-additional-controls">
+        <div class="inline-form">
+          <TextField
+            @value={{@controller.search}}
+            @placeholderKey="discourse_kofi.payments.search_placeholder"
+            @onChange={{@controller.updateSearch}}
+          />
+        </div>
       </div>
     </div>
 
@@ -37,7 +39,7 @@ export default RouteTemplate(
       @action={{@controller.loadMore}}
     >
       <div class="container">
-        <table class="table discourse-kofi-payments-table">
+        <table class="table discourse-kofi-user discourse-kofi-payments-table">
           <thead class="heading-container">
             <tr>
               <th class="col heading">
@@ -93,7 +95,7 @@ export default RouteTemplate(
 
           <tbody>
             {{#each @controller.payments as |payment|}}
-              <tr class="">
+              <tr class="kofi-user-row__content">
                 <td rowspan="2" class="">
                   {{formatDate payment.timestamp leaveAgo="true"}}
                 </td>

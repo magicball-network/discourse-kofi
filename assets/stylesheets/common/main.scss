@@ -1,0 +1,48 @@
+div.discourse-kofi-user-controls {
+  background: var(--primary-very-low);
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
+
+  .controls {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+
+    .inline-form {
+      margin-bottom: -0.5em;
+    }
+  }
+}
+
+table.discourse-kofi-user {
+  width: 100%;
+
+  th,
+  td {
+    padding: 8px;
+  }
+
+  tr {
+    text-align: left;
+
+    &.kofi-user-row__content {
+      position: relative;
+      padding: var(--space-1) 0;
+    }
+  }
+
+  td {
+    vertical-align: middle;
+
+    &.kofi-user-row__controls {
+      text-align: right;
+      width: auto;
+    }
+  }
+}
+
+.kofi_payment_transaction_id {
+	font-family: monospace;
+}
