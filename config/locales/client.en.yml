@@ -2,6 +2,7 @@ en:
   js:
     discourse_kofi:
       title: "Ko-fi"
+      anonymous: Anonymous
       admin:
         rewards-management:
           title: Rewards
@@ -67,11 +68,14 @@ en:
             Try <a href="https://ko-fi.com/manage/webhooks" target="_blank">sending a test message</a>
             from Ko-fi to verify the configuration.
           last-error-message: 'Received error on:'
+          status_ok: All is well
+          status_nok: Something is wrong
       actions:
         show_emails:
           title: Show emails
         hide_emails:
           title: Hide emails
+        clear_input: Clear input
       payments:
         search_placeholder: Search payments
         actions:

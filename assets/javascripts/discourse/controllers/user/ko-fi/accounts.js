@@ -41,6 +41,11 @@ export default class UserKofiAccountsController extends Controller {
   }
 
   @action
+  clearSearch() {
+    this.setProperties({ search: "" });
+  }
+
+  @action
   updateOrder(order, asc) {
     this.setProperties({
       order,

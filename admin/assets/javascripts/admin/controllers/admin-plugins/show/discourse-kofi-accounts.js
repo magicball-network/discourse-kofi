@@ -41,6 +41,11 @@ export default class AdminPluginsShowDiscourseKofiAccountsController extends Con
   }
 
   @action
+  clearSearch() {
+    this.setProperties({ search: "" });
+  }
+
+  @action
   updateOrder(order, asc) {
     this.setProperties({
       order,

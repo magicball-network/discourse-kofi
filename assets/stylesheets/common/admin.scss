@@ -1,8 +1,12 @@
 .discourse-kofi-admin {
   margin-top: 2em;
+
+  .search .inline-form {
+    flex-wrap: nowrap;
+  }
 }
 
 .kofi-status-health {
   font-size: 64px;
-  padding: .5em;
+  padding: 0.5em;
 }

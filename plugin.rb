@@ -2,11 +2,11 @@
 
 # name: discourse-kofi
 # about: Connect Ko-fi donations and subscriptions with Discourse.
-# meta_topic_id: 365158
+# meta_topic_id:
 # version: 0.1
 # authors: elmuerte
 # url: https://github.com/magicball-network/discourse-kofi
-# required_version: 3.4.0
+# required_version: 3.5.0
 
 enabled_site_setting :kofi_enabled
 
@@ -14,6 +14,7 @@ register_svg_icon "kofi"
 register_svg_icon "kofi-color"
 register_svg_icon "eye-slash"
 register_svg_icon "file-import"
+register_svg_icon "eraser"
 
 register_asset "stylesheets/common/admin.scss"
 register_asset "stylesheets/common/main.scss"

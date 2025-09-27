@@ -30,6 +30,12 @@ export default RouteTemplate(
             @placeholderKey="discourse_kofi.payments.search_placeholder"
             @onChange={{@controller.updateSearch}}
           />
+          <DButton
+            @icon="eraser"
+            @action={{@controller.clearSearch}}
+            title={{i18n "discourse_kofi.actions.clear_input"}}
+            class="btn-default"
+          />
         </div>
       </div>
     </div>

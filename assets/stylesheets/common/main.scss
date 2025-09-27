@@ -13,6 +13,10 @@ div.discourse-kofi-user-controls {
     .inline-form {
       margin-bottom: -0.5em;
     }
+
+    .search .inline-form {
+      flex-wrap: nowrap;
+    }
   }
 }
 
@@ -44,5 +48,5 @@ table.discourse-kofi-user {
 }
 
 .kofi_payment_transaction_id {
-	font-family: monospace;
+  font-family: monospace;
 }
