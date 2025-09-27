@@ -9,6 +9,6 @@ export default class AdminPluginsShowDiscourseKofiStatusRoute extends DiscourseR
 
   @action
   async refreshStatus() {
-    this.router.refresh();
+    this.refresh();
   }
 }
