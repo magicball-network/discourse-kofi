@@ -196,11 +196,20 @@ export default class AdminPluginsShowDiscourseKofiAccountsController extends Con
         .catch(popupAjaxError);
     };
 
+    let message;
+    if (!account.anonymized) {
+      message = i18n("discourse_kofi.accounts.actions.delete.confirmation", {
+        username: account.user.username,
+      });
+    } else {
+      message = i18n(
+        "discourse_kofi.accounts.actions.delete.confirmation_anonymous"
+      );
+    }
+
     this.dialog.confirm({
       title: i18n("discourse_kofi.accounts.actions.delete.title"),
-      message: i18n("discourse_kofi.accounts.actions.delete.confirmation", {
-        username: account.user.username,
-      }),
+      message,
       confirmButtonIcon: "trash-can",
       confirmButtonLabel: "discourse_kofi.accounts.actions.delete.confirm",
       confirmButtonClass: "btn-danger",

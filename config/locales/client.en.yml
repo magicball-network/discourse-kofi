@@ -229,6 +229,21 @@ en:
             updated: The account has been anonymized
           delete:
             title: Delete
+            confirmation:
+              Deleting an account will remove the association of payments with the user <em>%{username}</em>. It will not remove previously granted rewards.
+              As the payments are disassociated with the user, they will no longer contribute the totals needed to receive a reward.
+              <br /><br />
+              If the account was anonymized, the payments will become available to be claimed by a user again.
+              <br /><br />
+              Deleting an account cannot be undone as an administrator.
+            confirmation_anonymous:
+              Deleting an anonymized account will not release previous payments to be claimed again. All these payments were anonymized.
+              However, when an anonymized account is deleted, new payments made by the email originally associated with that account
+              can be associated with a user again.
+              <br /><br />
+              Deleting an account cannot be undone.
+            confirm: Delete this account
+            deleted: The account has been deleted
         search_placeholder: Search accounts
         id:
           title: ID
@@ -255,6 +270,22 @@ en:
           payments: Payments
           accounts: Accounts
           claim: Claim payment
+        claim:
+          information:
+            When you use a different email address to make a Ko-fi payment than you used for your account in this community, then
+            your payment is not automatically associated with you. With this form you can associate payments with that email address
+            with your community account.
+            <br /><br />
+            In order to claim a payment you need to provide the transaction ID. You can find this in the confirmation email.
+            Or you can <a href="https://ko-fi.com/manage/supportreceived">view the details of a payment on Ko-fi</a> and copy the URL in the form.
+          input_placeholder: Ko-fi transaction ID or confirmation URL
+          action: Claim
+          success: Payments from this email address have been claimed
+          errors:
+            invalid_reference: No valid transaction ID found.
+            unknown_reference: Transaction unknown.
+            already_claimed: This transaction has already been claimed.
+            account_failure: Failed to create an account for this transaction.
   admin_js:
     admin:
       site_settings:
