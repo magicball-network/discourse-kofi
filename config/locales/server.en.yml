@@ -3,7 +3,8 @@ en:
     kofi_webhook_token: 'Verification token for webhook calls made by Ko-fi. 
       Can be found <a href="https://ko-fi.com/manage/webhooks" target="_blank">in the Ko-fi API settings</a>.'
     kofi_account: 'Your ko-fi account name, will be used to create a link on the dashboard'
-    kofi_dashboard_enabled: 'Enable the dashboard/leaderboard of most recent donations'
+    kofi_dashboard_enabled: 'Enable the dashboard/leaderboard of most recent donations at <code>/ko-fi</code>'
+    kofi_dashboard_in_menu: 'Adds an item to the navigation sidebar. Disable this if you want to customize the link to the dashboard'
     kofi_dashboard_totals_types: 'Show totals for these payment types.'
     kofi_dashboard_totals_days: 'Number of days to look back. -1 means since ever'
     kofi_dashboard_count: 'How many of the recent payments to show. 0 will disable recent payments'

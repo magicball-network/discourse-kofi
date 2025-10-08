@@ -286,6 +286,10 @@ en:
             unknown_reference: Transaction unknown.
             already_claimed: This transaction has already been claimed.
             account_failure: Failed to create an account for this transaction.
+      dashboard:
+        menu:
+          title: Donations
+          description: Overview of donations made via Ko-fi
   admin_js:
     admin:
       site_settings:

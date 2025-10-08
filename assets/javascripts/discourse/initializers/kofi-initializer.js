@@ -1,4 +1,5 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
+import DashboardLink from "../misc/dashboard-link";
 import AccountLinkNotification from "../notifications/account-link-notification";
 
 export default {
@@ -9,6 +10,8 @@ export default {
         "kofi_account_link",
         () => AccountLinkNotification
       );
+
+      api.addCommunitySectionLink(() => DashboardLink, true);
     });
   },
 };

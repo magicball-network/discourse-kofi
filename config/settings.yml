@@ -12,11 +12,15 @@ discourse_kofi:
   kofi_dashboard_enabled:
     type: enum
     default: disabled
-    client: false
+    client: true
     choices:
       - disabled
       - authenticated_only
       - enabled
+  kofi_dashboard_in_menu:
+    type: boolean
+    default: true
+    client: true
   kofi_dashboard_totals_types:
     type: list
     default: donation|subscription

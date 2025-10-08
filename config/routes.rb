@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 DiscourseKofi::Engine.routes.draw do
+  get "/" => "/home_page#blank"
   post "webhook" => "webhook#index"
 
   defaults format: :json do
