@@ -22,7 +22,7 @@ export default class KofiUserMenu extends Component {
     {{#if this.viewingSelf}}
       <LinkTo @route="user.ko-fi">
         {{icon "kofi"}}
-        {{i18n "discourse_kofi.title"}}
+        <span>{{i18n "discourse_kofi.title"}}</span>
       </LinkTo>
     {{/if}}
   </template>
