@@ -15,7 +15,6 @@ export default class UserKofiPaymentsController extends Controller {
   search = "";
   order = "timestamp";
   asc = null;
-  period = "all";
 
   loading = false;
 
@@ -71,15 +70,11 @@ export default class UserKofiPaymentsController extends Controller {
     const page = this._page;
     this.set("loading", true);
 
-    const { startDate, endDate } = this._computePeriod();
-
     UserPayment.findAll({
       search: this.search,
       order: this.order,
       asc: this.asc,
       page,
-      startDate,
-      endDate,
     })
       .then((result) => {
         this._results[page] = result.payments;
@@ -90,36 +85,6 @@ export default class UserKofiPaymentsController extends Controller {
       .finally(() => {
         this.set("loading", false);
       });
-  }
-
-  _computePeriod() {
-    const endDate = moment().locale("en").utc().endOf("day");
-    let startDate = moment().locale("en").utc().startOf("day");
-    switch (this.period) {
-      case "all":
-        return { startDate: null, endDate: null };
-      case "yearly":
-        startDate.subtract(1, "year");
-        break;
-      case "quarterly":
-        startDate.subtract(3, "month");
-        break;
-      case "weekly":
-        startDate.subtract(6, "days");
-        break;
-      case "daily":
-        // no change
-        break;
-      case "monthly":
-      // falls through
-      default:
-        startDate.subtract(1, "month");
-        break;
-    }
-    return {
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-    };
   }
 
   @action

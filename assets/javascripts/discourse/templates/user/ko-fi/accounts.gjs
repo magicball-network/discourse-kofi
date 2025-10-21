@@ -81,20 +81,23 @@ export default RouteTemplate(
           <tbody class="d-table__body">
             {{#each @controller.accounts as |account|}}
               <tr class="d-table__row">
-                <td class="d-table__cell --overview">
+                <td class="d-table__cell">
                   <div class="d-table__mobile-label">#</div>
                   {{account.id}}
                 </td>
-                <td class="d-table__cell --overview">
+                <td class="d-table__cell --detail">
+                  <div class="d-table__mobile-label">{{i18n
+                      "discourse_kofi.accounts.email.title"
+                    }}</div>
                   {{account.email}}
                 </td>
-                <td class="d-table__cell --overview">
+                <td class="d-table__cell --detail">
                   <div class="d-table__mobile-label">{{i18n
                       "discourse_kofi.accounts.created_at.title"
                     }}</div>
                   {{formatDate account.created_at leaveAgo="true"}}
                 </td>
-                <td class="d-table__cell --overview">
+                <td class="d-table__cell --detail">
                   <div class="d-table__mobile-label">{{i18n
                       "discourse_kofi.accounts.latest_payment.title"
                     }}</div>

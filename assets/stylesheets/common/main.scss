@@ -1,3 +1,5 @@
+@use "lib/viewport";
+
 div.discourse-kofi-user-controls {
   background: var(--primary-very-low);
   margin-bottom: 1em;
@@ -20,30 +22,10 @@ div.discourse-kofi-user-controls {
   }
 }
 
-table.discourse-kofi-user {
-  width: 100%;
-
-  th,
-  td {
-    padding: 8px;
-  }
-
-  tr {
-    text-align: left;
-
-    &.kofi-user-row__content {
-      position: relative;
-      padding: var(--space-1) 0;
-    }
-  }
-
-  td {
-    vertical-align: middle;
-
-    &.kofi-user-row__controls {
-      text-align: right;
-      width: auto;
-    }
+.d-table__row.kofi_payment_overview {
+  @include viewport.until(md) {
+    margin-bottom: 0;
+    border-bottom: 0;
   }
 }
 

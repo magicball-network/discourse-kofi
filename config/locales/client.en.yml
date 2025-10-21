@@ -110,6 +110,8 @@ en:
         anonymized:
           title: Anonymized
           description: Payment has been anonymized.
+        message:
+          title: Message
       rewards:
         actions:
           create:
