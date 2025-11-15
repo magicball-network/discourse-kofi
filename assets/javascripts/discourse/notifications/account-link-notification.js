@@ -21,7 +21,7 @@ export default class extends NotificationTypeBase {
 
   get linkHref() {
     return userPath(
-      `${this.currentUser.username}/ko-fi/accounts?q=aid:${this.notification.data.account_id}`
+      `${this.currentUser.username}/ko-fi/accounts?q=id:${this.notification.data.account_id}`
     );
   }
 }
