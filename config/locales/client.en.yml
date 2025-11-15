@@ -247,6 +247,13 @@ en:
             confirm: Delete this account
             deleted: The account has been deleted
         search_placeholder: Search accounts
+        description:
+          Ko-fi accounts are links between the email address used to make an transaction and your account in this community.
+          All future Ko-fi transactions with that email address will be associated with you.
+          You can choose to hide these transactions from public display.
+          Visitors might only see that a transaction has happened, but not that it was made by you.
+          Accounts are automatically created for you when the transaction email matches the email you use in this community.
+          An account is also created when you manually claim a Ko-fi transaction.
         id:
           title: ID
         user:

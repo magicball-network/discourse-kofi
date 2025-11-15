@@ -7,6 +7,7 @@ import DropdownMenu from "discourse/components/dropdown-menu";
 import LoadMore from "discourse/components/load-more";
 import TableHeaderToggle from "discourse/components/table-header-toggle";
 import TextField from "discourse/components/text-field";
+import FKAlert from "discourse/form-kit/components/fk/alert";
 import icon from "discourse/helpers/d-icon";
 import formatDate from "discourse/helpers/format-date";
 import { i18n } from "discourse-i18n";
@@ -14,6 +15,9 @@ import DMenu from "float-kit/components/d-menu";
 
 export default RouteTemplate(
   <template>
+    <FKAlert @icon="circle-info">{{i18n
+        "discourse_kofi.accounts.description"
+      }}</FKAlert>
     <div class="discourse-kofi-user-controls">
       <div class="controls user-additional-controls">
         <div class="inline-form">
