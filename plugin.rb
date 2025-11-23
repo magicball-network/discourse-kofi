@@ -27,6 +27,7 @@ module ::DiscourseKofi
 end
 
 require_relative "lib/discourse_kofi/engine"
+require_relative "lib/discourse_kofi/reports"
 
 after_initialize do
   extend_list_method(
@@ -48,4 +49,15 @@ after_initialize do
   Notification.types[:kofi_account_link] = 53_900
 
   on(:user_anonymized) { |user| DiscourseKofi::Anonymizer.anonymize_user(user) }
+
+  register_stat("kofi_payment_totals", expose_via_api: true) do
+    DiscourseKofi::Statistics.payment_totals
+  end
+
+  add_report("kofi_payments") do |report|
+    DiscourseKofi::Reports.payments(report)
+  end
+  add_report("kofi_payment_amount") do |report|
+    DiscourseKofi::Reports.payment_amount(report)
+  end
 end
