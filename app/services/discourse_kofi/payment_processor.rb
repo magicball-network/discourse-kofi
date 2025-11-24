@@ -77,6 +77,7 @@ module DiscourseKofi
 
     def process_rewards(payment, only_reward = nil)
       if only_reward.present?
+        return if only_reward.subscription
         rewards = [only_reward]
       else
         rewards =
@@ -112,7 +113,7 @@ module DiscourseKofi
     def process_subscription(payment, only_reward = nil)
       if only_reward.present?
         if !only_reward.subscription ||
-             payment.tier_name.casecmp(only_reward.tier_name).zero?
+             !payment.tier_name.casecmp(only_reward.tier_name).zero?
           return
         end
         rewards = [only_reward]
@@ -126,14 +127,29 @@ module DiscourseKofi
       return if rewards.empty?
 
       subscriptions =
-        Subscription.where(user: payment.user).filter { |s| s.expired? }
-      #TODO find active sub
-      #add new if no active
-      #reward add/remove from group
-      #check expiration
-      #
-      # just to silence rubocop:
-      subscriptions.empty?
+        Subscription
+          .where(user: payment.user, reward_id: rewards.map { |r| r.id })
+          .map { |s| [s.reward, s] }
+          .to_h
+
+      groups_add = []
+
+      rewards.each do |reward|
+        sub = subscriptions[reward]
+        unless sub
+          sub = Subscription.new
+          sub.user = payment.user
+          sub.reward = reward
+        end
+        sub.last_payment = payment
+        sub.update_rewarded_fields
+        sub.save
+        groups_add << sub.group
+      end
+
+      groups_add
+        .uniq()
+        .each { |group| group.add(payment.user, notify: true, automatic: true) }
     end
   end
 end

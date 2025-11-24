@@ -185,4 +185,110 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
     badge = UserBadge.find_by(badge: reward.badge, user: account.user)
     expect(badge).to be_nil
   end
+
+  describe "subscription rewards" do
+    let(:sub_reward) { Fabricate(:kofi_subscription_reward) }
+    let(:sub_payment) do
+      Fabricate(
+        :kofi_subscription,
+        account: account,
+        tier_name: sub_reward.tier_name
+      )
+    end
+
+    it "will award a new subscription" do
+      @proc.reward_user(sub_payment)
+
+      sub = DiscourseKofi::Subscription.where(user: sub_payment.user).sole
+      expect(sub.last_payment).to eq(sub_payment)
+      expect(sub.reward).to eq(sub_reward)
+      expect(sub.expired?).to be false
+
+      group = GroupUser.find_by(group: sub_reward.group, user: account.user)
+      expect(group).not_to be_nil
+    end
+
+    it "will reactivate an inactive subscription" do
+      old_sub = DiscourseKofi::Subscription.new
+      old_sub.user = sub_payment.user
+      old_sub.last_payment =
+        Fabricate(:kofi_subscription, timestamp: DateTime.now - 2.months)
+      old_sub.reward = sub_reward
+      old_sub.update_rewarded_fields
+      old_sub.save
+      expect(old_sub.expired?).to be true
+
+      @proc.reward_user(sub_payment)
+
+      sub = DiscourseKofi::Subscription.where(user: sub_payment.user).sole
+      expect(sub.last_payment).to eq(sub_payment)
+      expect(sub.expired?).to be false
+    end
+
+    it "will update subscription fields on re-award" do
+      sub = DiscourseKofi::Subscription.new
+      sub.user = sub_payment.user
+      sub.last_payment = Fabricate(:kofi_subscription)
+      sub.reward = sub_reward
+      sub.update_rewarded_fields
+      sub.save
+
+      new_group = Fabricate(:group)
+      sub_reward.tier_name = "new tier"
+      sub_reward.group = new_group
+      sub_reward.save
+      sub_payment.tier_name = "New Tier"
+      sub_payment.save
+
+      @proc.reward_user(sub_payment)
+
+      sub = DiscourseKofi::Subscription.where(user: sub_payment.user).sole
+      expect(sub.tier_name).to eq("new tier")
+      expect(sub.group).to eq(new_group)
+    end
+
+    it "will award multiple subscriptions" do
+      @proc.reward_user(sub_payment)
+
+      sub_reward2 = Fabricate(:kofi_subscription_reward)
+      sub_reward2.tier_name = sub_reward.tier_name
+      sub_reward2.save
+
+      @proc.reward_user(sub_payment)
+
+      subs = DiscourseKofi::Subscription.where(user: sub_payment.user)
+      expect(subs).to contain_exactly(
+        have_attributes(reward: sub_reward, last_payment: sub_payment),
+        have_attributes(reward: sub_reward2, last_payment: sub_payment)
+      )
+    end
+
+    it "will not award when tier does not match" do
+      sub_reward.tier_name = "something else"
+      sub_payment.tier_name = "not the same"
+      @proc.reward_user(sub_payment, sub_reward)
+
+      subs = DiscourseKofi::Subscription.where(user: sub_payment.user)
+      expect(subs).to match_array([])
+    end
+
+    it "will not award subscription for non-subscription reward" do
+      reward2 = Fabricate(:kofi_reward, group: Fabricate(:group))
+      @proc.reward_user(sub_payment, reward2)
+
+      subs = DiscourseKofi::Subscription.where(user: sub_payment.user)
+      expect(subs).to match_array([])
+    end
+
+    it "only process a single reward" do
+      sub_reward2 = Fabricate(:kofi_subscription_reward)
+      sub_reward2.tier_name = sub_reward.tier_name
+      sub_reward2.save
+
+      @proc.reward_user(sub_payment, sub_reward2)
+
+      sub = DiscourseKofi::Subscription.where(user: sub_payment.user).sole
+      expect(sub.reward).to eq(sub_reward2)
+    end
+  end
 end

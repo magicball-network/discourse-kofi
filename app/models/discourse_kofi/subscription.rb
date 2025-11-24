@@ -17,6 +17,11 @@ module ::DiscourseKofi
       self.expires_at.past?
     end
 
+    def update_rewarded_fields
+      self.group = self.reward.group
+      self.tier_name = self.reward.tier_name
+    end
+
     private
 
     def update_expires
