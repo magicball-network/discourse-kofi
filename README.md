@@ -6,7 +6,7 @@ Note: This plugin is still in development and not ready to be used.
 
 ## Plugin Compatibility Status
 
-[![Discourse tests-passed](https://github.com/magicball-network/discourse-kofi/actions/workflows/tests-passed.yml/badge.svg)](https://github.com/magicball-network/discourse-kofi/actions/workflows/tests-passed.yml)
+[![Discourse latest](https://github.com/magicball-network/discourse-kofi/actions/workflows/latest.yml/badge.svg)](https://github.com/magicball-network/discourse-kofi/actions/workflows/latest.yml)
 
 [![Discourse stable](https://github.com/magicball-network/discourse-kofi/actions/workflows/stable.yml/badge.svg)](https://github.com/magicball-network/discourse-kofi/actions/workflows/stable.yml)
 
