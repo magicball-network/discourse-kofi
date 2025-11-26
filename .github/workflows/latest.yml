@@ -1,4 +1,4 @@
-name: Discourse tests-passed
+name: Discourse latest
 
 on:
   push:
