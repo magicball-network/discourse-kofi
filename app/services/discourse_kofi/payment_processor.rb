@@ -133,10 +133,13 @@ module DiscourseKofi
           .to_h
 
       groups_add = []
+      groups_remove = []
 
       rewards.each do |reward|
         sub = subscriptions[reward]
-        unless sub
+        if sub
+          groups_remove << sub.group if sub.group != reward.group
+        else
           sub = Subscription.new
           sub.user = payment.user
           sub.reward = reward
@@ -150,6 +153,19 @@ module DiscourseKofi
       groups_add
         .uniq()
         .each { |group| group.add(payment.user, notify: true, automatic: true) }
+
+      return if groups_remove.empty?
+
+      existing_groups =
+        Subscription
+          .where(user: payment.user)
+          .where("expires_at > ?", DateTime.now())
+          .pluck(:group_id)
+      groups_remove.delete_if do |g|
+        groups_add.include?(g) || existing_groups.include?(g.id())
+      end
+
+      groups_remove.uniq().each { |group| group.remove(payment.user) }
     end
   end
 end

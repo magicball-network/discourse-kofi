@@ -261,6 +261,11 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
         have_attributes(reward: sub_reward, last_payment: sub_payment),
         have_attributes(reward: sub_reward2, last_payment: sub_payment)
       )
+
+      group = GroupUser.find_by(group: sub_reward.group, user: account.user)
+      expect(group).not_to be_nil
+      group = GroupUser.find_by(group: sub_reward2.group, user: account.user)
+      expect(group).not_to be_nil
     end
 
     it "will not award when tier does not match" do
@@ -289,6 +294,48 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
 
       sub = DiscourseKofi::Subscription.where(user: sub_payment.user).sole
       expect(sub.reward).to eq(sub_reward2)
+    end
+
+    it "will remove the users from a stale group subscription" do
+      @proc.reward_user(sub_payment)
+
+      sub_reward.group = Fabricate(:group)
+      sub_reward.save
+      # User should be added to the new group, and removed from the old group
+      @proc.reward_user(sub_payment)
+
+      groups = GroupUser.where(user: account.user)
+      expect(groups).to contain_exactly(
+        have_attributes(group: sub_reward.group)
+      )
+    end
+
+    it "will not remove active group subscriptions" do
+      # second reward, same group
+      sub_reward2 = Fabricate(:kofi_subscription_reward)
+      sub_reward2.tier_name = sub_reward.tier_name
+      sub_reward2.group = sub_reward.group
+      sub_reward2.save
+
+      @proc.reward_user(sub_payment)
+
+      groups = GroupUser.where(user: account.user)
+      expect(groups).to contain_exactly(
+        have_attributes(group: sub_reward.group)
+      )
+
+      # change group for reward 2
+      sub_reward2.group = Fabricate(:group)
+      sub_reward2.save
+
+      # Only process for reward 2
+      @proc.reward_user(sub_payment, sub_reward2)
+
+      groups = GroupUser.where(user: account.user)
+      expect(groups).to contain_exactly(
+        have_attributes(group: sub_reward.group),
+        have_attributes(group: sub_reward2.group)
+      )
     end
   end
 end
