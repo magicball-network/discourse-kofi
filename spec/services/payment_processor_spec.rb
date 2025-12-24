@@ -206,6 +206,13 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
 
       group = GroupUser.find_by(group: sub_reward.group, user: account.user)
       expect(group).not_to be_nil
+
+      expect(user.notifications).to include(
+        have_attributes(
+          notification_type: Notification.types[:kofi_subscription_activated],
+          data: { tier_name: sub_reward.tier_name }.to_json
+        )
+      )
     end
 
     it "will reactivate an inactive subscription" do
@@ -223,6 +230,13 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
       sub = DiscourseKofi::Subscription.where(user: sub_payment.user).sole
       expect(sub.last_payment).to eq(sub_payment)
       expect(sub.expired?).to be false
+
+      expect(user.notifications).to include(
+        have_attributes(
+          notification_type: Notification.types[:kofi_subscription_activated],
+          data: { tier_name: sub_reward.tier_name }.to_json
+        )
+      )
     end
 
     it "will update subscription fields on re-award" do
@@ -245,6 +259,13 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
       sub = DiscourseKofi::Subscription.where(user: sub_payment.user).sole
       expect(sub.tier_name).to eq("new tier")
       expect(sub.group).to eq(new_group)
+
+      expect(user.notifications).not_to include(
+        have_attributes(
+          notification_type: Notification.types[:kofi_subscription_activated],
+          data: { tier_name: sub_reward.tier_name }.to_json
+        )
+      )
     end
 
     it "will award multiple subscriptions" do

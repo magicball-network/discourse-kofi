@@ -28,11 +28,46 @@ RSpec.describe DiscourseKofi::Subscription, type: :model do
     subscription.group = group
     subscription.tier_name = "premium"
 
+    # Expiration not set, so assume expired
+    expect(subscription.expired?).to be true
+
     expect(subscription.save).to be true
     expect(subscription.expired?).to be false
 
     payment.timestamp = payment.timestamp - 1.month - 1.day
     expect(subscription.save).to be true
     expect(subscription.expired?).to be true
+  end
+
+  it "can be activated" do
+    subscription = DiscourseKofi::Subscription.new
+    subscription.user = user
+    subscription.reward = reward
+    subscription.last_payment = payment
+    subscription.group = group
+    subscription.tier_name = "premium"
+
+    # Not saved yet, so cannot be activated yet
+    expect(subscription.activated?).to be false
+
+    expect(subscription.save).to be true
+    expect(subscription.activated?).to be true
+
+    # Expired, so it cannot be activated
+    payment.timestamp = DateTime.now - 2.month
+    expect(subscription.save).to be true
+    expect(subscription.activated?).to be false
+
+    # Need to reload it from the database to verify re-activation
+    subscription = DiscourseKofi::Subscription.find_by_id(subscription.id)
+    subscription.last_payment.timestamp = DateTime.now
+    expect(subscription.save).to be true
+    expect(subscription.activated?).to be true
+
+    # If it was activate previously, changing the date makes no difference
+    subscription = DiscourseKofi::Subscription.find_by_id(subscription.id)
+    subscription.last_payment.timestamp = DateTime.now + 1.day
+    expect(subscription.save).to be true
+    expect(subscription.activated?).to be false
   end
 end

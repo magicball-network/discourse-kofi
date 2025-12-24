@@ -67,6 +67,7 @@ module DiscourseKofi
 
     def reward_user(payment, only_reward = nil)
       return if payment.user.nil? || payment.anonymized
+      return if only_reward && !only_reward.enabled
       payment.transaction do
         process_rewards(payment, only_reward)
         process_subscription(payment, only_reward) if payment.type_subscription?
@@ -148,6 +149,14 @@ module DiscourseKofi
         sub.update_rewarded_fields
         sub.save
         groups_add << sub.group
+
+        if sub.activated?
+          Notification.create!(
+            notification_type: Notification.types[:kofi_subscription_activated],
+            user_id: sub.user.id,
+            data: { tier_name: sub.tier_name }.to_json
+          )
+        end
       end
 
       groups_add

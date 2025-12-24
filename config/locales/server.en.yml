@@ -15,6 +15,11 @@ en:
     kofi_leaderboard_days: 'Number of days to consider for the leaderboard. -1 means since ever'
     kofi_leaderboard_types: 'Which payment types to consider for the leaderboard'
   kofi:
+    payment_type:
+      donation: Donation
+      subscription: Subscription
+      commission: Commission
+      shop_order: Shop Order
     webhook:
       status:
         invalid_token: 'Received message %{msg_id} with invalid webhook token: %{verification_token}.'
@@ -38,3 +43,10 @@ en:
       validation:
         payment_types_array: 'must be an array'
         invalid_payment_type: "'%{type}' is not a valid payment type"
+  reports:
+    kofi_payments:
+      title: Ko-fi Payments
+      description: Number of payments per type.
+    kofi_payment_amount:
+      title: Ko-fi Payment Amount
+      description: Total amount receive per each type.

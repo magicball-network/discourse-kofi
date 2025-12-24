@@ -32,7 +32,7 @@ module DiscourseKofi
 
     def self.reprocess_subscription(reward)
       #TODO
-      # find relevant payments for reward tier past and previous?
+      # find last_payment based on reward, and payments >= 1 month for the tier
     end
   end
 end

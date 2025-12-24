@@ -158,7 +158,10 @@ en:
           description: Award the user with this badge.
         group:
           title: Group membership
-          description: Add the user to this group.
+          description: 
+            Add the user to this group. 
+            For subscription rewards the group should only be used with Ko-fi rewards as users will be removed from the group
+            if they have no active subscriptions for this group anymore.
         amount:
           title: Minimum amount
           description: Reward is granted when the total amount of payments by this user is greater or equal to this value.
@@ -274,6 +277,10 @@ en:
         account_linked:
           description: Ko-fi payments linked to your account
           link_title: View Ko-fi accounts
+        subscription_activated: Activated Ko-fi subscription for the '%{tier_name}' tier
+        subscription_expired: Ko-fi subscription expired for the '%{tier_name}' tier
+        subscription_joined_group: Your Ko-fi subscription granted you '%{group_name}' membership
+        subscription_left_group: You left '%{group_name}' due to expired Ko-fi subscriptions
       user:
         navigation:
           payments: Payments

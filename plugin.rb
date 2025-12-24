@@ -30,6 +30,8 @@ require_relative "lib/discourse_kofi/engine"
 require_relative "lib/discourse_kofi/reports"
 
 after_initialize do
+  require_relative "app/jobs/discourse_kofi/scheduled/subscription_expiration"
+
   extend_list_method(
     UserHistory,
     :staff_actions,
@@ -47,6 +49,10 @@ after_initialize do
   )
 
   Notification.types[:kofi_account_link] = 53_900
+  Notification.types[:kofi_subscription_activated] = 53_910
+  Notification.types[:kofi_subscription_expired] = 53_911
+  Notification.types[:kofi_subscription_joined_group] = 53_912
+  Notification.types[:kofi_subscription_left_group] = 53_913
 
   on(:user_anonymized) { |user| DiscourseKofi::Anonymizer.anonymize_user(user) }
 

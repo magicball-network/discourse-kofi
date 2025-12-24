@@ -14,7 +14,11 @@ module ::DiscourseKofi
     before_save :update_expires
 
     def expired?
-      self.expires_at.past?
+      self.expires_at.nil? || self.expires_at.past?
+    end
+
+    def activated?
+      @activated == true
     end
 
     def update_rewarded_fields
@@ -25,8 +29,10 @@ module ::DiscourseKofi
     private
 
     def update_expires
+      was_expired = self.expired?
       # Add 1 day slack
       self.expires_at = self.last_payment.timestamp + 1.month + 1.day
+      @activated = was_expired && !self.expired?
     end
   end
 end
