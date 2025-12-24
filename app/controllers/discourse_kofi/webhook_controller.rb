@@ -85,19 +85,35 @@ module ::DiscourseKofi
         return head :ok
       end
 
-      WebhookStatus.update(
-        success:
-          I18n.t(
-            "kofi.webhook.status.message_received",
-            msg_id: payment.message_id,
-            tx_id: payment.kofi_transaction_id
-          )
-      )
-
       payment.save
-      ::Jobs.enqueue(Jobs::ResolvePayment, payment_id: payment.id)
 
-      head :ok
+      if payment.valid?
+        WebhookStatus.update(
+          success:
+            I18n.t(
+              "kofi.webhook.status.message_received",
+              msg_id: payment.message_id,
+              tx_id: payment.kofi_transaction_id
+            )
+        )
+
+        ::Jobs.enqueue(Jobs::ResolvePayment, payment_id: payment.id)
+        head :ok
+      else
+        Rails.logger.error(
+          "Problem saving Ko-fi payment. Message ID: #{payment.message_id}; Transaction ID #{payment.kofi_transaction_id}: ; Errors: #{payment.errors.full_messages}"
+        )
+        WebhookStatus.update(
+          error:
+            I18n.t(
+              "kofi.webhook.status.save_error",
+              msg_id: payment.message_id,
+              tx_id: payment.kofi_transaction_id,
+              error_messages: payment.errors.full_messages.join("; ")
+            )
+        )
+        render_json_error payment.errors.full_messages, 400
+      end
     end
   end
 end

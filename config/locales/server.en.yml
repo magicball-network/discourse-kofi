@@ -27,6 +27,7 @@ en:
         duplicate_message: 'Received message %{msg_id} for transaction: %{tx_id}. Duplicate message.'
         known_transaction: 'Received message %{msg_id} for transaction: %{tx_id}. Known transaction.'
         message_received: 'Received message %{msg_id} for transaction: %{tx_id}.'
+        save_error: 'Failed to process message %{msg_id} for transaction: %{tx_id}. Could not save the record: %{error_messages}'
     payments:
       import:
         invalid_csv: 'Failed loading CSV file. %{error}'

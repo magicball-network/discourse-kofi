@@ -277,10 +277,14 @@ en:
         account_linked:
           description: Ko-fi payments linked to your account
           link_title: View Ko-fi accounts
-        subscription_activated: Activated Ko-fi subscription for the '%{tier_name}' tier
-        subscription_expired: Ko-fi subscription expired for the '%{tier_name}' tier
-        subscription_joined_group: Your Ko-fi subscription granted you '%{group_name}' membership
-        subscription_left_group: You left '%{group_name}' due to expired Ko-fi subscriptions
+        subscription_activated:
+          description: Activated Ko-fi subscription for the '%{tier_name}' tier
+        subscription_expired:
+          description: Ko-fi subscription expired for the '%{tier_name}' tier
+        subscription_joined_group:
+          description: Your Ko-fi subscription granted you '%{group_name}' membership
+        subscription_left_group:
+          description: You left '%{group_name}' due to expired Ko-fi subscriptions
       user:
         navigation:
           payments: Payments

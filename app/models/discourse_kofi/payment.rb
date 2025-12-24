@@ -53,8 +53,16 @@ module ::DiscourseKofi
               presence: true
 
     validates :amount, numericality: { greater_than: 0 }
-    validates :tier_name, presence: true, if: :is_subscription_payment
-    validates :tier_name, absence: true, unless: :is_subscription_payment
+    validates :tier_name,
+              presence: {
+                message: "required for subscription payments"
+              },
+              if: :is_subscription_payment
+    validates :tier_name,
+              absence: {
+                message: "forbidden for non-subscription payments"
+              },
+              unless: :is_subscription_payment
     validate :valid_transaction_id
 
     before_save :update_payment_type, :update_user
