@@ -112,6 +112,8 @@ module DiscourseKofi
     end
 
     def process_subscription(payment, only_reward = nil)
+      return if Subscription.calculate_expiration(payment.timestamp).past?
+
       if only_reward.present?
         if !only_reward.subscription ||
              !payment.tier_name.casecmp(only_reward.tier_name).zero?

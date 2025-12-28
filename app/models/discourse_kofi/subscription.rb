@@ -13,6 +13,11 @@ module ::DiscourseKofi
 
     before_save :update_expires
 
+    def self.calculate_expiration(timestamp)
+      # Add 1 day slack
+      timestamp + 1.month + 1.day
+    end
+
     def expired?
       self.expires_at.nil? || self.expires_at.past?
     end
@@ -30,8 +35,8 @@ module ::DiscourseKofi
 
     def update_expires
       was_expired = self.expired?
-      # Add 1 day slack
-      self.expires_at = self.last_payment.timestamp + 1.month + 1.day
+      self.expires_at =
+        Subscription.calculate_expiration(self.last_payment.timestamp)
       @activated = was_expired && !self.expired?
     end
   end

@@ -284,7 +284,7 @@ en:
         subscription_joined_group:
           description: Your Ko-fi subscription granted you '%{group_name}' membership
         subscription_left_group:
-          description: You left '%{group_name}' due to expired Ko-fi subscriptions
+          description: Membership of '%{group_name}' ended because the Ko-fi subscription expired
       user:
         navigation:
           payments: Payments

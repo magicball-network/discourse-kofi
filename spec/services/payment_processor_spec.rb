@@ -358,5 +358,15 @@ RSpec.describe DiscourseKofi::PaymentProcessor do
         have_attributes(group: sub_reward2.group)
       )
     end
+
+    it "will not create an instantly expires subscription" do
+      sub_payment.timestamp = DateTime.now - 1.month - 1.day
+      sub_payment.save!
+
+      @proc.reward_user(sub_payment)
+
+      subcount = DiscourseKofi::Subscription.where(user: sub_payment.user).count
+      expect(subcount).to eq(0)
+    end
   end
 end
