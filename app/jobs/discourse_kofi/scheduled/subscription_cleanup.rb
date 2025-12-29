@@ -1,17 +1,15 @@
 # frozen_string_literal: true
 
 module ::DiscourseKofi::Jobs
-  class SubscriptionExpiration < ::Jobs::Scheduled
+  class SubscriptionCleanup < ::Jobs::Scheduled
     every 1.hours
 
     def execute(args)
       return unless SiteSetting.kofi_enabled
       DiscourseKofi::Subscription
-        .where("expires_at <= ?", DateTime.now)
+        .where("expires_at <= ?", DateTime.now - 2.weeks)
         .each do |sub|
-          sub.transaction do
-            DiscourseKofi::SubscriptionProcessor.expire_subscription(sub)
-          end
+          sub.transaction { DiscourseKofi::SubscriptionProcessor.destroy!(sub) }
         end
     end
   end
