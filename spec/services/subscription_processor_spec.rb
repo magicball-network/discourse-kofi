@@ -85,4 +85,14 @@ RSpec.describe DiscourseKofi::SubscriptionProcessor do
       )
     )
   end
+
+  it "destroys subscriptions" do
+    described_class.destroy!(sub)
+
+    found_sub = DiscourseKofi::Subscription.find_by_id(sub.id)
+    expect(found_sub).to be_nil
+
+    group = GroupUser.find_by(group: sub.group, user: sub.user)
+    expect(group).to be_nil
+  end
 end

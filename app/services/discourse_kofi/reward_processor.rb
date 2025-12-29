@@ -2,7 +2,9 @@
 
 module DiscourseKofi
   class RewardProcessor
+    #: (DiscourseKofi::Reward reward) -> void
     def self.reprocess(reward)
+      raise "Not a Reward" unless reward.kind_of?(Reward)
       return unless reward.enabled
       if reward.subscription
         reprocess_subscription(reward)
@@ -31,8 +33,27 @@ module DiscourseKofi
     end
 
     def self.reprocess_subscription(reward)
-      #TODO
-      # find last_payment based on reward, and payments >= 1 month for the tier
+      # Expire subscriptions for the reward which no longer match the tier.
+      # They might be reactivated by a different payment, so give some expiration process slack.
+      Subscription
+        .where(reward: reward)
+        .where("lower(tier_name) != ?", reward.tier_name.downcase)
+        .update_all(expires_at: DateTime.now + 1.hour)
+
+      payments =
+        Payment
+          .where("user_id is not null")
+          .where("lower(tier_name) = ?", reward.tier_name.downcase)
+          .where("timestamp > ?", DateTime.now - 1.month - 1.day)
+          .where("is_subscription_payment = true")
+          .select(:id)
+      payments.each do |payment|
+        ::Jobs.enqueue(
+          Jobs::RewardUser,
+          payment_id: payment.id,
+          reward_id: reward.id
+        )
+      end
     end
   end
 end

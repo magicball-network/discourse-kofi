@@ -59,7 +59,7 @@ module DiscourseKofi
       def destroy
         Reward.transaction do
           reward = find_reward
-          # TODO delete subscriptions
+          destroy_subscriptions!(reward) if reward.subscription?
           StaffActionLogger.new(current_user).log_custom(
             "kofi_reward_deletion",
             log_details(reward)
@@ -79,6 +79,7 @@ module DiscourseKofi
         end
       end
 
+      #: -> DiscourseKofi::Reward
       def find_reward
         params.require(:id)
         Reward.find(params[:id])
@@ -126,6 +127,12 @@ module DiscourseKofi
         end
         details[:reward_id] = reward.id
         details
+      end
+
+      def destroy_subscriptions!(reward)
+        Subscription
+          .where(reward: reward)
+          .each { |sub| SubscriptionProcessor.destroy!(sub) }
       end
     end
   end

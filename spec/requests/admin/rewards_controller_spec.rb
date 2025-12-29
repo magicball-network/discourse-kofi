@@ -206,6 +206,20 @@ RSpec.describe DiscourseKofi::Admin::RewardsController do
         delete "/ko-fi/admin/rewards/9999999999999"
         expect(response.status).to eq(404)
       end
+
+      it "destroys subscriptions" do
+        payment =
+          Fabricate(:kofi_subscription, account: Fabricate(:kofi_account))
+        sub = DiscourseKofi::Subscription.new
+        sub.user = payment.user
+        sub.reward = kofi_subscription_reward
+        sub.last_payment = payment
+        sub.update_rewarded_fields
+        sub.save!
+
+        delete "/ko-fi/admin/rewards/#{kofi_subscription_reward.id}"
+        expect(response.status).to eq(200)
+      end
     end
   end
 end

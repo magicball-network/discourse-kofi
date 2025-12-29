@@ -2,7 +2,9 @@
 
 module DiscourseKofi
   class SubscriptionProcessor
+    #: (Discourse::Subscription subscription) -> void
     def self.expire_subscription(subscription)
+      raise "Not a Subscription" unless subscription.kind_of?(Subscription)
       return unless subscription.expired?
 
       Notification.create!(
@@ -15,6 +17,7 @@ module DiscourseKofi
         Subscription
           .where(user: subscription.user)
           .where(group: subscription.group)
+          .where("id != ?", subscription.id)
           .where("expires_at > ?", DateTime.now())
           .pluck(:group_id)
 
@@ -30,6 +33,14 @@ module DiscourseKofi
           }.to_json
         )
       end
+    end
+
+    #: (Discourse::Subscription subscription) -> void
+    def self.destroy!(subscription)
+      raise "Not a Subscription" unless subscription.kind_of?(Subscription)
+      subscription.expires_at = DateTime.now - 1 if !subscription.expired?
+      expire_subscription(subscription)
+      subscription.destroy!
     end
   end
 end

@@ -187,7 +187,7 @@ en:
               This will reprocess all active subscriptions, and related subscription payments of the users.<br />
               Users will be added and remove from the group depending on the changes made to this configuration.
               <br /><br />
-              Are you sure you want to reprocess subscription #${id}?
+              Are you sure you want to reprocess subscription #%{id}?
             confirm: Reprocess payments
             started: Started reprocessing payments...
           delete:
@@ -195,7 +195,10 @@ en:
             confirmation: |
               Permanently delete reward #%{id}? Associated with the ko-fi tier <em class="text-successful">%{tier_name}</em>? <br /><br />
               Deleting this subscription will also remove users from the associated group, 
-              unless they have an other subscription that grants them access to the group <em>%{group.name}</em>.
+              unless they have an other subscription that grants them access to the same group.
+              <br /><br />
+              Deleting a subscription which has a lot of active subscribes take take a while.
+              It is better to disable this reward first, and delete it after a month.
             confirm: Delete subscription
             deleted: Subscription deleted.
         id:
