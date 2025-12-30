@@ -27,7 +27,6 @@ module ::DiscourseKofi
 end
 
 require_relative "lib/discourse_kofi/engine"
-require_relative "lib/discourse_kofi/reports"
 
 after_initialize do
   require_relative "app/jobs/discourse_kofi/scheduled/subscription_expiration"
@@ -57,10 +56,16 @@ after_initialize do
 
   on(:user_anonymized) { |user| DiscourseKofi::Anonymizer.anonymize_user(user) }
 
+  require_relative "lib/discourse_kofi/reports"
   add_report("kofi_payments") do |report|
     DiscourseKofi::Reports.payments(report)
   end
   add_report("kofi_payment_amount") do |report|
     DiscourseKofi::Reports.payment_amount(report)
   end
+
+  require_relative "lib/discourse_kofi/problem_check/config"
+  register_problem_check(DiscourseKofi::KofiConfigProblemCheck)
+  require_relative "lib/discourse_kofi/problem_check/webhook"
+  register_problem_check(DiscourseKofi::KofiWebhookProblemCheck)
 end

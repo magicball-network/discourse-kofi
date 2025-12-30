@@ -51,3 +51,7 @@ en:
     kofi_payment_amount:
       title: Ko-fi Payment Amount
       description: Total amount receive per each type.
+  dashboard:
+    problem:
+      kofi_config_problem_check: There is a problem with the <a href="%{base_path}/admin/plugins/discourse-kofi/status">Ko-fi configuration</a>.
+      kofi_webhook_problem_check: Ko-fi webhook calls recently failed. See the <a href="%{base_path}/admin/plugins/discourse-kofi/status">status page</a> for more information.
