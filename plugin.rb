@@ -57,10 +57,6 @@ after_initialize do
 
   on(:user_anonymized) { |user| DiscourseKofi::Anonymizer.anonymize_user(user) }
 
-  register_stat("kofi_payment_totals", expose_via_api: true) do
-    DiscourseKofi::Statistics.payment_totals
-  end
-
   add_report("kofi_payments") do |report|
     DiscourseKofi::Reports.payments(report)
   end
