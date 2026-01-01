@@ -139,6 +139,8 @@ module DiscourseKofi
       groups_remove = []
 
       rewards.each do |reward|
+        next unless reward.group
+
         sub = subscriptions[reward]
         if sub
           groups_remove << sub.group if sub.group != reward.group

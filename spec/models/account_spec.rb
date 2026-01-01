@@ -3,11 +3,11 @@
 RSpec.describe DiscourseKofi::Account, type: :model do
   it "computes the email hash once" do
     account = Fabricate(:kofi_account)
-    account.save
+    account.save!
 
     hash_value = account.email_hash
     account.email = Faker::Internet.email
-    account.save
+    account.save!
 
     expect(account.email_hash).to eq hash_value
   end
@@ -26,5 +26,15 @@ RSpec.describe DiscourseKofi::Account, type: :model do
     expect(account.anonymized).to be true
     expect(account.email).to eq "12345@anonymous.invalid"
     expect(account.always_hide).to be true
+  end
+
+  it "get deleted on user deletion" do
+    account = Fabricate(:kofi_account)
+    account.save!
+
+    account.user.destroy!
+
+    reloaded = DiscourseKofi::Account.find_by_id(account.id)
+    expect(reloaded).to be_nil
   end
 end

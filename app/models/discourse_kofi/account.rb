@@ -2,6 +2,12 @@
 
 require "digest"
 
+class User
+  has_many :kofi_accounts,
+           class_name: "DiscourseKofi::Account",
+           dependent: :destroy
+end
+
 module ::DiscourseKofi
   class Account < ActiveRecord::Base
     self.table_name = "discourse_kofi_accounts"
@@ -16,6 +22,10 @@ module ::DiscourseKofi
 
     before_create do
       self.email_hash = Account.hash_email(self.email) if self.email_hash.nil?
+    end
+
+    before_destroy do
+      Payment.where(account: self).update_all(account_id: nil, user_id: nil)
     end
 
     def self.hash_email(email)

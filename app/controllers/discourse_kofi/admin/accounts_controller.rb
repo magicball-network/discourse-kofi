@@ -74,13 +74,7 @@ module DiscourseKofi
       def destroy
         params.require(:id)
         account = Account.find(params[:id])
-        account.transaction do
-          Payment.where(account: account).update_all(
-            account_id: nil,
-            user_id: nil
-          )
-          account.destroy
-        end
+        account.transaction { account.destroy }
         StaffActionLogger.new(current_user).log_custom(
           "kofi_account_deletion",
           log_details(account)

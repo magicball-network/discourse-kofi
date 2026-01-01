@@ -70,4 +70,34 @@ RSpec.describe DiscourseKofi::Subscription, type: :model do
     expect(subscription.save).to be true
     expect(subscription.activated?).to be false
   end
+
+  it "deletes subscriptions on user deletion" do
+    subscription = DiscourseKofi::Subscription.new
+    subscription.user = user
+    subscription.reward = reward
+    subscription.last_payment = payment
+    subscription.group = group
+    subscription.tier_name = "premium"
+    subscription.save!
+
+    user.destroy!
+
+    reloaded = DiscourseKofi::Subscription.find_by_id(subscription.id)
+    expect(reloaded).to be_nil
+  end
+
+  it "deletes subscriptions on group deletion" do
+    subscription = DiscourseKofi::Subscription.new
+    subscription.user = user
+    subscription.reward = reward
+    subscription.last_payment = payment
+    subscription.group = group
+    subscription.tier_name = "premium"
+    subscription.save!
+
+    group.destroy!
+
+    reloaded = DiscourseKofi::Subscription.find_by_id(subscription.id)
+    expect(reloaded).to be_nil
+  end
 end

@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+class User
+  has_many :kofi_subscriptions,
+           class_name: "DiscourseKofi::Subscription",
+           dependent: :destroy
+end
+class Group
+  has_many :kofi_subscriptions,
+           class_name: "DiscourseKofi::Subscription",
+           dependent: :destroy
+end
+
 module ::DiscourseKofi
   class Subscription < ActiveRecord::Base
     self.table_name = "discourse_kofi_subscriptions"

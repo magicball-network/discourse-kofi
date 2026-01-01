@@ -38,8 +38,8 @@ module ::DiscourseKofi
 
     enum :payment_type, PAYMENT_TYPES, prefix: :type
 
-    belongs_to :user, optional: true
-    belongs_to :account, class_name: "DiscourseKofi::Account", optional: true
+    belongs_to :user
+    belongs_to :account, class_name: "DiscourseKofi::Account"
 
     # Verification token is only used when a message is received, not persisted
     attr_accessor :verification_token

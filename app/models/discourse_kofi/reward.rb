@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+class Badge
+  has_many :kofi_rewards,
+           class_name: "DiscourseKofi::Reward",
+           dependent: :nullify
+end
+class Group
+  has_many :kofi_rewards,
+           class_name: "DiscourseKofi::Reward",
+           dependent: :nullify
+end
+
 module ::DiscourseKofi
   class Reward < ActiveRecord::Base
     self.table_name = "discourse_kofi_rewards"

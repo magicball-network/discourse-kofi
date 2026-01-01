@@ -138,4 +138,30 @@ RSpec.describe DiscourseKofi::Reward, type: :model do
     expect(reward.valid?).to be false
     expect(reward.errors[:tier_name]).to eq ["must be blank"]
   end
+
+  it "will have the badge set to nil when the badge is deleted" do
+    reward = DiscourseKofi::Reward.new
+    reward.badge = badge
+    reward.amount = 123.45
+    reward.payment_types = [:donation]
+    reward.save!
+
+    badge.destroy!
+
+    reloaded = DiscourseKofi::Reward.find_by_id(reward.id)
+    expect(reloaded.badge).to be_nil
+  end
+
+  it "will have the group set to nil when the group is deleted" do
+    reward = DiscourseKofi::Reward.new
+    reward.group = group
+    reward.amount = 123.45
+    reward.payment_types = [:donation]
+    reward.save!
+
+    group.destroy!
+
+    reloaded = DiscourseKofi::Reward.find_by_id(reward.id)
+    expect(reloaded.group).to be_nil
+  end
 end

@@ -118,4 +118,31 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
       [include("test transaction cannot be stored")]
     )
   end
+
+  it "will have the user nullified when the user is deleted" do
+    account = Fabricate(:kofi_account)
+    account.save!
+    payment = Fabricate(:kofi_payment, account: account)
+    payment.save!
+
+    account.user.destroy!
+
+    reloaded = DiscourseKofi::Payment.find_by_id(payment.id)
+    expect(reloaded.user).to be_nil
+    # Because the account has been destroyed
+    expect(reloaded.account).to be_nil
+  end
+
+  it "will have the account nullified when the account is deleted" do
+    account = Fabricate(:kofi_account)
+    account.save!
+    payment = Fabricate(:kofi_payment, account: account)
+    payment.save!
+
+    account.destroy!
+
+    reloaded = DiscourseKofi::Payment.find_by_id(payment.id)
+    expect(reloaded.account).to be_nil
+    expect(reloaded.user).to be_nil
+  end
 end
