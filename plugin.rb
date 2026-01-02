@@ -30,7 +30,6 @@ require_relative "lib/discourse_kofi/engine"
 
 after_initialize do
   require_relative "app/jobs/discourse_kofi/scheduled/subscription_expiration"
-  require_relative "app/jobs/discourse_kofi/scheduled/subscription_cleanup"
 
   extend_list_method(
     UserHistory,

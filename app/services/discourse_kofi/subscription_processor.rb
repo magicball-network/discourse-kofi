@@ -33,6 +33,8 @@ module DiscourseKofi
           }.to_json
         )
       end
+
+      subscription.destroy!
     end
 
     #: (Discourse::Subscription subscription) -> void
@@ -40,7 +42,6 @@ module DiscourseKofi
       raise "Not a Subscription" unless subscription.kind_of?(Subscription)
       subscription.expires_at = DateTime.now - 1 if !subscription.expired?
       expire_subscription(subscription)
-      subscription.destroy!
     end
   end
 end

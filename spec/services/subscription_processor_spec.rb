@@ -30,6 +30,9 @@ RSpec.describe DiscourseKofi::SubscriptionProcessor do
 
     described_class.expire_subscription(sub)
 
+    found_sub = DiscourseKofi::Subscription.find_by_id(sub.id)
+    expect(found_sub).to be_nil
+
     group = GroupUser.find_by(group: sub.group, user: sub.user)
     expect(group).to be_nil
 
