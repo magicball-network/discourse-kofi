@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require "active_support/json"
-
 module ::DiscourseKofi
   class RewardSerializer < BaseRewardSerializer
     attributes :payment_types, :amount
 
-    has_one :badge, serializer: IdNameSerializer, embed: :objects
+    has_one :badge, serializer: BasicBadgeSerializer, embed: :objects
 
     def initialize(object, options = {})
       if object.subscription

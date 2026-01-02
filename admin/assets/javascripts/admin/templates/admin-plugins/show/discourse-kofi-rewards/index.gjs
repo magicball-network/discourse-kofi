@@ -1,9 +1,12 @@
 import { fn } from "@ember/helper";
+import { LinkTo } from "@ember/routing";
 import RouteTemplate from "ember-route-template";
 import { not } from "truth-helpers";
+import BadgeButton from "discourse/components/badge-button";
 import DButton from "discourse/components/d-button";
 import DPageSubheader from "discourse/components/d-page-subheader";
 import DropdownMenu from "discourse/components/dropdown-menu";
+import GroupLink from "discourse/components/group-link";
 import icon from "discourse/helpers/d-icon";
 import { i18n } from "discourse-i18n";
 import DMenu from "float-kit/components/d-menu";
@@ -63,8 +66,22 @@ export default RouteTemplate(
                   </td>
                   <td class="d-admin-row__detail">{{reward.amount}}</td>
                   <td class="d-admin-row__detail">{{reward.payment_types}}</td>
-                  <td class="d-admin-row__detail">{{reward.badge.name}}</td>
-                  <td class="d-admin-row__detail">{{reward.group.name}}</td>
+                  <td class="d-admin-row__detail">
+                    {{#if reward.badge}}
+                      <LinkTo
+                        @route="adminBadges.show"
+                        @model={{reward.badge.id}}
+                      >
+                        <BadgeButton @badge={{reward.badge}} />
+                      </LinkTo>
+                    {{/if}}</td>
+                  <td class="d-admin-row__detail">
+                    {{#if reward.group}}
+                      <GroupLink
+                        @group={{reward.group}}
+                      >{{reward.group.name}}</GroupLink>
+                    {{/if}}
+                  </td>
                   <td class="d-admin-row__controls">
                     <DButton
                       @icon="pencil"
@@ -156,9 +173,9 @@ export default RouteTemplate(
                   <td
                     class="d-admin-row__detail"
                   >{{subscription.tier_name}}</td>
-                  <td
-                    class="d-admin-row__detail"
-                  >{{subscription.group.name}}</td>
+                  <td class="d-admin-row__detail"><GroupLink
+                      @group={{subscription.group}}
+                    >{{subscription.group.name}}</GroupLink></td>
                   <td class="d-admin-row__controls">
                     <DButton
                       @icon="pencil"

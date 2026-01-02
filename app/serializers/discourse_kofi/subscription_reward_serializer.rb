@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "active_support/json"
-
 module ::DiscourseKofi
   class SubscriptionRewardSerializer < BaseRewardSerializer
     attributes :tier_name

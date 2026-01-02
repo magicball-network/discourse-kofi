@@ -15,6 +15,7 @@ RSpec.describe DiscourseKofi::RewardSerializer do
     expect(json[:group]).not_to be_nil
     expect(json[:group][:id]).to eq reward.group.id
     expect(json[:group][:name]).to eq reward.group.name
+    expect(json[:group][:url]).to eq reward.group.full_url
     expect(json[:payment_types]).to eq reward.payment_types
     expect(json[:amount]).to eq reward.amount
 

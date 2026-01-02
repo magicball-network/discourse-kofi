@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "active_support/json"
-
 module ::DiscourseKofi
   # User's view on payments
   class UserPaymentSerializer < PaymentSerializer
