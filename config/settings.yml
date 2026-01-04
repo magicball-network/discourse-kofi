@@ -68,7 +68,7 @@ discourse_kofi:
     client: true
   kofi_leaderboard_days:
     default: 90
-    client: false
+    client: true
   kofi_leaderboard_types:
     type: list
     default: donation|subscription|commission|shop_order
