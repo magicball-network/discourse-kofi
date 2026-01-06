@@ -33,7 +33,7 @@ module ::DiscourseKofi
           payment_types: SiteSetting.kofi_dashboard_types.split("|")
         )
 
-      if visible_details.exclude?("include_unknown")
+      if visible_details.exclude?("include_unknown_users")
         query = query.where("user_id is not null")
       end
 

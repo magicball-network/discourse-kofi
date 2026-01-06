@@ -76,6 +76,61 @@ RSpec.describe DiscourseKofi::PaymentStats do
           { name: "number4" }
         ]
       )
+
+      stored_leaderboard =
+        PluginStore
+          .get(DiscourseKofi::PLUGIN_NAME, :leaderboard)
+          .map { |e| e.symbolize_keys }
+      expect(stored_leaderboard).to eq(leaderboard)
+    end
+  end
+
+  describe "goal" do
+    before(:example) do
+      SiteSetting.kofi_goal_amount = 100
+      Fabricate(:kofi_payment, amount: 10)
+      Fabricate(:kofi_payment, amount: 10, timestamp: DateTime.now - 2.months)
+      Fabricate(:kofi_subscription, amount: 50)
+
+      Fabricate(:kofi_payment, amount: 1000, type: "Commission")
+      Fabricate(:kofi_payment, amount: 1000, timestamp: DateTime.now - 2.years)
+    end
+
+    it "does not calculate a goal when target is 0" do
+      SiteSetting.kofi_goal_amount = 0
+      goal = described_class.calculate_goal
+      expect(goal[:progress]).to eq(0)
+      expect(goal[:target]).to be_nil
+    end
+
+    it "calculates a monthly goal" do
+      goal = described_class.calculate_goal
+      expect(goal[:progress]).to eq(60)
+      expect(goal[:target]).to be_nil
+    end
+
+    it "calculates a yearly goal" do
+      SiteSetting.kofi_goal_period = "yearly"
+      goal = described_class.calculate_goal
+      expect(goal[:progress]).to eq(70)
+      expect(goal[:target]).to be_nil
+    end
+
+    it "target is returned when enabled" do
+      SiteSetting.kofi_goal_show_amount = true
+      goal = described_class.calculate_goal
+      expect(goal[:progress]).to eq(60)
+      expect(goal[:target]).to eq(100)
+
+      stored_goal =
+        PluginStore.get(DiscourseKofi::PLUGIN_NAME, :goal).symbolize_keys
+      expect(stored_goal).to eq(goal)
+    end
+
+    it "progress can go over 100%" do
+      SiteSetting.kofi_goal_amount = 50
+      goal = described_class.calculate_goal
+      expect(goal[:progress]).to eq(120)
     end
   end
 end

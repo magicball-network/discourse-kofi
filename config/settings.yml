@@ -21,7 +21,7 @@ discourse_kofi:
     type: boolean
     default: true
     client: true
-  kofi_dashboard_totals_types:
+  kofi_dashboard_summary_types:
     type: list
     default: donation|subscription
     client: false
@@ -32,9 +32,19 @@ discourse_kofi:
       - subscription
       - commission
       - shop_order
-  kofi_dashboard_totals_days:
-    default: 365
+  kofi_dashboard_summary_periods:
+    type: list
+    default: 'all time'
     client: false
+    allow_any: false
+    list_type: compact
+    choices:
+      - last 7 days
+      - last month
+      - last year
+      - all time
+      - current month
+      - current year
   kofi_dashboard_count:
     default: 50
     client: true
@@ -55,20 +65,45 @@ discourse_kofi:
       - amount
       - user
       - message
-      - include_unknown
+      - include_unknown_users
   kofi_dashboard_authenticated_view:
     type: list
-    default: user|message|include_unknown
+    default: user|message|include_unknown_users
     client: false
     allow_any: false
     list_type: compact
     choices: *visibility
+  kofi_goal_amount:
+    default: 0
+    client: false
+  kofi_goal_period:
+    default: monthly
+    type: enum
+    choices:
+      - monthly
+      - yearly
+      #- since
+  #kofi_goal_since:
+  #  default: ''
+  #  type: datetime
+  kofi_goal_show_amount:
+    default: false
+    client: false
+  kofi_goal_types:
+    type: list
+    default: donation|subscription
+    client: false
+    allow_any: false
+    list_type: compact
+    choices: *payment_types
   kofi_leaderboard_count:
     default: 10
     client: true
+    min: 0
   kofi_leaderboard_days:
     default: 90
     client: true
+    min: -1
   kofi_leaderboard_types:
     type: list
     default: donation|subscription|commission|shop_order

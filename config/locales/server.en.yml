@@ -12,8 +12,12 @@ en:
     kofi_dashboard_anonymous_view: 'What details should be shown for unauthenticated users'
     kofi_dashboard_authenticated_view: 'What should be shown for authenticated users'
     kofi_leaderboard_count: 'Number of donators to show. 0 will disable the leaderboard'
-    kofi_leaderboard_days: 'Number of days to consider for the leaderboard. -1 means since ever'
+    kofi_leaderboard_days: 'Number of days to consider for the leaderboard. -1 means since ever. 0 will disable the leaderboard'
     kofi_leaderboard_types: 'Which payment types to consider for the leaderboard'
+    kofi_goal_amount: 'Goal of payment per period work toward to. 0 disables the goal'
+    kofi_goal_period: 'Period over which the goal should work against'
+    kofi_goal_show_amount: 'Show the target amount. Otherwise it will only show the percentage'
+    kofi_goal_types: 'Which types to consider counting toward the goal'
   kofi:
     payment_type:
       donation: Donation

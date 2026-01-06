@@ -6,9 +6,15 @@ module DiscourseKofi
       leaderboard = []
       if SiteSetting.kofi_leaderboard_count < 1 ||
            SiteSetting.kofi_leaderboard_types.empty? ||
-           SiteSetting.kofi_leaderboard_days < 1
+           SiteSetting.kofi_leaderboard_days == 0
         PluginStore.set(PLUGIN_NAME, :leaderboard, leaderboard)
         return leaderboard
+      end
+
+      if SiteSetting.kofi_leaderboard_days == -1
+        timestamp_offset = DateTime.new
+      else
+        timestamp_offset = DateTime.now - SiteSetting.kofi_leaderboard_days.days
       end
 
       ActiveRecord::Base
@@ -29,7 +35,7 @@ module DiscourseKofi
              ",
           "kofi_leaderboard",
           [
-            DateTime.now - SiteSetting.kofi_leaderboard_days.days,
+            timestamp_offset,
             SiteSetting.kofi_leaderboard_types,
             SiteSetting.kofi_leaderboard_count
           ]
@@ -46,6 +52,34 @@ module DiscourseKofi
 
       PluginStore.set(PLUGIN_NAME, :leaderboard, leaderboard)
       leaderboard
+    end
+
+    def self.calculate_goal
+      goal = { progress: 0, target: nil }
+      if SiteSetting.kofi_goal_amount <= 0 || SiteSetting.kofi_goal_types.empty?
+        PluginStore.set(PLUGIN_NAME, :goal, goal)
+        return goal
+      end
+
+      goal[
+        :target
+      ] = SiteSetting.kofi_goal_amount if SiteSetting.kofi_goal_show_amount
+
+      timestamp_offset =
+        DateTime.now - 1.month if SiteSetting.kofi_goal_period == "monthly"
+      timestamp_offset =
+        DateTime.now - 1.year if SiteSetting.kofi_goal_period == "yearly"
+
+      total =
+        Payment
+          .where("timestamp > ?", timestamp_offset)
+          .where(payment_type: SiteSetting.kofi_goal_types.split("|"))
+          .sum(:amount)
+
+      goal[:progress] = (total / SiteSetting.kofi_goal_amount * 100).floor
+
+      PluginStore.set(PLUGIN_NAME, :goal, goal)
+      goal
     end
 
     def self.calculate_summary
