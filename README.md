@@ -8,7 +8,7 @@ Note: This plugin is still in development and not ready to be used.
 
 [![Discourse latest](https://github.com/magicball-network/discourse-kofi/actions/workflows/latest.yml/badge.svg)](https://github.com/magicball-network/discourse-kofi/actions/workflows/latest.yml)
 
-[![Discourse stable](https://github.com/magicball-network/discourse-kofi/actions/workflows/stable.yml/badge.svg)](https://github.com/magicball-network/discourse-kofi/actions/workflows/stable.yml)
+[![Discourse ESR](https://github.com/magicball-network/discourse-kofi/actions/workflows/esr.yml/badge.svg)](https://github.com/magicball-network/discourse-kofi/actions/workflows/esr.yml)
 
 The above status is based on the plugin's executed tests against the specified Discourse branch.
 It is no definite guarantee that there no issues.
