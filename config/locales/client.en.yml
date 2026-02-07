@@ -149,6 +149,9 @@ en:
             missing: Need to configure at least one payment type.
           badge_or_group:
             missing: Need to configure at least a badge or a group membership.
+        warnings:
+          badge-usage: This badge is associated with one or more Ko-fi rewards. Removing it will disassociate it with the reward.
+          group-usage: This group is associated with one or more Ko-fi rewards. Removing it will disassociate it with the reward or subscription.
         id:
           title: ID
         enabled:

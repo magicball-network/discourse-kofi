@@ -69,6 +69,18 @@ module DiscourseKofi
         render json: success_json
       end
 
+      def badge_usage
+        params.require(:id)
+        reward_ids = Reward.where(badge_id: params[:id]).pluck(:id)
+        render json: reward_ids
+      end
+
+      def group_usage
+        params.require(:id)
+        reward_ids = Reward.where(group_id: params[:id]).pluck(:id)
+        render json: reward_ids
+      end
+
       private
 
       def render_reward(reward)
