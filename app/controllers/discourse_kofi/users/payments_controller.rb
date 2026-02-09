@@ -48,7 +48,7 @@ module DiscourseKofi
             PaymentProcessor.new.claim_payment(current_user, params[:reference])
           render_serialized(payment, UserPaymentSerializer)
         rescue PaymentClaimError => error
-          render json: { failed: error.failure }, status: 400
+          render json: { failed: error.failure }, status: :bad_request
         end
       end
     end

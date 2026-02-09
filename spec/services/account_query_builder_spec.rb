@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe DiscourseKofi::AccountQueryBuilder do
-  fab!(:account1) { Fabricate(:kofi_account) }
+  fab!(:account1, :kofi_account)
   fab!(:payment1) do
     Fabricate(
       :kofi_payment,
@@ -18,8 +18,8 @@ RSpec.describe DiscourseKofi::AccountQueryBuilder do
   end
 
   fab!(:account2) { Fabricate(:kofi_account, user: account1.user) }
-  fab!(:account3) { Fabricate(:kofi_account) }
-  fab!(:account4) { Fabricate(:kofi_account) }
+  fab!(:account3, :kofi_account)
+  fab!(:account4, :kofi_account)
 
   it "returns all accounts" do
     account = DiscourseKofi::AccountQueryBuilder.new({})

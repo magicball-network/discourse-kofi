@@ -19,8 +19,6 @@ DiscourseKofi::Engine.routes.draw do
     namespace :admin, constraints: AdminConstraint.new do
       resources :rewards do
         post "reprocess", on: :member
-        get "badge-usage", on: :collection
-        get "group-usage", on: :collection
       end
       resources :payments, only: %i[index show update] do
         post "import", on: :collection

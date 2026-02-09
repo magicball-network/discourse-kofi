@@ -1,67 +1,64 @@
 import { htmlSafe } from "@ember/template";
-import RouteTemplate from "ember-route-template";
 import DButton from "discourse/components/d-button";
 import icon from "discourse/helpers/d-icon";
 import formatDate from "discourse/helpers/format-date";
 import routeAction from "discourse/helpers/route-action";
 import { i18n } from "discourse-i18n";
 
-export default RouteTemplate(
-  <template>
-    <div class="admin-content discourse-kofi-status">
-      <h1 class="kofi-status-health">
-        {{#if @model.healthy}}
-          {{icon
-            "kofi"
-            class="text-successful"
-            title="discourse_kofi.admin.status.status_ok"
-          }}
-        {{else}}
-          {{icon
-            "far-face-frown"
-            class="text-danger"
-            title="discourse_kofi.admin.status.status_nok"
-          }}
-        {{/if}}
-      </h1>
-
-      <DButton
-        @icon="arrows-rotate"
-        @action={{routeAction "refreshStatus"}}
-        @label="refresh"
-      />
-
-      <p class="kofi-status-item">
-        {{#if @model.config.webhook_token_configured}}
-          {{icon "circle-check" class="text-successful"}}
-        {{else}}
-          {{icon "circle-xmark" class="text-danger"}}
-        {{/if}}
-        {{i18n "discourse_kofi.admin.status.webhook-token-configured"}}
-      </p>
-
-      {{#if @model.success}}
-        <p class="kofi-status-item">
-          {{icon "circle-check" class="text-successful"}}
-          {{i18n "discourse_kofi.admin.status.last-success-message"}}
-          {{formatDate @model.success.timestamp leaveAgo="true"}}
-        </p>
-        <p class="kofi-status-detail">{{@model.success.message}}</p>
+export default <template>
+  <div class="admin-content discourse-kofi-status">
+    <h1 class="kofi-status-health">
+      {{#if @model.healthy}}
+        {{icon
+          "kofi"
+          class="text-successful"
+          title="discourse_kofi.admin.status.status_ok"
+        }}
       {{else}}
-        <p class="kofi-status-item">
-          {{icon "circle-exclamation"}}
-          {{htmlSafe (i18n "discourse_kofi.admin.status.webhook-test-hint")}}
-        </p>
+        {{icon
+          "far-face-frown"
+          class="text-danger"
+          title="discourse_kofi.admin.status.status_nok"
+        }}
       {{/if}}
+    </h1>
 
-      {{#if @model.error}}
-        <p class="kofi-status-item">
-          {{icon "circle-xmark" class="text-danger"}}
-          {{i18n "discourse_kofi.admin.status.last-error-message"}}
-          {{formatDate @model.error.timestamp leaveAgo="true"}}
-        </p>
-        <p class="kofi-status-detail">{{@model.error.message}}</p>
+    <DButton
+      @icon="arrows-rotate"
+      @action={{routeAction "refreshStatus"}}
+      @label="refresh"
+    />
+
+    <p class="kofi-status-item">
+      {{#if @model.config.webhook_token_configured}}
+        {{icon "circle-check" class="text-successful"}}
+      {{else}}
+        {{icon "circle-xmark" class="text-danger"}}
       {{/if}}
-    </div>
-  </template>
-);
+      {{i18n "discourse_kofi.admin.status.webhook-token-configured"}}
+    </p>
+
+    {{#if @model.success}}
+      <p class="kofi-status-item">
+        {{icon "circle-check" class="text-successful"}}
+        {{i18n "discourse_kofi.admin.status.last-success-message"}}
+        {{formatDate @model.success.timestamp leaveAgo="true"}}
+      </p>
+      <p class="kofi-status-detail">{{@model.success.message}}</p>
+    {{else}}
+      <p class="kofi-status-item">
+        {{icon "circle-exclamation"}}
+        {{htmlSafe (i18n "discourse_kofi.admin.status.webhook-test-hint")}}
+      </p>
+    {{/if}}
+
+    {{#if @model.error}}
+      <p class="kofi-status-item">
+        {{icon "circle-xmark" class="text-danger"}}
+        {{i18n "discourse_kofi.admin.status.last-error-message"}}
+        {{formatDate @model.error.timestamp leaveAgo="true"}}
+      </p>
+      <p class="kofi-status-detail">{{@model.error.message}}</p>
+    {{/if}}
+  </div>
+</template>

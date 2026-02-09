@@ -21,25 +21,25 @@ module ::DiscourseKofi
     belongs_to :badge
     belongs_to :group
 
-    with_options if: :subscription? do |reward|
-      reward.validates :tier_name, :group, presence: true
+    with_options if: :subscription? do
+      validates :tier_name, :group, presence: true
 
-      reward.validates :badge, :payment_types, :amount, absence: true
+      validates :badge, :payment_types, :amount, absence: true
     end
 
-    with_options unless: :subscription? do |reward|
-      reward.validates :tier_name, absence: true
+    with_options unless: :subscription? do
+      validates :tier_name, absence: true
 
-      reward.validates :payment_types, presence: true
+      validates :payment_types, presence: true
 
-      reward.validates :amount, numericality: { greater_than_or_equal_to: 0 }
+      validates :amount, numericality: { greater_than_or_equal_to: 0 }
 
-      reward.validates :badge,
-                       presence: true,
-                       unless: Proc.new { |r| r.group.present? }
-      reward.validates :group,
-                       presence: true,
-                       unless: Proc.new { |r| r.badge.present? }
+      validates :badge,
+                presence: true,
+                unless: Proc.new { |r| r.group.present? }
+      validates :group,
+                presence: true,
+                unless: Proc.new { |r| r.badge.present? }
     end
 
     validate :valid_payment_types, unless: :subscription?

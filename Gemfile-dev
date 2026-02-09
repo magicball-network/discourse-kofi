@@ -13,8 +13,3 @@ source "https://rubygems.org"
 eval_gemfile(File.expand_path("../../Gemfile", __dir__))
 
 gemspec name: "discourse", path: "../../", require: false
-
-group :development do
-  gem "ruby-lsp-rspec", require: false
-  gem "debug", require: false, platforms: :mri
-end

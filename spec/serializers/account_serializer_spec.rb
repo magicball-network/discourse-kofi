@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe DiscourseKofi::AccountSerializer do
-  fab!(:account) { Fabricate(:kofi_account) }
+  fab!(:account, :kofi_account)
   fab!(:payment) { Fabricate(:kofi_payment, account: account) }
 
   it "includes default elements" do

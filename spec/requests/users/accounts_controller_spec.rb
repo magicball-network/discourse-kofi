@@ -7,7 +7,7 @@ RSpec.describe DiscourseKofi::Users::AccountsController do
   end
 
   fab!(:kofi_account)
-  fab!(:other_account) { Fabricate(:kofi_account) }
+  fab!(:other_account, :kofi_account)
 
   describe "#index" do
     it "returns user all accounts" do

@@ -10,6 +10,8 @@ export default {
     }
 
     withPluginApi((api) => {
+      api.setAdminPluginIcon("discourse-kofi", "kofi");
+
       api.addAdminPluginConfigurationNav("discourse-kofi", [
         {
           label: "discourse_kofi.admin.status.title",

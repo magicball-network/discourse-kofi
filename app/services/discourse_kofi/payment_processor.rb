@@ -132,8 +132,7 @@ module DiscourseKofi
       subscriptions =
         Subscription
           .where(user: payment.user, reward_id: rewards.map { |r| r.id })
-          .map { |s| [s.reward, s] }
-          .to_h
+          .index_by { |s| s.reward }
 
       groups_add = []
       groups_remove = []

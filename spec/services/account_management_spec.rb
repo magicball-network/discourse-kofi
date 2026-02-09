@@ -2,7 +2,7 @@
 
 RSpec.describe DiscourseKofi::AccountManagement do
   fab!(:user)
-  fab!(:other_user) { Fabricate(:user) }
+  fab!(:other_user, :user)
 
   fab!(:account) { Fabricate(:kofi_account, user: user) }
   fab!(:other_account) { Fabricate(:kofi_account, user: other_user) }

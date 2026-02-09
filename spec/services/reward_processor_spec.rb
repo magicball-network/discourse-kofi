@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe DiscourseKofi::RewardProcessor do
-  fab!(:account) { Fabricate(:kofi_account) }
-  fab!(:account2) { Fabricate(:kofi_account) }
+  fab!(:account, :kofi_account)
+  fab!(:account2, :kofi_account)
 
   before(:example) { allow(::Jobs).to receive(:enqueue) }
 
@@ -12,7 +12,7 @@ RSpec.describe DiscourseKofi::RewardProcessor do
 
     fab!(:payment2) { Fabricate(:kofi_payment, account: account2) }
 
-    fab!(:payment3) { Fabricate(:kofi_payment) }
+    fab!(:payment3, :kofi_payment)
 
     fab!(:reward) do
       Fabricate(:kofi_reward, payment_types: %i[donation subscription])
@@ -49,7 +49,7 @@ RSpec.describe DiscourseKofi::RewardProcessor do
   end
 
   describe "subscription rewards" do
-    fab!(:reward) { Fabricate(:kofi_subscription_reward) }
+    fab!(:reward, :kofi_subscription_reward)
 
     fab!(:payment) do
       Fabricate(

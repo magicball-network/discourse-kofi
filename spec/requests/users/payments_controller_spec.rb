@@ -22,8 +22,8 @@ RSpec.describe DiscourseKofi::Users::PaymentsController do
     Fabricate(:kofi_subscription, amount: 30, account: kofi_account)
   end
 
-  fab!(:other_donation1) { Fabricate(:kofi_payment) }
-  fab!(:other_account) { Fabricate(:kofi_account) }
+  fab!(:other_donation1, :kofi_payment)
+  fab!(:other_account, :kofi_account)
   fab!(:other_donation2) { Fabricate(:kofi_payment, account: other_account) }
 
   describe "#index" do

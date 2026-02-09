@@ -6,7 +6,7 @@
 # version: 0.1
 # authors: elmuerte
 # url: https://github.com/magicball-network/discourse-kofi
-# required_version: 3.5.0
+# required_version: 2026.1
 
 enabled_site_setting :kofi_enabled
 
@@ -54,6 +54,18 @@ after_initialize do
   Notification.types[:kofi_subscription_left_group] = 53_913
 
   on(:user_anonymized) { |user| DiscourseKofi::Anonymizer.anonymize_user(user) }
+
+  add_to_serializer(
+    :group_show,
+    :kofi_rewards,
+    include_condition: -> { scope.is_admin? }
+  ) { DiscourseKofi::Reward.where(group: object).pluck(:id) }
+
+  add_to_serializer(
+    :badge,
+    :kofi_rewards,
+    include_condition: -> { scope.is_admin? }
+  ) { DiscourseKofi::Reward.where(badge: object).pluck(:id) }
 
   require_relative "lib/discourse_kofi/reports"
   add_report("kofi_payments") do |report|

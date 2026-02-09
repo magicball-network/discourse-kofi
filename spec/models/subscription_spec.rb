@@ -54,7 +54,7 @@ RSpec.describe DiscourseKofi::Subscription, type: :model do
     expect(subscription.activated?).to be true
 
     # Expired, so it cannot be activated
-    payment.timestamp = DateTime.now - 2.month
+    payment.timestamp = DateTime.now - 2.months
     expect(subscription.save).to be true
     expect(subscription.activated?).to be false
 

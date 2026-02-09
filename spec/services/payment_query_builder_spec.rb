@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe DiscourseKofi::PaymentQueryBuilder do
-  fab!(:account) { Fabricate(:kofi_account) }
+  fab!(:account, :kofi_account)
   fab!(:payment1) do
     Fabricate(
       :kofi_payment,

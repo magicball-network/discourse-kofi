@@ -2,7 +2,7 @@
 
 module ::DiscourseKofi::Jobs
   class SubscriptionExpiration < ::Jobs::Scheduled
-    every 1.hours
+    every 1.hour
 
     def execute(args)
       return unless SiteSetting.kofi_enabled

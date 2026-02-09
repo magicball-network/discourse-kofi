@@ -1,10 +1,8 @@
-import { tracked } from "@glimmer/tracking";
-import Component from "@ember/component";
+import Component from "@glimmer/component";
 import { hash } from "@ember/helper";
 import { LinkTo } from "@ember/routing";
 import { service } from "@ember/service";
 import icon from "discourse/helpers/d-icon";
-import { ajax } from "discourse/lib/ajax";
 import { i18n } from "discourse-i18n";
 
 export default class BadgeRewardUsage extends Component {
@@ -13,32 +11,18 @@ export default class BadgeRewardUsage extends Component {
   }
 
   @service router;
+  @service adminBadges;
 
-  @tracked usedByReward = false;
-
-  async init() {
-    super.init(...arguments);
-    await this.loadUsage();
-  }
-
-  async didUpdateAttrs() {
-    super.didUpdateAttrs(...arguments);
-    await this.loadUsage();
-  }
-
-  async loadUsage() {
-    // Because this plugin outlet does not properly pass the badge instance
-    let badgeId = this.router.currentRoute?.params["badge_id"];
-    if (!badgeId) {
-      return;
+  get usedByReward() {
+    let badge;
+    if (this.args.badge) {
+      badge = this.args.badge;
+    } else {
+      // Old version of Discourse did not set the badge argument correctly
+      let badgeId = parseInt(this.router.currentRoute?.params["badge_id"], 10);
+      badge = this.adminBadges.badges.find((b) => b.id === badgeId);
     }
-    let rewards = await ajax("/ko-fi/admin/rewards/badge-usage", {
-      method: "get",
-      data: {
-        id: badgeId,
-      },
-    }).then((result) => result.rewards);
-    this.usedByReward = rewards && rewards.length > 0;
+    return badge && badge.kofi_rewards && badge.kofi_rewards.length > 0;
   }
 
   <template>

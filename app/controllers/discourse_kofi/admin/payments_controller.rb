@@ -61,7 +61,7 @@ module DiscourseKofi
                             "kofi.payments.import.invalid_csv",
                             error: er.message
                           ),
-                          status: 400
+                          status: :bad_request
       end
 
       def anonymize
@@ -70,7 +70,7 @@ module DiscourseKofi
         if account
           render_serialized(account, AdminAccountSerializer)
         else
-          render json: failed_json, status: 400
+          render json: failed_json, status: :bad_request
         end
       end
     end

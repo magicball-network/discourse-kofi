@@ -3,8 +3,8 @@
 RSpec.describe DiscourseKofi::Jobs::SubscriptionExpiration do
   before { SiteSetting.kofi_enabled = true }
 
-  fab!(:account) { Fabricate(:kofi_account) }
-  fab!(:reward) { Fabricate(:kofi_subscription_reward) }
+  fab!(:account, :kofi_account)
+  fab!(:reward, :kofi_subscription_reward)
   fab!(:payment) do
     Fabricate(:kofi_subscription, account: account, tier_name: reward.tier_name)
   end
@@ -17,7 +17,7 @@ RSpec.describe DiscourseKofi::Jobs::SubscriptionExpiration do
     sub.save!
     sub
   end
-  fab!(:reward2) { Fabricate(:kofi_subscription_reward) }
+  fab!(:reward2, :kofi_subscription_reward)
   fab!(:old_payment) do
     Fabricate(
       :kofi_subscription,
