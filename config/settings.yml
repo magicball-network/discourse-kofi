@@ -82,10 +82,10 @@ discourse_kofi:
     choices:
       - monthly
       - yearly
-      #- since
-  #kofi_goal_since:
-  #  default: ''
-  #  type: datetime
+      - since
+  kofi_goal_since:
+    default: ''
+    type: datetime
   kofi_goal_show_amount:
     default: false
     client: false
@@ -96,6 +96,8 @@ discourse_kofi:
     allow_any: false
     list_type: compact
     choices: *payment_types
+  kofi_goal_progress_bar_integration:
+    default: false
   kofi_leaderboard_count:
     default: 10
     client: true
