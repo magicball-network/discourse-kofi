@@ -12,6 +12,7 @@ module DiscourseKofi
       end
 
       if SiteSetting.kofi_leaderboard_days == -1
+        # Since for ever, well... Julian day
         timestamp_offset = DateTime.new
       else
         timestamp_offset = DateTime.now - SiteSetting.kofi_leaderboard_days.days
@@ -71,6 +72,10 @@ module DiscourseKofi
         DateTime.now - 1.month if SiteSetting.kofi_goal_period == "monthly"
       timestamp_offset =
         DateTime.now - 1.year if SiteSetting.kofi_goal_period == "yearly"
+      timestamp_offset =
+        DateTime.iso8601(
+          SiteSetting.kofi_goal_since
+        ) if SiteSetting.kofi_goal_period == "since"
 
       total =
         Payment

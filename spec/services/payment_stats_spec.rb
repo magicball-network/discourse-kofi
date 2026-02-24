@@ -132,5 +132,39 @@ RSpec.describe DiscourseKofi::PaymentStats do
       goal = described_class.calculate_goal
       expect(goal[:progress]).to eq(120)
     end
+
+    it "calculates since a specific datetime" do
+      SiteSetting.kofi_goal_period = "since"
+      SiteSetting.kofi_goal_since = (DateTime.now - 1.month).to_fs(:iso8601)
+
+      goal = described_class.calculate_goal
+      expect(goal[:progress]).to eq(60)
+    end
+
+    it "updates the progress bar component" do
+      theme =
+        Fabricate(
+          :theme_with_remote_url,
+          component: true,
+          remote_theme:
+            Fabricate(
+              :remote_theme,
+              remote_url:
+                "https://github.com/Canapin/Discourse-progress-bar.git"
+            )
+        )
+      Fabricate(:settings_theme_field, theme: theme, value: <<~YAML)
+        max_value: 1
+        current_value: 1
+      YAML
+
+      SiteSetting.kofi_goal_progress_bar_integration = true
+
+      described_class.calculate_goal
+
+      theme = Theme.find_by_id(theme.id)
+      expect(theme.get_setting(:max_value)).to eq(100)
+      expect(theme.get_setting(:current_value)).to eq(60)
+    end
   end
 end
