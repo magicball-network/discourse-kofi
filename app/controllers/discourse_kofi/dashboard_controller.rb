@@ -5,13 +5,9 @@ module ::DiscourseKofi
     requires_plugin PLUGIN_NAME
 
     def index
-      dashboard = { leaderboard: [], goal: { progress: 0, target: nil } }
+      dashboard = { leaderboard: [], goal: { progress: 0, target: 0 } }
 
-      if SiteSetting.kofi_dashboard_enabled == "disabled" ||
-           (
-             SiteSetting.kofi_dashboard_enabled == "authenticated_only" &&
-               current_user.blank?
-           )
+      unless SiteSetting.kofi_dashboard_enabled
         render json: dashboard
         return
       end

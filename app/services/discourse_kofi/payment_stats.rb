@@ -58,7 +58,7 @@ module DiscourseKofi
     end
 
     def self.calculate_goal
-      goal = { progress: 0, target: nil }
+      goal = { progress: 0, target: 0 }
       if SiteSetting.kofi_goal_amount <= 0 || SiteSetting.kofi_goal_types.empty?
         PluginStore.set(PLUGIN_NAME, :goal, goal)
         return goal

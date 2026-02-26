@@ -9,17 +9,17 @@ en:
     kofi_dashboard_totals_days: 'Number of days to look back. -1 means since ever'
     kofi_dashboard_count: 'How many of the recent payments to show. 0 will disable recent payments'
     kofi_dashboard_types: 'Which payment types should be shown on the dashboard'
-    kofi_dashboard_anonymous_view: 'What details should be shown for unauthenticated users'
-    kofi_dashboard_authenticated_view: 'What should be shown for authenticated users'
+    kofi_dashboard_anonymous_view: 'What details should be shown for unauthenticated users. If empty, nothing will be shown.'
+    kofi_dashboard_authenticated_view: 'What should be shown for authenticated users. If empty, nothing will be shown.'
     kofi_leaderboard_count: 'Number of donators to show. 0 will disable the leaderboard'
     kofi_leaderboard_days: 'Number of days to consider for the leaderboard. -1 means since ever. 0 will disable the leaderboard'
     kofi_leaderboard_types: 'Which payment types to consider for the leaderboard'
     kofi_goal_amount: 'Goal of payment per period work toward to. 0 disables the goal'
     kofi_goal_period: 'Period over which the goal should work against'
-    kofi_goal_since: 'Starting date of the goal'
+    kofi_goal_since: 'Starting date of the goal when the using "since" as period'
     kofi_goal_show_amount: 'Show the target amount. Otherwise it will only show the percentage'
     kofi_goal_types: 'Which types to consider counting toward the goal'
-    kofi_goal_progress_bar_integration: 'Integrate with the <a href="https://meta.discourse.org/t/progress-bar/394184">Progress Bar</a> theme component. This will overwrite the max and current value settings.'
+    kofi_goal_progress_bar_integration: 'Integrate with the <a href="https://meta.discourse.org/t/progress-bar/394184">Progress Bar</a> theme component. This will overwrite the max and current value settings of the component.'
   kofi:
     payment_type:
       donation: Donation

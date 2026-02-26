@@ -10,13 +10,9 @@ discourse_kofi:
     default: ''
     client: true
   kofi_dashboard_enabled:
-    type: enum
-    default: disabled
+    type: boolean
+    default: false
     client: true
-    choices:
-      - disabled
-      - authenticated_only
-      - enabled
   kofi_dashboard_in_menu:
     type: boolean
     default: true
@@ -46,7 +42,7 @@ discourse_kofi:
       - current month
       - current year
   kofi_dashboard_count:
-    default: 50
+    default: 0
     client: true
   kofi_dashboard_types:
     type: list

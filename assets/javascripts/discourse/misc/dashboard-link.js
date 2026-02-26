@@ -9,9 +9,7 @@ export default class extends BaseCommunitySectionLink {
   get shouldDisplay() {
     return (
       this.siteSettings.kofi_dashboard_in_menu &&
-      (this.siteSettings.kofi_dashboard_enabled === "enabled" ||
-        (this.siteSettings.kofi_dashboard_enabled === "authenticated_only" &&
-          this.currentUser))
+      this.siteSettings.kofi_dashboard_enabled
     );
   }
 
