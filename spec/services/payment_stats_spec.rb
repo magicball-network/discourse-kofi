@@ -99,7 +99,7 @@ RSpec.describe DiscourseKofi::PaymentStats do
     it "does not calculate a goal when target is 0" do
       SiteSetting.kofi_goal_amount = 0
       goal = described_class.calculate_goal
-      expect(goal[:progress]).to eq(0)
+      expect(goal[:progress]).to be_nil
       expect(goal[:target]).to be_nil
     end
 

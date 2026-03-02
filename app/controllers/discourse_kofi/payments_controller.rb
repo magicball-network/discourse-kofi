@@ -5,12 +5,7 @@ module ::DiscourseKofi
     requires_plugin PLUGIN_NAME
 
     def index
-      if SiteSetting.kofi_dashboard_enabled == "disabled"
-        render json: []
-        return
-      end
-      if SiteSetting.kofi_dashboard_enabled == "authenticated_only" &&
-           current_user.blank?
+      unless SiteSetting.kofi_dashboard_enabled
         render json: []
         return
       end

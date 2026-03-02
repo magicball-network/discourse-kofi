@@ -3,7 +3,8 @@
 RSpec.describe DiscourseKofi::PaymentsController do
   before do
     SiteSetting.kofi_enabled = true
-    SiteSetting.kofi_dashboard_enabled = "enabled"
+    SiteSetting.kofi_dashboard_enabled = true
+    SiteSetting.kofi_dashboard_count = 10
   end
 
   describe "#index" do
@@ -26,7 +27,7 @@ RSpec.describe DiscourseKofi::PaymentsController do
     fab!(:public_subscription) { Fabricate(:kofi_subscription, amount: 30) }
 
     it "returns an empty result when disabled" do
-      SiteSetting.kofi_dashboard_enabled = "disabled"
+      SiteSetting.kofi_dashboard_enabled = false
       get "/ko-fi/payments"
       expect(response.status).to eq(200)
       parsed = response.parsed_body
@@ -34,7 +35,7 @@ RSpec.describe DiscourseKofi::PaymentsController do
     end
 
     it "returns an empty result when anonymous" do
-      SiteSetting.kofi_dashboard_enabled = "authenticated_only"
+      SiteSetting.kofi_dashboard_anonymous_view = ""
       get "/ko-fi/payments"
       expect(response.status).to eq(200)
       parsed = response.parsed_body

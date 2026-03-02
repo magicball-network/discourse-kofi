@@ -1,9 +1,5 @@
 export default function () {
-  let enabled =
-    this.site.siteSettings.kofi_dashboard_enabled === "enabled" ||
-    (this.site.siteSettings.kofi_dashboard_enabled === "authenticated_only" &&
-      this.site.currentUser);
-  if (enabled) {
+  if (this.site.siteSettings.kofi_dashboard_enabled) {
     this.route("ko-fi");
   }
 }

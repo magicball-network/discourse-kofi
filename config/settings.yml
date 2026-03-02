@@ -44,6 +44,7 @@ discourse_kofi:
   kofi_dashboard_count:
     default: 0
     client: true
+    min: 0
   kofi_dashboard_types:
     type: list
     default: donation
@@ -72,6 +73,7 @@ discourse_kofi:
   kofi_goal_amount:
     default: 0
     client: false
+    min: 0
   kofi_goal_period:
     default: monthly
     type: enum
