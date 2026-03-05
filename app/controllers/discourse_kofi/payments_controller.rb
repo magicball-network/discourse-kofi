@@ -7,10 +7,7 @@ module ::DiscourseKofi
     requires_plugin PLUGIN_NAME
 
     def index
-      unless SiteSetting.kofi_dashboard_enabled
-        render json: []
-        return
-      end
+      return head :not_found unless SiteSetting.kofi_dashboard_enabled
 
       if current_user.present?
         visible_details =

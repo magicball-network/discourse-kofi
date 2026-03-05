@@ -31,9 +31,7 @@ RSpec.describe DiscourseKofi::PaymentsController do
     it "returns an empty result when disabled" do
       SiteSetting.kofi_dashboard_enabled = false
       get "/ko-fi/payments"
-      expect(response.status).to eq(200)
-      parsed = response.parsed_body
-      expect(parsed[:payments]).to be_empty
+      expect(response.status).to eq(404)
     end
 
     it "returns an empty result when anonymous" do

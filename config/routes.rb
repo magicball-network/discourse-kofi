@@ -8,6 +8,7 @@ DiscourseKofi::Engine.routes.draw do
 
   defaults format: :json do
     resources :payments, only: %i[index]
+    resources :dashboard, only: %i[index]
 
     namespace :users do
       resources :payments, only: %i[index show update] do

@@ -7,15 +7,23 @@ module ::DiscourseKofi
     requires_plugin PLUGIN_NAME
 
     def index
-      dashboard = { leaderboard: [], goal: { progress: 0, target: 0 } }
+      return head :not_found unless SiteSetting.kofi_dashboard_enabled
 
-      unless SiteSetting.kofi_dashboard_enabled
-        render json: dashboard
-        return
+      dashboard = { leaderboard: [], goal: { progress: nil, target: nil } }
+
+      leaderboard = PluginStore.get(PLUGIN_NAME, :leaderboard) || []
+      user_ids = leaderboard.map { |e| e[:user_id] }.compact
+      users = User.where(id: user_ids).index_by { |e| e.id }
+
+      leaderboard.each do |entry|
+        if entry[:user_id]
+          user = BasicUserSerializer.new(users[entry[:user_id]], root: "user")
+          dashboard[:leaderboard] << user
+        else
+          dashboard[:leaderboard] << entry
+        end
       end
 
-      dashboard[:leaderboard] = PluginStore.get(PLUGIN_NAME, :leaderboard) ||
-        dashboard[:leaderboard]
       dashboard[:goal] = PluginStore.get(PLUGIN_NAME, :goal) || dashboard[:goal]
 
       render json: dashboard
