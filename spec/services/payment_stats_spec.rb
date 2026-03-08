@@ -51,18 +51,15 @@ RSpec.describe DiscourseKofi::PaymentStats do
         account: account,
         timestamp: DateTime.now - 6.months
       )
+      anonymous_account = Fabricate(:kofi_account)
+      anonymous_account.make_anonymous("12345@anonymous.invalid")
+      anonymous_account.save!
       Fabricate(
         :kofi_payment,
         amount: 90,
-        from_name: "number3 not public",
-        is_public: false,
-        email: "number3@foo.test"
-      )
-      Fabricate(
-        :kofi_payment,
-        amount: 1,
-        from_name: "number3",
-        email: "number3@foo.test"
+        from_name: "number3 is anonymous",
+        email: "number3@something.test",
+        account: anonymous_account
       )
       Fabricate(:kofi_payment, amount: 80, from_name: "number4")
       # excluded because a subscription payment

@@ -30,11 +30,12 @@ module DiscourseKofi
                 p.user_id as user_id,
                 max(p.id) as last_payment_id, 
                 sum(p.amount) as total, 
-                bool_and(is_public) as is_public
+                bool_or(a.always_hide) as has_private_account
               from discourse_kofi_payments p
+              left outer join discourse_kofi_accounts a on a.id = p.account_id
               where p.timestamp > $1
               and p.payment_type = any(string_to_array($2, '|'))
-              group by account, user_id
+              group by account, p.user_id
               order by total desc
               limit $3
              ",
@@ -46,7 +47,7 @@ module DiscourseKofi
           ]
         )
         .each do |row|
-          if !row["is_public"]
+          if row["has_private_account"]
             leaderboard << { anonymous: true }
           elsif row["user_id"]
             leaderboard << { user_id: row["user_id"].to_i }

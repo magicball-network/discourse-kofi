@@ -133,8 +133,8 @@ module ::DiscourseKofi
       end
     end
 
-    def make_anonymous(email = nil)
-      self.email = email if email.present?
+    def make_anonymous(new_email = nil)
+      self.email = new_email if new_email.present?
       self.from_name = ""
       self.message = ""
       self.is_public = false
