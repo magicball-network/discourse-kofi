@@ -44,6 +44,14 @@ module DiscourseKofi
       end
 
       def claim
+        # limit account claiming to 3 per 30 minutes
+        RateLimiter.new(
+          current_user,
+          "kofi_user_account_claim",
+          3,
+          30.minutes
+        ).performed!
+
         params.require(:reference)
         begin
           payment =

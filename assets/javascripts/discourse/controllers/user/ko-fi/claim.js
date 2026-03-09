@@ -33,6 +33,10 @@ export default class UserKofiClaimController extends Controller {
       })
       .catch((error) => {
         const errorInfo = extractErrorInfo(error);
+        if (error.jqXHR && error.jqXHR.status === 429) {
+          this.dialog.alert(errorInfo.message);
+          return;
+        }
         this.dialog.alert(
           i18n(`discourse_kofi.user.claim.errors.${errorInfo.message}`)
         );
