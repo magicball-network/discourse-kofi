@@ -1,31 +1,14 @@
 import Component from "@glimmer/component";
+import { concat } from "@ember/helper";
 import { htmlSafe } from "@ember/template";
 import UserAvatar from "discourse/components/user-avatar";
 import icon from "discourse/helpers/d-icon";
-import { and } from "discourse/truth-helpers";
+import { and, lt } from "discourse/truth-helpers";
 import I18n, { i18n } from "discourse-i18n";
 
 export default class extends Component {
-  // TODO:
-  // #1 = h1 with medium avatar
-  // #2,#3 = h2,h3 with small avatar
-  // #4... = h4 with tiny avatar
-
-  showBadge(idx) {
-    return idx < 3;
-  }
-
-  getBadgeType(idx) {
-    switch (idx) {
-      case 0:
-        return "gold";
-      case 1:
-        return "silver";
-      case 2:
-        return "bronze";
-      default:
-        return "";
-    }
+  getAvatarSize(idx) {
+    return idx < 1 ? "medium" : "small";
   }
 
   formatGoalProgress(goal) {
@@ -80,7 +63,7 @@ export default class extends Component {
               <div
                 class="kofi_dashboard__goal_container_bar_progress"
                 style={{htmlSafe
-                  "--progress-bar-progress: {{@model.goal.progress}}%"
+                  (concat "--progress-bar-progress: " @model.goal.progress "%")
                 }}
               ></div>
             </div>
@@ -94,35 +77,31 @@ export default class extends Component {
       {{#if @model.leaderboard}}
         <div class="kofi_dashboard__leaderboard">
           <h2>{{i18n "discourse_kofi.dashboard.leaderboard.title"}}</h2>
-          {{#each @model.leaderboard as |entry idx|}}
-            <div class="badge-card">
-              <div class="badge-contents">
-                {{#if (this.showBadge idx)}}
-                  <span
-                    class="badge-icon badge-type-{{this.getBadgeType idx}}"
-                    style="--badge-icon-size: var(--font-up-4);"
-                    aria-hidden="true"
-                  >
-                    {{icon "trophy"}}
-                  </span>
+          <ol>
+            {{#each @model.leaderboard as |entry idx|}}
+              <li class="leaderboard{{idx}}">
+                {{#if (lt idx 3)}}
+                  <span class="kofi_dashboard__leaderboard_trophy">{{icon
+                      "trophy"
+                    }}</span>
                 {{/if}}
-                <div class="badge-info">
-                  <div class="badge-info-item">
-                    <h3>
-                      {{#if entry.user}}
-                        <UserAvatar @size="medium" @user={{entry.user}} />
-                        {{entry.user.username}}
-                      {{else if entry.name}}
-                        {{entry.name}}
-                      {{else}}
-                        Anonymous
-                      {{/if}}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {{/each}}
+                <span class="kofi_dashboard__leaderboard_user">
+                  {{#if entry.user}}
+                    <UserAvatar
+                      @size={{this.getAvatarSize idx}}
+                      @user={{entry.user}}
+                    />
+                    {{entry.user.username}}
+                  {{else if entry.name}}
+                    {{entry.name}}
+                  {{else}}
+                    {{icon "user-secret"}}
+                    {{i18n "discourse_kofi.anonymous"}}
+                  {{/if}}
+                </span>
+              </li>
+            {{/each}}
+          </ol>
         </div>
       {{/if}}
 
