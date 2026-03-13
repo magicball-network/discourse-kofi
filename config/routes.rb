@@ -5,6 +5,13 @@
 DiscourseKofi::Engine.routes.draw do
   get "/" => "/home_page#blank"
   post "webhook" => "webhook#index"
+  get "dashboard-text" => "/static#show",
+      :id => "kofi-dashboard",
+      :constraints =>
+        lambda { |r|
+          SiteSetting.kofi_dashboard_enabled &&
+            SiteSetting.kofi_dashboard_topic_id > 0
+        }
 
   defaults format: :json do
     resources :payments, only: %i[index]

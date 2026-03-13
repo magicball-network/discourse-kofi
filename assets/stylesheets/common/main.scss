@@ -32,3 +32,70 @@ div.discourse-kofi-user-controls {
 .kofi_payment_transaction_id {
   font-family: monospace;
 }
+
+#main-outlet > section.kofi_dashboard__sections {
+  background: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+.kofi_dashboard__sections {
+  > div {
+    flex-basis: 30%;
+
+    &.kofi_dashboard__goal {
+      min-width: 300px;
+      flex-grow: 1;
+    }
+
+    &.kofi_dashboard__payments {
+      flex-grow: 2;
+      flex-basis: 50%;
+    }
+  }
+}
+
+.kofi_dashboard__widget {
+  iframe {
+    border: 5px solid #f9f9f9;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+}
+
+.kofi_dashboard__goal {
+  .kofi_dashboard__goal_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    margin: 0.5em 0;
+    gap: 0.5em;
+  }
+
+  .kofi_dashboard__goal_container_bar {
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 10px;
+    box-shadow: var(--shadow-header);
+    border: 1px solid var(--primary-low-mid);
+    padding: 3px;
+    border-radius: 2px;
+  }
+
+  .kofi_dashboard__goal_container_bar_progress {
+    --progress-bar-progress: 0%;
+    height: 100%;
+    width: var(--progress-bar-progress);
+    max-width: 100%;
+    background: var(--tertiary);
+  }
+
+  .kofi_dashboard__goal_container_status {
+    flex: 0 0 auto;
+  }
+}

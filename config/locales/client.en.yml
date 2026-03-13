@@ -316,6 +316,12 @@ en:
         menu:
           title: Donations
           description: Overview of donations made via Ko-fi
+        goal:
+          title: Donation goal
+          short_format_MF: '{progress,number,#}%'
+          full_format_MF: '{progress,number,#}% of ¤ {target,number,#}'
+        leaderboard:
+          title: Leaderboard  
   admin_js:
     admin:
       site_settings:

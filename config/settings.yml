@@ -2,6 +2,9 @@ discourse_kofi:
   kofi_enabled:
     default: false
     client: true
+  kofi_needs_seed:
+    default: true
+    hidden: true
   kofi_webhook_token:
     default: ''
     client: false
@@ -15,6 +18,11 @@ discourse_kofi:
     client: true
   kofi_dashboard_in_menu:
     type: boolean
+    default: true
+    client: true
+  kofi_dashboard_topic_id:
+    default: -1
+  kofi_dashboard_widget_enabled:
     default: true
     client: true
   kofi_dashboard_summary_types:
