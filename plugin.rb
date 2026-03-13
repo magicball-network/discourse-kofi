@@ -31,6 +31,24 @@ end
 require_relative "lib/discourse_kofi/engine"
 
 after_initialize do
+  require_relative "lib/discourse_kofi/seed"
+  DiscourseKofi::Seed.seed_me_seymour
+  add_topic_static_page(
+    "kofi-dashboard",
+    { topic_id: "kofi_dashboard_topic_id" }
+  )
+  on(:site_setting_changed) do |name, old_value, new_value|
+    DiscourseKofi::Seed.update_topic if %i[kofi_account title].include?(name)
+    # TODO: trigger job
+    if name.to_s.starts_with?("kofi_goal_")
+      DiscourseKofi::PaymentStats.calculate_goal
+    end
+    # TODO: trigger job
+    if name.to_s.starts_with?("kofi_leaderboard_")
+      DiscourseKofi::PaymentStats.calculate_leaderboard
+    end
+  end
+
   require_relative "app/jobs/discourse_kofi/scheduled/subscription_expiration"
   require_relative "app/jobs/discourse_kofi/scheduled/leader_board"
 
