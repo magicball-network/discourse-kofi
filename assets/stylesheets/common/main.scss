@@ -78,7 +78,7 @@ div.discourse-kofi-user-controls {
 
   .kofi_dashboard__goal_container_bar {
     display: flex;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgb(0, 0, 0, 0.2);
     width: 100%;
     height: 1.1em;
     box-shadow: var(--shadow-header);
@@ -109,14 +109,16 @@ div.discourse-kofi-user-controls {
       --kofi_trophy_color: var(--d-badge-card-background-color);
       display: flex;
       align-items: center;
-      gap: .25em;
-
+      gap: 0.25em;
       list-style: none;
       font-size: var(--font-up-2);
       margin-bottom: 5px;
       padding: 0.33em;
-
-      background-color: color-mix(in oklab, var(--d-badge-card-background-color) 80%, var(--kofi_trophy_color));
+      background-color: color-mix(
+        in oklab,
+        var(--d-badge-card-background-color) 80%,
+        var(--kofi_trophy_color)
+      );
       border: 1px solid var(--content-border-color);
       border-radius: var(--d-border-radius);
 
@@ -128,14 +130,19 @@ div.discourse-kofi-user-controls {
 
       &.leaderboard0 {
         font-size: var(--font-up-5);
+
         --kofi_trophy_color: var(--gold);
       }
+
       &.leaderboard1 {
         font-size: var(--font-up-4);
+
         --kofi_trophy_color: var(--silver);
       }
+
       &.leaderboard2 {
         font-size: var(--font-up-3);
+
         --kofi_trophy_color: var(--bronze);
       }
     }

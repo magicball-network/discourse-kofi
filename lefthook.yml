@@ -1,6 +1,13 @@
-skip_output:
-  - meta
-  - success
+output:
+  - summary
+  - empty_summary
+  - failure
+  - execution
+  - execution_out
+  - execution_info
+  - skips
+
+glob_matcher: doublestar
 
 pre-commit:
   parallel: true
@@ -15,17 +22,13 @@ pre-commit:
       glob: "*.rb"
       run: bundle exec stree check {staged_files}
     prettier:
-      glob: "*.{js,gjs}"
+      glob: "*.{js,gjs,scss}"
       run: pnpm prettier --list-different {staged_files}
-    #prettier-scss:
-    #  glob: "*.scss"
-    #  include: "app/assets/stylesheets|plugins/.+?/assets/stylesheets"
-    #  run: pnpm prettier --list-different {staged_files}
     eslint:
       glob: "*.{js,gjs}"
       run: pnpm eslint --quiet {staged_files}
     ember-template-lint:
-      glob: "*.{js,gjs}"
+      glob: "*.{gjs}"
       run: pnpm ember-template-lint {staged_files}
     yaml-syntax:
       glob: "*.yml"
@@ -33,6 +36,9 @@ pre-commit:
     i18n-lint:
       glob: "**/{client,server}.en.yml"
       run: bundle exec ruby ../../script/i18n_lint.rb {staged_files}
+    stylelint:
+      glob: "*.scss"
+      run: pnpm stylelint {staged_files}
 
 fix-staged:
   parallel: false
@@ -41,7 +47,7 @@ fix-staged:
       glob: "*.rb"
       run: bundle exec rubocop --force-exclusion -A {staged_files}
     prettier:
-      glob: "*.{js,gjs}"
+      glob: "*.{js,gjs,scss}"
       run: pnpm prettier --write {staged_files}
     eslint:
       glob: "*.{js,gjs}"
@@ -52,6 +58,9 @@ fix-staged:
     syntax_tree:
       glob: "*.rb"
       run: bundle exec stree write Gemfile {staged_files}
+    stylelint:
+      glob: "*.scss"
+      run: pnpm stylelint --fix {staged_files}
 
 lints:
   parallel: true
@@ -60,10 +69,8 @@ lints:
       glob: "*.rb"
       run: bundle exec rubocop --parallel {all_files}
     prettier:
-      glob: "*.{js,gjs}"
+      glob: "*.{js,gjs,scss}"
       run: pnpm prettier --list-different {all_files}
-    #prettier-scss:
-    #  run: pnpm prettier --list-different **/*.scss
     eslint:
       glob: "*.{js,gjs}"
       run: pnpm eslint {all_files}
@@ -79,3 +86,6 @@ lints:
     i18n-lint:
       glob: "**/{client,server}.en.yml"
       run: bundle exec ruby ../../script/i18n_lint.rb {all_files}
+    stylelint:
+      glob: "*.scss"
+      run: pnpm stylelint {all_files}
