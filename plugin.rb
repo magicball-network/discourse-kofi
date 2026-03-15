@@ -32,7 +32,7 @@ require_relative "lib/discourse_kofi/engine"
 
 after_initialize do
   require_relative "lib/discourse_kofi/seed"
-  DiscourseKofi::Seed.seed_me_seymour
+  ::Jobs.enqueue(DiscourseKofi::Jobs::SeedConfig)
   add_topic_static_page(
     "kofi-dashboard",
     { topic_id: "kofi_dashboard_topic_id" }

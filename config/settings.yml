@@ -21,7 +21,7 @@ discourse_kofi:
     default: true
     client: true
   kofi_dashboard_topic_id:
-    default: -1
+    default: 0
   kofi_dashboard_widget_enabled:
     default: true
     client: true
