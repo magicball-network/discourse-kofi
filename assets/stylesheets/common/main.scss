@@ -47,7 +47,7 @@ div.discourse-kofi-user-controls {
     flex-basis: 30%;
 
     &.kofi_dashboard__goal {
-      min-width: 300px;
+      min-width: 300px;      
       flex-grow: 1;
     }
 
@@ -69,34 +69,57 @@ div.discourse-kofi-user-controls {
 .kofi_dashboard__goal {
   .kofi_dashboard__goal_container {
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex: 1;
-    margin: 0.5em 0;
-    gap: 0.5em;
+    margin: 50px 0;
   }
 
-  .kofi_dashboard__goal_container_bar {
-    display: flex;
-    background: rgb(0, 0, 0, 0.2);
-    width: 100%;
-    height: 1.1em;
-    box-shadow: var(--shadow-header);
-    border: 1px solid var(--primary-low-mid);
-    padding: 3px;
-    border-radius: 2px;
+  .kofi_dashboard__goal_bar {
+    --size: 250px;
+    --bar-width: 18px;
+    --size2: calc(var(--size) / 2);
+    --radius: calc((var(--size) - var(--bar-width)) / 2);
   }
 
-  .kofi_dashboard__goal_container_bar_progress {
-    --progress-bar-progress: 0%;
-    height: 100%;
-    width: var(--progress-bar-progress);
-    max-width: 100%;
-    background: var(--tertiary);
+  .kofi_dashboard__goal_bar circle {
+    cx: var(--size2);
+    cy: var(--size2);
+    r: var(--radius);
+    stroke-width: var(--bar-width);
+    fill: none;
+    stroke: var(--tertiary);
   }
 
-  .kofi_dashboard__goal_container_status {
-    flex: 0 0 auto;
+  .kofi_dashboard__goal_bar circle.border {
+    stroke: var(--primary-low-mid);
+  }
+
+  .kofi_dashboard__goal_bar circle.bg {
+    stroke: var(--primary-low);
+    stroke-width: calc(var(--bar-width) - 2px);
+  }
+
+  .kofi_dashboard__goal_bar circle.fg {
+    --circ: calc(var(--radius) * pi * 2);
+    --dash: calc((var(--progress) * var(--circ)) / 100);
+    transform: rotate(-90deg);
+    transform-origin: var(--size2) var(--size2);
+    stroke-dasharray: var(--dash) calc(var(--circ) - var(--dash));
+    stroke: var(--tertiary);
+    stroke-width: calc(var(--bar-width) - 6px);
+  }
+
+  .kofi_dashboard__goal_bar text {
+    text-anchor: middle;
+  }
+
+  .kofi_dashboard__goal_bar text.progress {
+    fill: var(--primary);
+    font-size: calc(var(--size) / 4);
+  }
+
+  .kofi_dashboard__goal_bar text.goal-target {
+    fill: var(--primary-low-mid);
+    font-size: calc(var(--size) / 12);
   }
 }
 

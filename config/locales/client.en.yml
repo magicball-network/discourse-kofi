@@ -318,8 +318,7 @@ en:
           description: Overview of donations made via Ko-fi
         goal:
           title: Donation goal
-          short_format_MF: '{progress,number,#}%'
-          full_format_MF: '{progress,number,#}% of ¤ {target,number,#}'
+          target_MF: 'of ¤{target,number,#}'
         leaderboard:
           title: Leaderboard  
   admin_js:
