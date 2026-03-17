@@ -13,13 +13,10 @@ export default class extends Component {
 
   formatGoalProgress(goal) {
     if (goal.target) {
-      return I18n.messageFormat(
-        "discourse_kofi.dashboard.goal.target_MF",
-        {
-          progress: goal.progress,
-          target: goal.target,
-        }
-      );
+      return I18n.messageFormat("discourse_kofi.dashboard.goal.target_MF", {
+        progress: goal.progress,
+        target: goal.target,
+      });
     } else {
       return "";
     }
@@ -59,15 +56,21 @@ export default class extends Component {
               height="250"
               viewBox="0 0 250 250"
               class="kofi_dashboard__goal_bar"
-              style={{htmlSafe
-                (concat "--progress: " @model.goal.progress)
-              }}
+              style={{htmlSafe (concat "--progress: " @model.goal.progress)}}
             >
               <circle class="border"></circle>
               <circle class="bg"></circle>
               <circle class="fg"></circle>
-              <text x="50%" y="55%" class="progress">{{@model.goal.progress}}%</text>
-              <text x="50%" y="70%" class="goal-target">{{this.formatGoalProgress @model.goal}}</text>
+              <text
+                x="50%"
+                y="55%"
+                class="progress"
+              >{{@model.goal.progress}}%</text>
+              <text
+                x="50%"
+                y="70%"
+                class="goal-target"
+              >{{this.formatGoalProgress @model.goal}}</text>
             </svg>
           </div>
         </div>

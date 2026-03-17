@@ -7,8 +7,6 @@ output:
   - execution_info
   - skips
 
-glob_matcher: doublestar
-
 pre-commit:
   parallel: true
   skip:
