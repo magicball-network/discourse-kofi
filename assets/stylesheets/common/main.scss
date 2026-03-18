@@ -46,11 +46,6 @@ div.discourse-kofi-user-controls {
   > div {
     flex-basis: 30%;
 
-    &.kofi_dashboard__goal {
-      min-width: 300px;
-      flex-grow: 1;
-    }
-
     &.kofi_dashboard__payments {
       flex-grow: 2;
       flex-basis: 50%;
@@ -98,7 +93,7 @@ div.discourse-kofi-user-controls {
     stroke-width: calc(var(--bar-width) - 2px);
   }
 
-  .kofi_dashboard__goal_bar circle.fg {
+  .kofi_dashboard__goal_bar circle.progress {
     --circ: calc(var(--radius) * pi * 2);
     --dash: calc((var(--progress) * var(--circ)) / 100);
     transform: rotate(-90deg);

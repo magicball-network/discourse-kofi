@@ -60,7 +60,7 @@ export default class extends Component {
             >
               <circle class="border"></circle>
               <circle class="bg"></circle>
-              <circle class="fg"></circle>
+              <circle class="progress"></circle>
               <text
                 x="50%"
                 y="55%"
