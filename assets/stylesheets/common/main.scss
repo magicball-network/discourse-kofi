@@ -44,11 +44,11 @@ div.discourse-kofi-user-controls {
 
 .kofi_dashboard__sections {
   > div {
-    flex-basis: 30%;
+    flex-basis: 29%;
 
     &.kofi_dashboard__payments {
       flex-grow: 2;
-      flex-basis: 50%;
+      flex-basis: 33%;
     }
   }
 }
@@ -58,6 +58,7 @@ div.discourse-kofi-user-controls {
     border: 5px solid #f9f9f9;
     background: #f9f9f9;
     border-radius: 8px;
+    box-sizing: border-box;
   }
 }
 
