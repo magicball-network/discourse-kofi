@@ -26,6 +26,7 @@ discourse_kofi:
     default: true
     client: true
   kofi_dashboard_summary_types:
+    hidden: true
     type: list
     default: donation|subscription
     client: false
@@ -37,6 +38,7 @@ discourse_kofi:
       - commission
       - shop_order
   kofi_dashboard_summary_periods:
+    hidden: true
     type: list
     default: 'all time'
     client: false
@@ -55,7 +57,7 @@ discourse_kofi:
     min: 0
   kofi_dashboard_types:
     type: list
-    default: donation
+    default: donation|subscription
     client: false
     allow_any: false
     list_type: compact

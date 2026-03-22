@@ -7,7 +7,16 @@ export default class KoFiRoute extends Route {
     return ajax("/ko-fi/dashboard");
   }
 
+  async recentPayments() {
+    return ajax("/ko-fi/payments")
+      .then((result) => result.payments)
+      .catch(() => []);
+  }
+
   async setupController(controller) {
+    if (controller.siteSettings.kofi_dashboard_count > 0) {
+      controller.set("payments", await this.recentPayments());
+    }
     controller.set(
       "donationMessage",
       await StaticPage.find("ko-fi/dashboard-text")

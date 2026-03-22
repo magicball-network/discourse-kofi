@@ -166,3 +166,54 @@ div.discourse-kofi-user-controls {
     }
   }
 }
+
+.kofi_dashboard__payments {
+  .kofi_dashboard__payments_list {
+    display: flex;
+    flex-direction: column;
+
+    .kofi_dashboard__payments_payment {
+      display: grid;
+      grid-template-columns: min-content auto;
+      gap: 0.5em;
+      border: 1px solid var(--content-border-color);
+      border-radius: var(--d-border-radius);
+      background: var(--secondary);
+      padding: 0.5em;
+      margin-bottom: 0.5em;
+
+      .kofi_dashboard__payments_payment_timestamp {
+        order: 3;
+        color: var(--secondary-high);
+      }
+
+      .kofi_dashboard__payments_payment_user {
+        order: 2;
+        white-space: nowrap;
+        font-weight: bolder;
+      }
+
+      .kofi_dashboard__payments_payment_amount {
+        order: 1;
+        grid-row: 1/3;
+        font-size: var(--font-up-2);
+        color: var(--tertiary);
+        text-align: center;
+        align-content: center;
+      }
+
+      .kofi_dashboard__payments_payment_message {
+        order: 4;
+        grid-column: 1/3;
+      }
+
+      &:has(.kofi_dashboard__payments_payment_amount) {
+        grid-template-columns: 100px min-content auto;
+
+        .kofi_dashboard__payments_payment_message {
+          grid-column: 2/4;
+        }
+      }
+    }
+  }
+}

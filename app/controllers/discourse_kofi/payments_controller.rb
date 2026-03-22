@@ -25,6 +25,9 @@ module ::DiscourseKofi
         Payment.where(
           "payment_type IN (:payment_types)",
           payment_types: SiteSetting.kofi_dashboard_types.split("|")
+        ).where(
+          # Only include first subscription payment; only that one has a message
+          "is_subscription_payment = false or is_first_subscription_payment = true"
         )
 
       if visible_details.exclude?("include_unknown_users")

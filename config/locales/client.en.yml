@@ -320,7 +320,9 @@ en:
           title: Donation goal
           target_MF: 'of ¤{target,number,#}'
         leaderboard:
-          title: Leaderboard  
+          title: Leaderboard
+        payments:
+          title: Recent donations
   admin_js:
     admin:
       site_settings:

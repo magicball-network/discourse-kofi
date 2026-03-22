@@ -2,7 +2,9 @@ import Component from "@glimmer/component";
 import { concat } from "@ember/helper";
 import { htmlSafe } from "@ember/template";
 import UserAvatar from "discourse/components/user-avatar";
+import UserLink from "discourse/components/user-link";
 import icon from "discourse/helpers/d-icon";
+import formatDate from "discourse/helpers/format-date";
 import { and, lt } from "discourse/truth-helpers";
 import I18n, { i18n } from "discourse-i18n";
 
@@ -93,7 +95,9 @@ export default class extends Component {
                       @size={{this.getAvatarSize idx}}
                       @user={{entry.user}}
                     />
-                    {{entry.user.username}}
+                    <UserLink
+                      @user={{entry.user}}
+                    >{{entry.user.username}}</UserLink>
                   {{else if entry.name}}
                     {{entry.name}}
                   {{else}}
@@ -109,8 +113,37 @@ export default class extends Component {
 
       {{#if @controller.siteSettings.kofi_dashboard_count}}
         <div class="kofi_dashboard__payments">
-          This will contain the most recent payments made by users with their
-          message and what not.
+          <h2>{{i18n "discourse_kofi.dashboard.payments.title"}}</h2>
+          <div class="kofi_dashboard__payments_list">
+            {{#each @controller.payments as |payment|}}
+              <div class="kofi_dashboard__payments_payment">
+                <div class="kofi_dashboard__payments_payment_timestamp">
+                  {{formatDate payment.timestamp leaveAgo="true"}}
+                </div>
+                <div class="kofi_dashboard__payments_payment_user">
+                  {{#if payment.user}}
+                    <UserAvatar @size="tiny" @user={{payment.user}} />
+                    <UserLink
+                      @user={{payment.user}}
+                    >{{payment.user.username}}</UserLink>
+                  {{else if payment.username}}
+                    {{payment.username}}
+                  {{else}}
+                    {{icon "user-secret"}}
+                    {{i18n "discourse_kofi.anonymous"}}
+                  {{/if}}
+                </div>
+                {{#if payment.amount_currency}}
+                  <div class="kofi_dashboard__payments_payment_amount">
+                    {{payment.amount_currency}}
+                  </div>
+                {{/if}}
+                <div class="kofi_dashboard__payments_payment_message">
+                  {{payment.message}}
+                </div>
+              </div>
+            {{/each}}
+          </div>
         </div>
       {{/if}}
 
