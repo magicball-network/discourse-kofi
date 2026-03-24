@@ -1,4 +1,4 @@
-zh-CN:
+zh-TW:
   site_settings:
     kofi_webhook_token: 'Verification token for webhook calls made by Ko-fi. Can be found <a href="https://ko-fi.com/manage/webhooks" target="_blank">in the Ko-fi API settings</a>.'
     kofi_account: 'Your ko-fi account name, will be used to create a link on the dashboard'
