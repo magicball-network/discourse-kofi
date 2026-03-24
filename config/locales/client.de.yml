@@ -1,0 +1,285 @@
+de:
+  js:
+    discourse_kofi:
+      title: "Ko-fi"
+      anonymous: Anonymous
+      admin:
+        rewards-management:
+          title: Rewards
+          description: Rewards and and subscription management.
+        rewards:
+          title: Rewards
+          description: One-off rewards received for the current total of payments made.
+        subscriptions:
+          title: Subscriptions
+          description: |
+            Rewards received based on ko-fi membership tiers.
+            Subscriptions are re-evaluated daily. If the last subscription payment was more than a month ago
+            the user will be removed from the associated group.
+        payments:
+          title: Payments
+          description: Received payments via ko-fi.
+        accounts:
+          title: Accounts
+          description: Ko-fi account links to Discourse users.
+        import:
+          title: Import
+          description: Import a Ko-fi CSV transaction export.
+          information: You can import past payments which are not registered by <a href="https://ko-fi.com/manage/supportreceived">downloading a CSV from Ko-fi</a>, and upload it here. Only received payments which are unknown will be added to the database. Already known payments will be ignored.<br /><br /> As the CSV export does not contain information if the user wanted to have this information public, all payments will be imported as private.
+          file: CSV file
+          make_private: Hide payment user information from public
+          import: Import payments
+          aborted: Select a CSV file to import.
+          results: Import results
+          summary: Imported %{count} payments.
+          errors: Import failures
+          error:
+            line: Line
+            message: Message
+        anonymize:
+          title: Anonymize
+          description: Remove personal identifiable information from payments.
+          information: When you anonymize a Discourse user account it will automatically anonymize all Ko-fi Payments registered in the database, and also future received payment.<br /> For existing accounts, associated with Discourse users, you can also individually anonymize associated accounts from the accounts screen.<br /> When you receive a request to forget a person, you can use this forum to create an anonymized account for this email address and thereby anonymize all previous and future payments.<br /><br /> When anonymizing payments all identifiable information will be removed, including the original used email address. The original email address will be pseudo-anonymized by hashing it using SHA2, this allows for matching with future payments.<br /><br /> Anonymization of payments is non-reversible. Deleting an anonymized account will allow new payments to be matched with a user, but past payments cannot be matched.
+          email: Email address
+          anonymize: Anonymize
+          account_created: Anonymized account created.
+        status:
+          title: Status
+          webhook-token-configured: 'Webhook token configured'
+          last-success-message: 'Last successful message received:'
+          webhook-test-hint: Try <a href="https://ko-fi.com/manage/webhooks" target="_blank">sending a test message</a> from Ko-fi to verify the configuration.
+          last-error-message: 'Received error on:'
+          status_ok: All is well
+          status_nok: Something is wrong
+      actions:
+        show_emails:
+          title: Show emails
+        hide_emails:
+          title: Hide emails
+        clear_input: Clear input
+      payments:
+        search_placeholder: Search payments
+        actions:
+          make_private:
+            title: Make payment private
+            confirmation: This will hide the user information and message of the selected payment in public display. <br /><br /> This action cannot be undone.
+            confirm: Hide user payment details
+          show_account:
+            title: Go to account
+        timestamp:
+          title: Date
+        type:
+          title: Type
+        tier_name:
+          title: Tier
+        amount:
+          title: Amount
+        from:
+          title: From
+        from_name:
+          title: Payment from
+        transaction_id:
+          title: Transaction ID
+        public:
+          title: Public
+          description: User payment details are displayed.
+        private:
+          title: Private
+          description: User payment details are hidden.
+        anonymized:
+          title: Anonymized
+          description: Payment has been anonymized.
+        message:
+          title: Message
+      rewards:
+        actions:
+          create:
+            title: New reward
+            description: Create a new one-off reward for paying a given total sum of money. It must grant either a badge, a group membership, or both.
+            saved: Reward created.
+          edit:
+            label: Edit
+            title: Edit reward
+            description: ""
+            saved: Reward updated.
+          reprocess:
+            title: Reprocess
+            description: Reprocess payments by users and award this reward.
+            confirmation: |
+              This will reprocess the past payments made by users and check if this rewards applies to them.<br />
+              Processing can take quite some time to complete depending on the number of users who have made payments in the past.
+              <br /><br />
+              Reprocessing will not revoke awards based on the previous configuration of this award.
+              <br /><br />
+              Are you sure you want to reprocess the payments and award users for paying at least <em class="text-successful">%{amount}</em>?
+            confirm: Reprocess payments
+            started: Started reprocessing payments...
+          delete:
+            title: Delete reward
+            confirmation: |
+              Permanently delete reward #%{id}? Awarded after paying <em class="text-successful">%{amount}</em>? <br /><br />
+              This does not revoke the previously awarded badges or group memberships.
+            confirm: Delete reward
+            deleted: Reward deleted.
+        errors:
+          payment_types:
+            missing: Need to configure at least one payment type.
+          badge_or_group:
+            missing: Need to configure at least a badge or a group membership.
+        warnings:
+          badge-usage: This badge is associated with one or more Ko-fi rewards. Removing it will disassociate it with the reward.
+          group-usage: This group is associated with one or more Ko-fi rewards. Removing it will disassociate it with the reward or subscription.
+        id:
+          title: ID
+        enabled:
+          title: Enabled
+        badge:
+          title: Badge
+          description: Award the user with this badge.
+        group:
+          title: Group membership
+          description: Add the user to this group. For subscription rewards the group should only be used with Ko-fi rewards as users will be removed from the group if they have no active subscriptions for this group anymore.
+        amount:
+          title: Minimum amount
+          description: Reward is granted when the total amount of payments by this user is greater or equal to this value.
+        payment_types:
+          title: Payment types
+          description: Payment types to include when computing the total payment amount.
+      subscriptions:
+        actions:
+          create:
+            title: New subscription
+            description: Create a new subscription, which is a monthly payment of a specified tier.
+            saved: Subscription created.
+          edit:
+            label: Edit
+            title: Edit subscription
+            description: ""
+            saved: Subscription updated.
+          reprocess:
+            title: Reprocess
+            description: Reprocess payments by users for this subscription
+            confirmation: |
+              This will reprocess all active subscriptions, and related subscription payments of the users.<br />
+              Users will be added and remove from the group depending on the changes made to this configuration.
+              <br /><br />
+              Are you sure you want to reprocess subscription #%{id}?
+            confirm: Reprocess payments
+            started: Started reprocessing payments...
+          delete:
+            title: Delete subscription
+            confirmation: |
+              Permanently delete reward #%{id}? Associated with the ko-fi tier <em class="text-successful">%{tier_name}</em>? <br /><br />
+              Deleting this subscription will also remove users from the associated group,
+              unless they have an other subscription that grants them access to the same group.
+              <br /><br />
+              Deleting a subscription which has a lot of active subscribes take take a while.
+              It is better to disable this reward first, and delete it after a month.
+            confirm: Delete subscription
+            deleted: Subscription deleted.
+        id:
+          title: ID
+        enabled:
+          title: Enabled
+        group:
+          title: Group membership
+          description: Add the user to this group. If the subscription is expired the user will be removed from the group.
+        tier_name:
+          title: Ko-fi tier name
+          description: This value must match the name of the membership tier in Ko-fi, otherwise the subscription will not match.
+      accounts:
+        actions:
+          always_hide:
+            title: Payments are never public
+            updated: Future payments will never be public.
+          not_always_hide:
+            title: Allow public payments
+            updated: Future payments will be public when the user allowed it.
+          hide_payment_details:
+            title: Make past payments private
+            confirmation: This will hide the user information and message of all past payments for this account in public display.<br /><br /> This action cannot be undone.
+            confirm: Hide user payment details
+            updated: User details have been hidden for past payments.
+          anonymize:
+            title: Anonymize account and payments
+            confirmation: This will anonymize the account and all associated payments in the past and future (payments made by <em>%{email}</em>). The account will no longer be associated with the user <em>%{username}</em>, and thereby they will no longer be rewarded. <br /><br /> This action cannot be undone.
+            confirm: Anonymize account and payments
+            updated: The account has been anonymized
+          delete:
+            title: Delete
+            confirmation: Deleting an account will remove the association of payments with the user <em>%{username}</em>. It will not remove previously granted rewards. As the payments are disassociated with the user, they will no longer contribute the totals needed to receive a reward. <br /><br /> If the account was anonymized, the payments will become available to be claimed by a user again. <br /><br /> Deleting an account cannot be undone as an administrator.
+            confirmation_anonymous: Deleting an anonymized account will not release previous payments to be claimed again. All these payments were anonymized. However, when an anonymized account is deleted, new payments made by the email originally associated with that account can be associated with a user again. <br /><br /> Deleting an account cannot be undone.
+            confirm: Delete this account
+            deleted: The account has been deleted
+        search_placeholder: Search accounts
+        description: Ko-fi accounts are links between the email address used to make an transaction and your account in this community. All future Ko-fi transactions with that email address will be associated with you. You can choose to hide these transactions from public display. Visitors might only see that a transaction has happened, but not that it was made by you. Accounts are automatically created for you when the transaction email matches the email you use in this community. An account is also created when you manually claim a Ko-fi transaction.
+        id:
+          title: ID
+        user:
+          title: User
+        email:
+          title: Account email
+        always_hide:
+          title: Hide payment details
+          description: Future payments are never public
+        latest_payment:
+          title: Latest payment
+        anonymized:
+          title: Anonymized
+          description: Personal identifiable information is removed from payments
+        created_at:
+          title: Created on
+      notifications:
+        account_linked:
+          description: Ko-fi payments linked to your account
+          link_title: View Ko-fi accounts
+        subscription_activated:
+          description: Activated Ko-fi subscription for the '%{tier_name}' tier
+        subscription_expired:
+          description: Ko-fi subscription expired for the '%{tier_name}' tier
+        subscription_joined_group:
+          description: Your Ko-fi subscription granted you '%{group_name}' membership
+        subscription_left_group:
+          description: Membership of '%{group_name}' ended because the Ko-fi subscription expired
+      user:
+        navigation:
+          payments: Payments
+          accounts: Accounts
+          claim: Claim payment
+        claim:
+          information: When you use a different email address to make a Ko-fi payment than you used for your account in this community, then your payment is not automatically associated with you. With this form you can associate payments with that email address with your community account. <br /><br /> In order to claim a payment you need to provide the transaction ID. You can find this in the confirmation email. Or you can <a href="https://ko-fi.com/manage/supportreceived">view the details of a payment on Ko-fi</a> and copy the URL in the form.
+          input_placeholder: Ko-fi transaction ID or confirmation URL
+          action: Claim
+          success: Payments from this email address have been claimed
+          errors:
+            invalid_reference: No valid transaction ID found.
+            unknown_reference: Transaction unknown.
+            already_claimed: This transaction has already been claimed.
+            account_failure: Failed to create an account for this transaction.
+      dashboard:
+        menu:
+          title: Donations
+          description: Overview of donations made via Ko-fi
+        goal:
+          title: Donation goal
+          target_MF: 'of ¤{target,number,#}'
+        leaderboard:
+          title: Leaderboard
+        payments:
+          title: Recent donations
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_kofi: "Ko-fi"
+      logs:
+        staff_actions:
+          actions:
+            kofi_reward_creation: Ko-fi reward creation
+            kofi_reward_change: Ko-fi reward change
+            kofi_reward_deletion: Ko-fi reward deletion
+            kofi_account_change: Ko-fi account change
+            kofi_account_anonymized: Ko-fi account anonymized
+            kofi_account_deletion: Ko-fi account deletion
+            kofi_payment_privatized: Ko-fi payments privatized
+            kofi_payment_change: Ko-fi payment change
