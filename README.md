@@ -2,7 +2,9 @@
 
 This [Discourse](https://discourse.com) plugin adds an integration with [Ko-fi](https://ko-fi.com). 
 
-Note: This plugin is still in development and not ready to be used.
+Donations and other payments made via Ko-fi can be bound to rewards like badges or user group access.
+
+For more information check the [discussion on Discourse Meta](https://meta.discourse.org/t/???).
 
 ## Plugin Compatibility Status
 

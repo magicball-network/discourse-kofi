@@ -103,7 +103,7 @@ RSpec.describe DiscourseKofi::RewardProcessor do
       sub.reward = reward
       sub.last_payment = payment_other_tier
       sub.update_rewarded_fields
-      sub.tier_name = payment_other_tier.tier_name
+      sub.tier_name = sub.tier_name + "_changed"
       sub.save!
       reward.group.add(sub.user)
       sub
