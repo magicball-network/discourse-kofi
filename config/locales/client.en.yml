@@ -13,12 +13,12 @@ en:
         subscriptions:
           title: Subscriptions
           description: |
-            Rewards received based on ko-fi membership tiers. 
+            Rewards received based on Ko-fi membership tiers. 
             Subscriptions are re-evaluated daily. If the last subscription payment was more than a month ago
             the user will be removed from the associated group.
         payments:
           title: Payments
-          description: Received payments via ko-fi.
+          description: Received payments via Ko-fi.
         accounts:
           title: Accounts
           description: Ko-fi account links to Discourse users.
@@ -196,7 +196,7 @@ en:
           delete:
             title: Delete subscription
             confirmation: |
-              Permanently delete reward #%{id}? Associated with the ko-fi tier <em class="text-successful">%{tier_name}</em>? <br /><br />
+              Permanently delete reward #%{id}? Associated with the Ko-fi tier <em class="text-successful">%{tier_name}</em>? <br /><br />
               Deleting this subscription will also remove users from the associated group, 
               unless they have an other subscription that grants them access to the same group.
               <br /><br />
