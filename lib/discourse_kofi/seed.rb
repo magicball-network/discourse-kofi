@@ -6,11 +6,23 @@ module ::DiscourseKofi
   class Seed
     def self.seed_me_seymour
       return unless SiteSetting.kofi_needs_seed
-      I18n.with_locale(SiteSetting.default_locale) { self.create_topic }
+      I18n.with_locale(SiteSetting.default_locale) { self.do_create_topic }
       SiteSetting.kofi_needs_seed = false
     end
 
-    def self.create_topic
+    def self.seed_or_feed
+      I18n.with_locale(SiteSetting.default_locale) do
+        if SiteSetting.kofi_needs_seed
+          self.do_create_topic
+        else
+          self.do_update_topic
+        end
+      end
+    end
+
+    private
+
+    def self.do_create_topic
       topic_id = SiteSetting.kofi_dashboard_topic_id
       return if topic_id > 0 || Topic.find_by(id: topic_id)
 
@@ -39,7 +51,7 @@ module ::DiscourseKofi
       SiteSetting.kofi_dashboard_topic_id = post.topic_id
     end
 
-    def self.update_topic
+    def self.do_update_topic
       topic_id = SiteSetting.kofi_dashboard_topic_id
       return if topic_id <= 0
       posts = Post.where(topic_id: topic_id, post_number: 1)

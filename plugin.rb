@@ -32,20 +32,32 @@ require_relative "lib/discourse_kofi/engine"
 
 after_initialize do
   require_relative "lib/discourse_kofi/seed"
-  ::Jobs.enqueue(DiscourseKofi::Jobs::SeedConfig)
   add_topic_static_page(
     "kofi-dashboard",
     { topic_id: "kofi_dashboard_topic_id" }
   )
+
+  on_enabled_change do |old_value, new_value|
+    DiscourseKofi::Seed.seed_me_seymour if new_value
+  end
+
   on(:site_setting_changed) do |name, old_value, new_value|
-    DiscourseKofi::Seed.update_topic if %i[kofi_account title].include?(name)
-    # TODO: trigger job
+    DiscourseKofi::Seed.seed_or_feed if %i[kofi_account title].include?(name)
+
     if name.to_s.starts_with?("kofi_goal_")
-      DiscourseKofi::PaymentStats.calculate_goal
+      ::Jobs.enqueue_in(
+        1.minute,
+        DiscourseKofi::Jobs::LeaderBoard,
+        calculate: ["goal"]
+      )
     end
-    # TODO: trigger job
+
     if name.to_s.starts_with?("kofi_leaderboard_")
-      DiscourseKofi::PaymentStats.calculate_leaderboard
+      ::Jobs.enqueue_in(
+        1.minute,
+        DiscourseKofi::Jobs::LeaderBoard,
+        calculate: ["leaderboard"]
+      )
     end
   end
 

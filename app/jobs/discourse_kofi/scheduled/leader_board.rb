@@ -7,8 +7,14 @@ module ::DiscourseKofi::Jobs
     every 1.hour
 
     def execute(args)
-      ::DiscourseKofi::PaymentStats.calculate_leaderboard
-      ::DiscourseKofi::PaymentStats.calculate_goal
+      return unless SiteSetting.kofi_enabled
+      calc = args["calculate"] || []
+      if calc.empty? || calc.include?("leaderboard")
+        ::DiscourseKofi::PaymentStats.calculate_leaderboard
+      end
+      if calc.empty? || calc.include?("goal")
+        ::DiscourseKofi::PaymentStats.calculate_goal
+      end
     end
   end
 end
