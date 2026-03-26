@@ -38,13 +38,18 @@ div.discourse-kofi-user-controls {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: 1em;
 }
 
 .kofi_dashboard__sections {
   > div {
     flex-basis: 29%;
+
+    &.kofi_dashboard__leaderboard {
+      flex-grow: 1;
+      max-width: 50vh;
+    }
 
     &.kofi_dashboard__payments {
       flex-grow: 2;
@@ -145,6 +150,10 @@ div.discourse-kofi-user-controls {
         color: var(--kofi_trophy_color);
         font-size: larger;
         line-height: normal;
+      }
+
+      .kofi_dashboard__leaderboard_user {
+        overflow-wrap: anywhere;
       }
 
       &.leaderboard0 {
