@@ -1,27 +1,30 @@
 en:
   site_settings:
-    kofi_webhook_token: 'Verification token for webhook calls made by Ko-fi. 
-      Can be found <a href="https://ko-fi.com/manage/webhooks" target="_blank">in the Ko-fi API settings</a>.'
-    kofi_account: 'Your Ko-fi account name, will be used to create a link on the dashboard'
-    kofi_dashboard_enabled: 'Enable the dashboard/leaderboard of most recent donations at <code>/ko-fi</code>'
-    kofi_dashboard_in_menu: 'Adds an item to the navigation sidebar. Disable this if you want to customize the link to the dashboard'
-    kofi_dashboard_topic_id: 'The topic ID which contains the message shown on the dashboard'
-    kofi_dashboard_widget_enabled: 'Include the Ko-fi donation widget on the dashboard'
-    kofi_dashboard_totals_types: 'Show totals for these payment types.'
-    kofi_dashboard_totals_days: 'Number of days to look back. -1 means since ever'
-    kofi_dashboard_count: 'How many of the recent payments to show. 0 will disable recent payments'
-    kofi_dashboard_types: 'Which payment types should be shown on the dashboard'
-    kofi_dashboard_anonymous_view: 'What details should be shown for unauthenticated users. If empty, nothing will be shown.'
-    kofi_dashboard_authenticated_view: 'What should be shown for authenticated users. If empty, nothing will be shown.'
-    kofi_leaderboard_count: 'Number of donators to show. 0 will disable the leaderboard'
-    kofi_leaderboard_days: 'Number of days to consider for the leaderboard. -1 means since ever. 0 will disable the leaderboard'
-    kofi_leaderboard_types: 'Which payment types to consider for the leaderboard'
-    kofi_goal_amount: 'Goal of payment per period work toward to. 0 disables the goal'
-    kofi_goal_period: 'Period over which to calculate the goal progress'
-    kofi_goal_since: 'Starting date of the goal when the using "since" as period'
-    kofi_goal_show_amount: 'Show the target amount. Otherwise it will only show the percentage'
-    kofi_goal_types: 'Which types to consider counting toward the goal'
-    kofi_goal_progress_bar_integration: 'Integrate with the <a href="https://meta.discourse.org/t/progress-bar/394184">Progress Bar</a> theme component. This will overwrite the max and current value settings of the component.'
+    kofi_webhook_token: >
+      Verification token for webhook calls made by Ko-fi.
+      Can be found <a href="https://ko-fi.com/manage/webhooks" target="_blank">in the Ko-fi API settings</a>.
+    kofi_account: Your Ko-fi account name, will be used to create a link on the dashboard.
+    kofi_dashboard_enabled: Enable the dashboard/leaderboard of most recent donations at <code>/ko-fi</code>.
+    kofi_dashboard_in_menu: Adds an item to the navigation sidebar. Disable this if you want to customize the link to the dashboard.
+    kofi_dashboard_topic_id: The topic ID which contains the message shown on the dashboard.
+    kofi_dashboard_widget_enabled: Include the Ko-fi donation widget on the dashboard.
+    kofi_dashboard_totals_types: how totals for these payment types.
+    kofi_dashboard_totals_days: Number of days to look back. -1 means since ever.
+    kofi_dashboard_count: How many of the recent payments to show. 0 will disable recent payments.
+    kofi_dashboard_types: Which payment types should be shown on the dashboard.
+    kofi_dashboard_anonymous_view: What details should be shown for unauthenticated users. If empty, nothing will be shown.
+    kofi_dashboard_authenticated_view: What should be shown for authenticated users. If empty, nothing will be shown.
+    kofi_leaderboard_count: Number of donators to show. 0 will disable the leaderboard.
+    kofi_leaderboard_days: Number of days to consider for the leaderboard. -1 means since ever. 0 will disable the leaderboard.
+    kofi_leaderboard_types: Which payment types to consider for the leaderboard.
+    kofi_goal_amount: Target amount of payments per period to work towards to. 0 disables the goal.
+    kofi_goal_period: Period over which to calculate the goal progress.
+    kofi_goal_since: Starting date of the goal when the using "since" as period.
+    kofi_goal_show_amount: Show the target amount. Otherwise it will only show the percentage.
+    kofi_goal_types: Which types to consider counting toward the goal.
+    kofi_goal_progress_bar_integration: >
+      Integrate with the <a href="https://meta.discourse.org/t/progress-bar/394184">Progress Bar</a> theme component.
+      This will overwrite the max and current value settings of the component.
   kofi:
     payment_type:
       donation: Donation
@@ -30,27 +33,27 @@ en:
       shop_order: Shop Order
     webhook:
       status:
-        invalid_token: 'Received message %{msg_id} with invalid webhook token: %{verification_token}.'
-        test_transaction: 'Received a test transaction, message %{msg_id}.'
-        duplicate_message: 'Received message %{msg_id} for transaction: %{tx_id}. Duplicate message.'
-        known_transaction: 'Received message %{msg_id} for transaction: %{tx_id}. Known transaction.'
-        message_received: 'Received message %{msg_id} for transaction: %{tx_id}.'
-        save_error: 'Failed to process message %{msg_id} for transaction: %{tx_id}. Could not save the record: %{error_messages}'
+        invalid_token: "Received message %{msg_id} with invalid webhook token: %{verification_token}."
+        test_transaction: Received a test transaction, message %{msg_id}.
+        duplicate_message: "Received message %{msg_id} for transaction: %{tx_id}. Duplicate message."
+        known_transaction: "Received message %{msg_id} for transaction: %{tx_id}. Known transaction."
+        message_received: "Received message %{msg_id} for transaction: %{tx_id}."
+        save_error: "Failed to process message %{msg_id} for transaction: %{tx_id}. Could not save the record: %{error_messages}."
     payments:
       import:
-        invalid_csv: 'Failed loading CSV file. %{error}'
-        tx_already_known: 'Transaction already registered'
-        test_transaction: 'Test transaction ID'
-        invalid_datetime: 'Invalid date/time: %{datetime}'
-        invalid_type: 'Invalid transaction type: %{type}'
-        invalid_amount: 'Invalid amount: %{amount}'
-        zero_amount: 'Zero or negative amount'
-        missing_tier_name: 'Subscription payment requires an item value as tier name'
+        invalid_csv: Failed loading CSV file. %{error}
+        tx_already_known: Transaction already registered
+        test_transaction: Test transaction ID
+        invalid_datetime: "Invalid date/time: %{datetime}"
+        invalid_type: "Invalid transaction type: %{type}"
+        invalid_amount: "Invalid amount: %{amount}"
+        zero_amount: Zero or negative amount
+        missing_tier_name: Subscription payment requires an item value as tier name
       validation:
-        test_transaction: 'test transaction cannot be stored'
+        test_transaction: test transaction cannot be stored
     rewards:
       validation:
-        payment_types_array: 'must be an array'
+        payment_types_array: must be an array
         invalid_payment_type: "'%{type}' is not a valid payment type"
     dashboard:
       topic:

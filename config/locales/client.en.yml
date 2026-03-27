@@ -1,7 +1,7 @@
 en:
   js:
     discourse_kofi:
-      title: "Ko-fi"
+      title: Ko-fi
       anonymous: Anonymous
       admin:
         rewards-management:
@@ -62,8 +62,8 @@ en:
           account_created: Anonymized account created.
         status:
           title: Status
-          webhook-token-configured: 'Webhook token configured'
-          last-success-message: 'Last successful message received:'
+          webhook-token-configured: Webhook token configured
+          last-success-message: "Last successful message received:"
           webhook-test-hint:
             Try <a href="https://ko-fi.com/manage/webhooks" target="_blank">sending a test message</a>
             from Ko-fi to verify the configuration.
@@ -123,7 +123,7 @@ en:
           edit:
             label: Edit
             title: Edit reward
-            description: ""
+            description:
             saved: Reward updated.
           reprocess:
             title: Reprocess
@@ -181,7 +181,7 @@ en:
           edit:
             label: Edit
             title: Edit subscription
-            description: ""
+            description:
             saved: Subscription updated.
           reprocess:
             title: Reprocess
@@ -318,7 +318,7 @@ en:
           description: Overview of donations made via Ko-fi
         goal:
           title: Donation goal
-          target_MF: 'of ¤{target,number,#}'
+          target_MF: of ¤{target,number,#}
         leaderboard:
           title: Leaderboard
         payments:
@@ -327,7 +327,7 @@ en:
     admin:
       site_settings:
         categories:
-          discourse_kofi: "Ko-fi"
+          discourse_kofi: Ko-fi
       logs:
         staff_actions:
           actions:
