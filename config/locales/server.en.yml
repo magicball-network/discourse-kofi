@@ -8,7 +8,7 @@ en:
     kofi_dashboard_in_menu: Adds an item to the navigation sidebar. Disable this if you want to customize the link to the dashboard.
     kofi_dashboard_topic_id: The topic ID which contains the message shown on the dashboard.
     kofi_dashboard_widget_enabled: Include the Ko-fi donation widget on the dashboard.
-    kofi_dashboard_totals_types: how totals for these payment types.
+    kofi_dashboard_totals_types: Show totals for these payment types.
     kofi_dashboard_totals_days: Number of days to look back. -1 means since ever.
     kofi_dashboard_count: How many of the recent payments to show. 0 will disable recent payments.
     kofi_dashboard_types: Which payment types should be shown on the dashboard.
