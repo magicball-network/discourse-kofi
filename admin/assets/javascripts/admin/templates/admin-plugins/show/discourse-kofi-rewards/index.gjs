@@ -63,7 +63,9 @@ export default <template>
                   {{/if}}
                 </td>
                 <td class="d-admin-row__detail">{{reward.amount}}</td>
-                <td class="d-admin-row__detail">{{reward.payment_types}}</td>
+                <td
+                  class="d-admin-row__detail"
+                >{{reward.payment_types_list}}</td>
                 <td class="d-admin-row__detail">
                   {{#if reward.badge}}
                     <LinkTo

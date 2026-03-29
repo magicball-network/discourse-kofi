@@ -21,6 +21,10 @@ export default class AdminReward extends EmberObject {
     }).then((result) => AdminReward.create(result.reward));
   }
 
+  get payment_types_list() {
+    return this.payment_types.join(", ");
+  }
+
   persist(data) {
     let result;
     if (this.id) {
