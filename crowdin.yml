@@ -1,4 +1,3 @@
-commit_message: "[ci skip]"
 files:
   - source: /config/locales/client.en.yml
     translation: /config/locales/client.%two_letters_code%.yml
