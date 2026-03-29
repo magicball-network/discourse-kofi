@@ -9,7 +9,7 @@ export default class AdminPluginsShowDiscourseKofiRewardsNewRoute extends AdminP
     return AdminReward.create({
       enabled: false,
       subscription: false,
-      payment_types: ["donation"],
+      payment_types: ["donation", "subscription"],
     });
   }
 }
