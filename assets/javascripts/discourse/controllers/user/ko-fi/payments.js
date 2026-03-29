@@ -52,9 +52,6 @@ export default class UserKofiPaymentsController extends Controller {
     this.resetFilters();
   }
 
-  @action
-  toggleBulkSelect() {}
-
   resetFilters() {
     this._page = 1;
     this._results.length = 0;

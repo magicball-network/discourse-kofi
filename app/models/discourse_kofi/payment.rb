@@ -125,7 +125,7 @@ module ::DiscourseKofi
     def account=(value)
       super
       update_user
-      if !self.account.nil?
+      unless self.account.nil?
         # possibly updates email if it was matched on email hash
         self.email = self.account.email
         self.is_public = false if self.account.always_hide

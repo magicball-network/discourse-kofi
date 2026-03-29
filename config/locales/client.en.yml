@@ -61,6 +61,7 @@ en:
           account_created: Anonymized account created.
         status:
           title: Status
+          webhook-url: Webhook URL
           webhook-token-configured: Webhook token configured
           last-success-message: "Last successful message received:"
           webhook-test-hint:

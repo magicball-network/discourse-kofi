@@ -96,10 +96,6 @@ module DiscourseKofi
       goal
     end
 
-    def self.calculate_summary
-      # TODO
-    end
-
     private
 
     def self.update_progress_bar(target, total)

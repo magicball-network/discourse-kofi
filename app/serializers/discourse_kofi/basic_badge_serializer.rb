@@ -4,7 +4,7 @@
 
 module ::DiscourseKofi
   class BasicBadgeSerializer < ApplicationSerializer
-    attributes :id, :name, :enabled, :icon, :image, :badgeTypeClassName
+    attributes :id, :name, :enabled, :icon, :image, :badge_type_name
 
     def name
       object.display_name
@@ -14,8 +14,8 @@ module ::DiscourseKofi
       object.image_url
     end
 
-    def badgeTypeClassName
-      "badge-type-" + object.badge_type.name.downcase
+    def badge_type_name
+      object.badge_type.name.downcase
     end
   end
 end

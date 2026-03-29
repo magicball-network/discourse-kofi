@@ -3,6 +3,7 @@ import DButton from "discourse/components/d-button";
 import icon from "discourse/helpers/d-icon";
 import formatDate from "discourse/helpers/format-date";
 import routeAction from "discourse/helpers/route-action";
+import { getAbsoluteURL } from "discourse/lib/get-url";
 import { i18n } from "discourse-i18n";
 
 export default <template>
@@ -28,6 +29,11 @@ export default <template>
       @action={{routeAction "refreshStatus"}}
       @label="refresh"
     />
+
+    <p class="kofi-status-item">
+      {{i18n "discourse_kofi.admin.status.webhook-url"}}:
+      <code>{{getAbsoluteURL "/ko-fi/webhook"}}</code>
+    </p>
 
     <p class="kofi-status-item">
       {{#if @model.config.webhook_token_configured}}

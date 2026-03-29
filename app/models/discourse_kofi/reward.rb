@@ -47,14 +47,9 @@ module ::DiscourseKofi
     validate :valid_payment_types, unless: :subscription?
 
     def valid_payment_types
-      if !payment_types.kind_of?(Array)
-        errors.add(
-          :payment_types,
-          I18n.t("kofi.rewards.validation.payment_types_array")
-        )
-      else
+      if payment_types.kind_of?(Array)
         payment_types.each do |payment_type|
-          if !Payment::PAYMENT_TYPES.keys.include?(payment_type.to_sym)
+          if Payment::PAYMENT_TYPES.keys.exclude?(payment_type.to_sym)
             errors.add(
               :payment_types,
               I18n.t(
@@ -64,6 +59,11 @@ module ::DiscourseKofi
             )
           end
         end
+      else
+        errors.add(
+          :payment_types,
+          I18n.t("kofi.rewards.validation.payment_types_array")
+        )
       end
     end
   end
