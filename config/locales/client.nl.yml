@@ -1,0 +1,283 @@
+nl:
+  js:
+    discourse_kofi:
+      title: Ko-fi
+      anonymous: Anoniem
+      admin:
+        rewards-management:
+          title: Beloningen
+          description: Beloningen en abonnementsbeheer.
+        rewards:
+          title: Beloningen
+          description: Eenmalige beloningen ontvangen voor het huidige totaal van gemaakte betalingen.
+        subscriptions:
+          title: Abonnement
+          description: |
+            Beloningen toegekend op basis van Ko-fi abonnementen. Abonnementen worden dagelijks geëvalueerd. Als de laatste betaling meer dan een maand geleden was wordt de gebruiker verwijderd uit de gekoppelde groep.
+        payments:
+          title: Betalingen
+          description: Betalingen ontvangen via Ko-fi.
+        accounts:
+          title: Accounts
+          description: Ko-fi account koppelingen naar Discourse gebruikers.
+        import:
+          title: Importeren
+          description: Importeer een Ko-fi CSV-transactie export.
+          information: U kunt vorige betalingen importeren die nog niet zijn geregistreerd door <a href="https://ko-fi.com/manage/supportreceived">een CSV van Ko-fi</a> te downloaden en hier te uploaden. Alleen ontvangen betalingen die onbekend zijn, worden aan de database toegevoegd. Al gekende betalingen zullen worden genegeerd.<br /><br /> De CSV-export bevat geen informatie of de gebruiker deze informatie openbaar wil maken, hierdoor worden alle betalingen als privé worden gemarkeerd.
+          file: CSV bestand
+          make_private: Verberg gebruikersinformatie in de betalingen
+          import: Importeer betalingen
+          aborted: Selecteer een CSV bestand om te importeren.
+          results: Importeer resultaat
+          summary: '%{count} Betalingen geïmporteerd.'
+          errors: Importeer fouten
+          error:
+            line: Regel
+            message: Melding
+        anonymize:
+          title: Anonimiseren
+          description: Verwijder persoonlijke identificeerbare informatie van betalingen.
+          information: Wanneer u een Discourse gebruikersaccount anonimiseert, worden alle Ko-fi betalingen die in de database zijn geregistreerd automatisch geanonimiseerd. Dit geld ook voor betaling die in de toekomst ontvangen worden vanuit dezelfde persson.<br /> Voor bestaande accounts, geassocieerd met Discourse gebruikers, kunt u ook individueel gekoppelde accounts anonimiseren via het accountscherm.<br /> Wanneer u een verzoek ontvangt om een persoon te vergeten, kan je dit formulier gebruiken om een geanonimiseerd account voor dit e-mailadres te maken. Hierdoor worden alle eerdere en toekomstige betalingen anonimiseerd.<br /><br /> Wanneer betalingen geanonimiseerd worden, worden alle identificeerbare informatie verwijderd, inclusief het oorspronkelijk gebruikte e-mailadres. Het oorspronkelijke e-mailadres wordt gepseudo-anonimiseerd door het te hashen met SHA2. Dit maakt het mogelijk om ook toekomstige betalingen te anonimiseren.<br /><br /> Geanonimiseerde betalingen zijn niet omkeerbaar. Het verwijderen van een geanonimiseerd account maakt het mogelijk nieuwe betalingen aan een gebruiker te koppelen, maar betalingen uit het verleden kunnen niet worden gekoppeld.
+          email: E-mail adres
+          anonymize: Anonimiseren
+          account_created: Geanonimiseerd account aangemaakt.
+        status:
+          title: Status
+          webhook-token-configured: Webhook token geconfigureerd
+          last-success-message: "Laatste succesvolle ontvangen bericht:"
+          webhook-test-hint: Probeer <a href="https://ko-fi.com/manage/webhooks" target="_blank">een testbericht</a> te sturen van Ko-fi om de configuratie te verifiëren.
+          last-error-message: "Fout ontvangen op:"
+          status_ok: Alles is goed
+          status_nok: Iets gaat mis
+      actions:
+        show_emails:
+          title: Toon e-mails
+        hide_emails:
+          title: Verberg e-mail
+        clear_input: Invoer wissen
+      payments:
+        search_placeholder: Betalingen zoeken
+        actions:
+          make_private:
+            title: Maak betaling privé
+            confirmation: Dit zal de gebruikersinformatie en het bericht van de geselecteerde betaling in de openbare weergave verbergen. <br /><br /> Deze actie kan niet ongedaan worden gemaakt.
+            confirm: Betalingsgegevens van gebruiker verbergen
+          show_account:
+            title: Ga naar account
+        timestamp:
+          title: Datum
+        type:
+          title: Type
+        tier_name:
+          title: Staffel
+        amount:
+          title: Bedrag
+        from:
+          title: Van
+        from_name:
+          title: Betaling van
+        transaction_id:
+          title: Transactie-ID
+        public:
+          title: Openbaar
+          description: Gebruikers betalingsgegevens worden weergegeven.
+        private:
+          title: Afgeschermd
+          description: Gebruiker betalingsgegevens zijn verborgen.
+        anonymized:
+          title: Geanonimiseerd
+          description: De betaling is geanonimiseerd.
+        message:
+          title: Bericht
+      rewards:
+        actions:
+          create:
+            title: Nieuwe beloning
+            description: Maak een nieuwe eenmalige beloning voor het betalen van een bepaald totaal bedrag. Het moet een badge verlenen, een groepslidmaatschap of beide.
+            saved: Beloning aangemaakt.
+          edit:
+            label: Bewerken
+            title: Beloning aanpassen
+            description:
+            saved: Beloning bijgewerkt.
+          reprocess:
+            title: Opnieuw verwerken
+            description: Herverwerken van betalingen door gebruikers en toekennen van deze beloning.
+            confirmation: |
+              Dit zal de vorige betalingen van gebruikers opnieuw verwerken en controleren of deze beloningen voor hen gelden.<br />
+              Afhankelijk van het aantal gebruikers dat betalingen heeft gedaan in het verleden kan het verwerking heel wat tijd in beslag nemen om te voltooien.
+              <br /><br />
+              Herverwerking zal geen beloning intrekken die eerder gemaakt zijn intrekken.
+              <br /><br />
+              Weet je zeker dat je de betalingen wilt herverwerken en gebruikers wilt belonen voor het betalen van ten minste <em class="text-successful">%{amount}</em>?
+            confirm: Betalingen opnieuw verwerken
+            started: Betalingen worden verwerkt...
+          delete:
+            title: Beloning verwijderen
+            confirmation: |
+              Permanent verwijderen van beloning #%{id}? Beloning toegekend bij betaling van minimaal <em class="text-successful">%{amount}</em>? <br /><br />
+              Eerder beloonde badges of groepslidmaatschappen worden niet ingetrokken.
+            confirm: Beloning verwijderen
+            deleted: Beloning verwijderd.
+        errors:
+          payment_types:
+            missing: Moet minimaal één betaaltype bevatten.
+          badge_or_group:
+            missing: Moet minimaal een badge of een groepslidmaatschap configureren.
+        warnings:
+          badge-usage: Deze badge is gekoppeld met één of meer Ko-fi beloningen. Verwijderen zal het ontkoppelen van de beloning.
+          group-usage: Deze groep wordt geassocieerd met één of meer Ko-fi beloningen. Als u het verwijdert, zal het worden losgekoppeld van de beloning of het abonnement.
+        id:
+          title: ID
+        enabled:
+          title: Actief
+        badge:
+          title: Badge
+          description: Beloon de gebruiker met deze badge.
+        group:
+          title: Groepslidmaatschap
+          description: Voeg de gebruiker toe aan deze groep. Voor abonnement beloningen mag de groep alleen gebruikt worden met Ko-fi beloningen, omdat gebruikers verwijderd worden uit de groep als ze geen actieve abonnementen meer hebben voor deze groep.
+        amount:
+          title: Minimumbedrag
+          description: Beloning wordt toegekend wanneer het totale bedrag van betalingen door deze gebruiker minimaal deze waarde heeft.
+        payment_types:
+          title: Betalingstypes
+          description: Betalingstypen die moeten worden opgenomen bij het berekenen van het totale bedrag.
+      subscriptions:
+        actions:
+          create:
+            title: Nieuw abonnement
+            description: Maak een nieuw abonnement aan dat een maandelijkse betaling is van een opgegeven staffel.
+            saved: Abonnementen aangemaakt.
+          edit:
+            label: Bewerken
+            title: Bewerk abonnement
+            description:
+            saved: Abonnement bijgewerkt.
+          reprocess:
+            title: Opnieuw verwerken
+            description: Herverwerk betalingen voor dit abonnement
+            confirmation: |
+              Dit zal alle actieve abonnementen en gerelateerde abonnementsbetalingen van de gebruikers herverwerken.<br />
+              Gebruikers zullen worden toegevoegd en verwijderd uit de groep, afhankelijk van de wijzigingen die zijn aangebracht in deze configuratie.
+              <br /><br />
+              Weet u zeker dat u abonnement #%{id} wilt herverwerken?
+            confirm: Betalingen opnieuw verwerken
+            started: Betalingen worden verwerkt...
+          delete:
+            title: Abonnement verwijderen
+            confirmation: |
+              Permanent verwijderen van beloning #%{id}? Gekoppeld aan de Ko-fi staffel <em class="text-successful">%{tier_name}</em>? <br /><br />
+              Als u dit abonnement verwijdert, worden ook gebruikers uit de bijbehorende groep verwijderd,
+              tenzij ze een ander abonnement hebben dat hen toegang geeft tot dezelfde groep.
+              <br /><br />
+              Het verwijderen van een abonnement met veel actieve abonnementen duurt een tijdje.
+              Het is beter om deze beloning eerst uit te schakelen en deze na een maand te verwijderen.
+            confirm: Abonnement verwijderen
+            deleted: Abonnement verwijderd.
+        id:
+          title: ID
+        enabled:
+          title: Actief
+        group:
+          title: Groepslidmaatschap
+          description: Voeg de gebruiker toe aan deze groep. Als het abonnement is verlopen wordt de gebruiker uit de groep verwijderd.
+        tier_name:
+          title: Ko-fi staffel
+          description: Deze waarde moet overeenkomen met de naam van de lidmaatschapstaffel in Ko-fi, anders komt het abonnement niet overeen.
+      accounts:
+        actions:
+          always_hide:
+            title: Betalingen zijn nooit openbaar
+            updated: Toekomstige betalingen zullen nooit openbaar zijn.
+          not_always_hide:
+            title: Openbare betalingen toestaan
+            updated: Toekomstige betalingen zijn openbaar wanneer de gebruiker het heeft toegestaan.
+          hide_payment_details:
+            title: Betaling verbergen
+            confirmation: Dit zal de gebruikersinformatie en het bericht van de geselecteerde betaling in de openbare weergave verbergen. <br /><br /> Deze actie kan niet ongedaan worden gemaakt.
+            confirm: Betalingsgegevens verbergen
+            updated: Gebruikersgegevens van betalingen uit het verleden zijn verborgen.
+          anonymize:
+            title: Anonimiseer account en betalingen
+            confirmation: Dit zal het account en alle bijbehorende betalingen in het verleden en in de toekomst anonimiseren (betalingen gedaan door <em>%{email}</em>). Het account zal niet langer gekoppeld worden aan gebruiker <em>%{username}</em>, waardoor ze niet langer beloond worden. <br /><br /> Deze actie kan niet ongedaan worden gemaakt.
+            confirm: Anonimiseer account en betalingen
+            updated: Het account is geanonimiseerd
+          delete:
+            title: Verwijderen
+            confirmation: Het verwijderen van een account zal de associatie van betalingen met de gebruiker <em>%{username}</em>verwijderen. Het zal geen eerder toegekende beloningen verwijderen. Aangezien de betalingen worden losgekoppeld van de gebruiker, zullen ze niet langer aan het totaal bijdragen die nodig is om een beloning te ontvangen. <br /><br /> Als het account geanonimiseerd is, zullen de toekomstige betalingen weer beschikbaar komen voor een gebruiker op te eisen. <br /><br /> Een account verwijderen kan niet ongedaan worden gemaakt als beheerder.
+            confirmation_anonymous: Het verwijderen van een geanonimiseerd account zal eerdere betalingen niet opnieuw vrijgeven om te worden opgeëist. Al deze betalingen zijn geanonimiseerd. Wanneer een geanonimiseerd account wordt verwijderd, kunnen nieuwe betalingen die zijn gedaan door het e-mailadres dat oorspronkelijk aan dat account is gekoppeld, opnieuw aan een gebruiker worden gekoppeld. <br /><br /> Een account verwijderen kan niet ongedaan worden gemaakt.
+            confirm: Verwijder dit account
+            deleted: Dit account is verwijderd
+        search_placeholder: Accounts zoeken
+        description: Ko-fi accounts zijn links tussen het e-mailadres dat wordt gebruikt voor het uitvoeren van een transactie en uw account in deze gemeenschap. Alle toekomstige Ko-fi transacties met dat e-mailadres worden aan je gekoppeld. Je kunt er voor kiezen om deze transacties te verbergen voor een openbare weergave. Bezoekers zien misschien alleen dat een transactie is gebeurd, maar niet dat deze door u is gemaakt. Accounts worden automatisch voor u aangemaakt wanneer de transactie-e-mail overeenkomt met het e-mailadres dat u in deze community gebruikt. Er wordt ook een account aangemaakt wanneer je handmatig een Ko-fi transactie claimt.
+        id:
+          title: ID
+        user:
+          title: Gebruiker
+        email:
+          title: Account e-mail
+        always_hide:
+          title: Betalingsgegevens verbergen
+          description: Toekomstige betalingen zullen nooit openbaar zijn
+        latest_payment:
+          title: Laatste betalingen
+        anonymized:
+          title: Geanonimiseerd
+          description: Persoonlijke identificeerbare informatie wordt verwijderd uit betalingen
+        created_at:
+          title: Aangemaakt op
+      notifications:
+        account_linked:
+          description: Ko-fi betalingen gekoppeld aan uw account
+          link_title: Ko-fi accounts bekijken
+        subscription_activated:
+          description: Ko-fi abonnement geactiveerd voor de staffel '%{tier_name}'
+        subscription_expired:
+          description: Ko-fi abonnement is verlopen voor de staffel '%{tier_name}'
+        subscription_joined_group:
+          description: Uw Ko-fi abonnement heeft u het lidmaatschap van '%{group_name}' verleend
+        subscription_left_group:
+          description: Lidmaatschap van '%{group_name}' eindigde omdat het Ko-fi abonnement is verlopen
+      user:
+        navigation:
+          payments: Betalingen
+          accounts: Accounts
+          claim: Claim betaling
+        claim:
+          information: Wanneer je een ander e-mailadres gebruikt om een Ko-fi betaling te doen dan je hebt gebruikt voor je account in deze gemeenschap dan wordt uw betaling niet automatisch aan u gekoppeld. Met dit formulier kan je betalingen aan dat e-mailadres aan je community account koppelen. <br /><br /> Om een betaling te claimen, moet u de transactie-ID aanleveren. U vindt dit in de bevestigingsmail. Of u kunt <a href="https://ko-fi.com/manage/supportreceived">de details van een betaling op Ko-fi</a> bekijken en de URL in het formulier kopiëren.
+          input_placeholder: Ko-fi transactie-ID of bevestigings-URL
+          action: Claim
+          success: Betalingen van dit e-mailadres zijn geclaimd
+          errors:
+            invalid_reference: Geen geldig transactie-ID gevonden.
+            unknown_reference: Transactie onbekend.
+            already_claimed: Deze transactie is al geclaimd.
+            account_failure: Het aanmaken van een account voor deze transactie is mislukt.
+      dashboard:
+        menu:
+          title: Donaties
+          description: Overzicht van donaties gemaakt via Ko-fi
+        goal:
+          title: Donatie doel
+          target_MF: 'van ¤{target,number,#}'
+        leaderboard:
+          title: Scorebord
+        payments:
+          title: Recente donaties
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_kofi: Ko-fi
+      logs:
+        staff_actions:
+          actions:
+            kofi_reward_creation: Ko-fi beloning creatie
+            kofi_reward_change: Ko-fi beloningswijziging
+            kofi_reward_deletion: Ko-fi beloning verwijdering
+            kofi_account_change: Ko-fi accountwijziging
+            kofi_account_anonymized: Ko-fi account geanonimiseerd
+            kofi_account_deletion: Ko-fi account verwijderd
+            kofi_payment_privatized: Ko-fi betalingen geprivatiseerd
+            kofi_payment_change: Ko-fi betaling wijziging
