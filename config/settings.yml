@@ -25,32 +25,6 @@ discourse_kofi:
   kofi_dashboard_widget_enabled:
     default: true
     client: true
-  kofi_dashboard_summary_types:
-    hidden: true
-    type: list
-    default: donation|subscription
-    client: false
-    allow_any: false
-    list_type: compact
-    choices: &payment_types
-      - donation
-      - subscription
-      - commission
-      - shop_order
-  kofi_dashboard_summary_periods:
-    hidden: true
-    type: list
-    default: 'all time'
-    client: false
-    allow_any: false
-    list_type: compact
-    choices:
-      - last 7 days
-      - last month
-      - last year
-      - all time
-      - current month
-      - current year
   kofi_dashboard_count:
     default: 0
     client: true
@@ -61,7 +35,11 @@ discourse_kofi:
     client: false
     allow_any: false
     list_type: compact
-    choices: *payment_types
+    choices: &payment_types
+      - donation
+      - subscription
+      - commission
+      - shop_order
   kofi_dashboard_anonymous_view:
     type: list
     default: user|message

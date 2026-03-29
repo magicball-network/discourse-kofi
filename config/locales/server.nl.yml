@@ -7,8 +7,6 @@ nl:
     kofi_dashboard_in_menu: Voegt een item toe aan de navigatie zijbalk. Schakel dit uit als u de link naar het dashboard wilt aanpassen.
     kofi_dashboard_topic_id: Het onderwerp-ID dat het bericht bevat dat getoond wordt op het dashboard.
     kofi_dashboard_widget_enabled: Voeg de Ko-fi donatie widget toe aan het dashboard.
-    kofi_dashboard_totals_types: Toon totalen voor deze betaaltypes.
-    kofi_dashboard_totals_days: Aantal dagen om terug te kijken. -1 betekent sinds ooit.
     kofi_dashboard_count: Hoeveel recente betalingen weer te geven zijn. 0 zal recente betalingen uitschakelen.
     kofi_dashboard_types: Welke betaaltypes moeten worden weergegeven op het dashboard.
     kofi_dashboard_anonymous_view: Welke details moeten worden getoond voor ongeautoriseerde gebruikers. Indien leeg wordt er niets getoond.
