@@ -1,0 +1,76 @@
+nl:
+  site_settings:
+    kofi_webhook_token: >
+      Verificatietoken voor webhook oproepen gemaakt door Ko-fi. Kan gevonden worden <a href="https://ko-fi.com/manage/webhooks" target="_blank">in de Ko-fi API-instellingen</a>.
+    kofi_account: Uw Ko-fi accountnaam zal worden gebruikt om een link aan te maken op het dashboard.
+    kofi_dashboard_enabled: Schakel het dashboard/scorebord van de meest recente donaties in op <code>/ko-fi</code>.
+    kofi_dashboard_in_menu: Voegt een item toe aan de navigatie zijbalk. Schakel dit uit als u de link naar het dashboard wilt aanpassen.
+    kofi_dashboard_topic_id: Het onderwerp-ID dat het bericht bevat dat getoond wordt op het dashboard.
+    kofi_dashboard_widget_enabled: Voeg de Ko-fi donatie widget toe aan het dashboard.
+    kofi_dashboard_totals_types: Toon totalen voor deze betaaltypes.
+    kofi_dashboard_totals_days: Aantal dagen om terug te kijken. -1 betekent sinds ooit.
+    kofi_dashboard_count: Hoeveel recente betalingen weer te geven zijn. 0 zal recente betalingen uitschakelen.
+    kofi_dashboard_types: Welke betaaltypes moeten worden weergegeven op het dashboard.
+    kofi_dashboard_anonymous_view: Welke details moeten worden getoond voor ongeautoriseerde gebruikers. Indien leeg wordt er niets getoond.
+    kofi_dashboard_authenticated_view: Wat moet worden getoond voor geauthenticeerde gebruikers. Indien leeg wordt niets getoond.
+    kofi_leaderboard_count: Aantal donateurs om te tonen. 0 zal het scorebord uitschakelen.
+    kofi_leaderboard_days: Aantal dagen om te overwegen voor het scorebord. -1 betekent sinds altijd. 0 zal het scorebord uitschakelen.
+    kofi_leaderboard_types: Welke betalingstypen in overweging moeten worden genomen voor het scorebord.
+    kofi_goal_amount: Bestemmingsbedrag per periode waaraan je wilt werken. 0 schakelt het doel uit.
+    kofi_goal_period: Periode om het doel te berekenen.
+    kofi_goal_since: Begindatum van het doel wanneer de "since"-periode wordt gebruikt.
+    kofi_goal_show_amount: Toon het doel bedrag. Anders zal het enkel het percentage getoond worden.
+    kofi_goal_types: Welke typen tellen mee voor het bereiken van het doel.
+    kofi_goal_progress_bar_integration: >
+      Integreer met het <a href="https://meta.discourse.org/t/progress-bar/394184">Progress Bar</a> thema component. Dit overschrijft het maximum en de huidige waarde van het component.
+  kofi:
+    payment_type:
+      donation: Donatie
+      subscription: Abonnement
+      commission: Commissie
+      shop_order: Winkel bestelling
+    webhook:
+      status:
+        invalid_token: "Bericht %{msg_id} met ongeldige webhook token: %{verification_token}."
+        test_transaction: Test transactie ontvangen, bericht %{msg_id}.
+        duplicate_message: "Bericht %{msg_id} ontvangen voor transactie: %{tx_id}. Bericht eerder ontvangen."
+        known_transaction: "Bericht %{msg_id} ontvangen voor transactie: %{tx_id}. Bekende transactie."
+        message_received: "Bericht %{msg_id} ontvangen voor transactie: %{tx_id}."
+        save_error: "Bericht %{msg_id} verwerken mislukt voor transactie: %{tx_id}. Kan het record niet opslaan: %{error_messages}."
+    payments:
+      import:
+        invalid_csv: Laden CSV-bestand mislukt. %{error}
+        tx_already_known: Transactie al geregistreerd
+        test_transaction: Test transactie-ID
+        invalid_datetime: "Ongeldige datum/tijd: %{datetime}"
+        invalid_type: "Ongeldige transactie type: %{type}"
+        invalid_amount: "Ongeldig bedrag: %{amount}"
+        zero_amount: Nul of negatief bedrag
+        missing_tier_name: Abonnementsbetaling vereist een artikelwaarde als staffelnaam
+      validation:
+        test_transaction: testtransactie kan niet worden opgeslagen
+    rewards:
+      validation:
+        payment_types_array: moet een array zijn
+        invalid_payment_type: "'%{type}' is geen geldig betaaltype"
+    dashboard:
+      topic:
+        title: Doneren via Ko-fi
+        body: |
+          # Donaties
+          U kunt %{site_title} ondersteunen door een donatie te doen via <a href="https://ko-fi.com/%{kofi_account}">Ko-fi</a>.
+        first_reply: |
+          Bewerk het eerste bericht in deze topic om de inhoud van het Ko-fi donatie dashboard te wijzigen (wanneer ingeschakeld).
+          Je wilt het bericht waarschijnlijk uitbreiden om ook details op te nemen waarvoor mensen doneren.
+          Zorg ervoor dat de link naar de Ko-fi website uw Ko-fi accountnaam bevat.
+  reports:
+    kofi_payments:
+      title: Ko-fi Betalingen
+      description: Aantal betalingen per type.
+    kofi_payment_amount:
+      title: Ko-fi Betalingen Totalen
+      description: Totaalbedrag ontvangen per type.
+  dashboard:
+    problem:
+      kofi_config_problem_check: Er is een probleem met de <a href="%{base_path}/admin/plugins/discourse-kofi/status">Ko-fi configuratie</a>.
+      kofi_webhook_problem_check: Ko-fi webhook oproepen onlangs mislukt. Zie de <a href="%{base_path}/admin/plugins/discourse-kofi/status">statuspagina</a> voor meer informatie.
