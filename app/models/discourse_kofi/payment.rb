@@ -59,6 +59,7 @@ module ::DiscourseKofi
               presence: {
                 message: "required for subscription payments"
               },
+              allow_blank: true,
               if: :is_subscription_payment
     validates :tier_name,
               absence: {
@@ -75,6 +76,11 @@ module ::DiscourseKofi
       hash.each do |key, value|
         next if JSON_WHITELIST.exclude?(key)
         payment.send("#{key}=", value)
+      end
+      if payment.is_subscription_payment && payment.tier_name.nil?
+        # Use the "default" tier name when not set. This is the case
+        # for monthly donations which are not tied to a tier.
+        payment.tier_name = ""
       end
       payment
     end

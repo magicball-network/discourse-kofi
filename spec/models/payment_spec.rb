@@ -3,7 +3,7 @@
 # frozen_string_literal: true
 
 RSpec.describe DiscourseKofi::Payment, type: :model do
-  it "parses valid JSON" do
+  it "parses valid donation JSON" do
     json = plugin_file_fixture("webhook.json").read
 
     payment = ::DiscourseKofi::Payment.from_json(json)
@@ -23,12 +23,12 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
     ).to eq "https://ko-fi.com/Home/CoffeeShop?txid=a8b80b8f-1df0-4a23-ba5f-67582b656bc9"
     expect(payment.email).to eq "jo.example@kofi.example"
     expect(payment.currency).to eq "USD"
-    expect(payment.is_subscription_payment).to be true
-    expect(payment.is_first_subscription_payment).to be true
+    expect(payment.is_subscription_payment).to be false
+    expect(payment.is_first_subscription_payment).to be false
     expect(
       payment.kofi_transaction_id
     ).to eq "a8b80b8f-1df0-4a23-ba5f-67582b656bc9"
-    expect(payment.tier_name).to eq "Gold"
+    expect(payment.tier_name).to be_nil
 
     expect(payment.test_transaction?).to be false
     expect(payment.type_donation?).to be true
@@ -40,6 +40,46 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
     expect(stored_payment.message_id).to eq payment.message_id
     expect(stored_payment.payment_type).to eq "donation"
     expect(stored_payment.verification_token).to be_nil
+    stored_payment.destroy
+  end
+
+  it "parses valid subscription JSON" do
+    json = plugin_file_fixture("webhook-sub.json").read
+
+    payment = ::DiscourseKofi::Payment.from_json(json)
+
+    expect(payment.message_id).to eq "bee3f4db-0ac1-442b-9a9b-5387a43a6b48"
+    expect(payment.is_subscription_payment).to be true
+    expect(payment.is_first_subscription_payment).to be true
+    expect(payment.tier_name).to eq "Gold"
+
+    expect(payment.valid?).to be true
+    expect(payment.save).to be true
+
+    stored_payment = ::DiscourseKofi::Payment.find(payment.id)
+    expect(stored_payment.message_id).to eq payment.message_id
+    expect(stored_payment.payment_type).to eq "subscription"
+    expect(stored_payment.tier_name).to eq "Gold"
+    stored_payment.destroy
+  end
+
+  it "parses valid subscription JSON without tier" do
+    json = plugin_file_fixture("webhook-sub-notier.json").read
+
+    payment = ::DiscourseKofi::Payment.from_json(json)
+
+    expect(payment.message_id).to eq "bee3f4db-0ac1-442b-9a9b-5387a43a6b48"
+    expect(payment.is_subscription_payment).to be true
+    expect(payment.is_first_subscription_payment).to be true
+    expect(payment.tier_name).to eq ""
+
+    expect(payment.valid?).to be true
+    expect(payment.save).to be true
+
+    stored_payment = ::DiscourseKofi::Payment.find(payment.id)
+    expect(stored_payment.message_id).to eq payment.message_id
+    expect(stored_payment.payment_type).to eq "subscription"
+    expect(stored_payment.tier_name).to eq ""
     stored_payment.destroy
   end
 
