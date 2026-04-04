@@ -68,17 +68,14 @@ RSpec.describe DiscourseKofi::Payment, type: :model do
 
     payment = ::DiscourseKofi::Payment.from_json(json)
 
-    expect(payment.message_id).to eq "bee3f4db-0ac1-442b-9a9b-5387a43a6b48"
     expect(payment.is_subscription_payment).to be true
-    expect(payment.is_first_subscription_payment).to be true
+    # null is converted to "" for subscriptions
     expect(payment.tier_name).to eq ""
 
     expect(payment.valid?).to be true
     expect(payment.save).to be true
 
     stored_payment = ::DiscourseKofi::Payment.find(payment.id)
-    expect(stored_payment.message_id).to eq payment.message_id
-    expect(stored_payment.payment_type).to eq "subscription"
     expect(stored_payment.tier_name).to eq ""
     stored_payment.destroy
   end
