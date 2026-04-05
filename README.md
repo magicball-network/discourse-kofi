@@ -14,3 +14,7 @@ For more information check the [discussion on Discourse Meta](https://meta.disco
 
 The above status is based on the plugin's executed tests against the specified Discourse branch.
 It is no definite guarantee that there are no issues.
+
+## Localization
+
+Localization will be handled via [Crowdin](https://crowdin.com/project/discourse-kofi). If you want to contribute a translation for a different language, please request it via Crowdin.
