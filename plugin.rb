@@ -4,7 +4,7 @@
 
 # name: discourse-kofi
 # about: Connect Ko-fi donations and subscriptions with Discourse.
-# meta_topic_id:
+# meta_topic_id: 399978
 # version: 1.0
 # authors: elmuerte
 # url: https://github.com/magicball-network/discourse-kofi
