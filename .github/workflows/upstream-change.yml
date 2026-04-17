@@ -1,9 +1,9 @@
 name: Discourse Branch Update Check
 
 on:
-  #schedule:
+  schedule:
     # Runs once a week
-    #- cron: '34 6 * * 5'
+    - cron: '34 6 * * 5'
   workflow_dispatch:
 
 permissions:
