@@ -110,19 +110,20 @@ module DiscourseKofi
         errors
       end
 
-      REWARD_FIELDS =
+      def reward_fields
         Reward.attribute_names.excluding("id", "created_at", "updated_at")
+      end
 
       def log_details(reward, update = false)
         details = {}
         if update
           details[:subscription] = reward.subscription
           reward.previous_changes.each do |f, values|
-            details[f.to_sym] = values[1] if REWARD_FIELDS.include?(f)
+            details[f.to_sym] = values[1] if reward_fields.include?(f)
           end
         else
           details =
-            REWARD_FIELDS
+            reward_fields
               .map { |f| [f, reward.public_send(f)] }
               .select { |f, v| v.present? }
               .to_h
