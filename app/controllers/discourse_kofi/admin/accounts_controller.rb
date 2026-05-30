@@ -86,18 +86,19 @@ module DiscourseKofi
         raise Discourse::NotFound
       end
 
-      ACCOUNT_FIELDS =
+      def account_fields
         Account.attribute_names.excluding("id", "created_at", "updated_at")
+      end
 
       def log_details(account, update = false)
         details = {}
         if update
           account.previous_changes.each do |f, values|
-            details[f.to_sym] = values[1] if ACCOUNT_FIELDS.include?(f)
+            details[f.to_sym] = values[1] if account_fields.include?(f)
           end
         else
           details =
-            ACCOUNT_FIELDS
+            account_fields
               .map { |f| [f, account.public_send(f)] }
               .select { |f, v| v.present? }
               .to_h
