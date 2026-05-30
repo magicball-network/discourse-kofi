@@ -43,6 +43,7 @@ nl:
           account_created: Geanonimiseerd account aangemaakt.
         status:
           title: Status
+          webhook-url: Webhook URL
           webhook-token-configured: Webhook token geconfigureerd
           last-success-message: "Laatste succesvolle ontvangen bericht:"
           webhook-test-hint: Probeer <a href="https://ko-fi.com/manage/webhooks" target="_blank">een testbericht</a> te sturen van Ko-fi om de configuratie te verifiëren.
