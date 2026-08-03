@@ -4,7 +4,9 @@ import { service } from "@ember/service";
 export default class UserKoFiIndexRoute extends Route {
   @service router;
 
-  redirect() {
-    this.router.transitionTo("user.ko-fi.payments");
+  redirect(model, transition) {
+    if (transition.targetName === this.routeName) {
+      this.router.transitionTo("user.ko-fi.payments");
+    }
   }
 }
