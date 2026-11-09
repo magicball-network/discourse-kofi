@@ -60,14 +60,14 @@ end
 # Table name: discourse_kofi_subscriptions
 #
 #  id              :bigint           not null, primary key
-#  user_id         :bigint           not null
-#  reward_id       :bigint           not null
-#  last_payment_id :bigint           not null
-#  tier_name       :string           not null
-#  group_id        :bigint           not null
 #  expires_at      :datetime         not null
+#  tier_name       :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  group_id        :bigint           not null
+#  last_payment_id :bigint           not null
+#  reward_id       :bigint           not null
+#  user_id         :bigint           not null
 #
 # Indexes
 #

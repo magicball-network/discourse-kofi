@@ -74,15 +74,15 @@ end
 # Table name: discourse_kofi_rewards
 #
 #  id            :bigint           not null, primary key
-#  badge_id      :bigint
-#  group_id      :bigint
+#  amount        :decimal(15, 2)
 #  enabled       :boolean          default(FALSE), not null
+#  payment_types :string           is an Array
 #  subscription  :boolean          not null
 #  tier_name     :string
-#  payment_types :string           is an Array
-#  amount        :decimal(15, 2)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  badge_id      :bigint
+#  group_id      :bigint
 #
 # Indexes
 #

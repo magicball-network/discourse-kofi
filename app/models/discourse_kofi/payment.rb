@@ -171,26 +171,26 @@ end
 # Table name: discourse_kofi_payments
 #
 #  id                            :bigint           not null, primary key
-#  message_id                    :string           not null
+#  amount                        :decimal(15, 2)   not null
+#  anonymized                    :boolean          default(FALSE), not null
+#  currency                      :string           not null
+#  email                         :string
+#  from_name                     :string
+#  is_first_subscription_payment :boolean          not null
+#  is_public                     :boolean          not null
+#  is_subscription_payment       :boolean          not null
+#  message                       :string
+#  payment_type                  :string           not null
+#  tier_name                     :string
 #  timestamp                     :datetime         not null
 #  type                          :string           not null
-#  is_public                     :boolean          not null
-#  from_name                     :string
-#  message                       :string
-#  amount                        :decimal(15, 2)   not null
 #  url                           :string
-#  email                         :string
-#  currency                      :string           not null
-#  is_subscription_payment       :boolean          not null
-#  is_first_subscription_payment :boolean          not null
-#  kofi_transaction_id           :string           not null
-#  tier_name                     :string
-#  payment_type                  :string           not null
-#  account_id                    :bigint
-#  user_id                       :bigint
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
-#  anonymized                    :boolean          default(FALSE), not null
+#  account_id                    :bigint
+#  kofi_transaction_id           :string           not null
+#  message_id                    :string           not null
+#  user_id                       :bigint
 #
 # Indexes
 #

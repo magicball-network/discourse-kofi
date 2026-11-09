@@ -53,13 +53,13 @@ end
 # Table name: discourse_kofi_accounts
 #
 #  id          :bigint           not null, primary key
-#  email       :string           not null
-#  user_id     :bigint
 #  always_hide :boolean          default(FALSE), not null
+#  anonymized  :boolean          default(FALSE), not null
+#  email       :string           not null
+#  email_hash  :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  email_hash  :string           not null
-#  anonymized  :boolean          default(FALSE), not null
+#  user_id     :bigint
 #
 # Indexes
 #
